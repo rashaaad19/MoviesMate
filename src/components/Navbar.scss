@@ -1,0 +1,57 @@
+//mixins
+@use "../assets/mixins.scss";
+
+
+
+.navList {
+  list-style: none;
+  color: #ffffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 50px;
+  padding-inline: 10px;
+  padding-block: 10px;
+}
+.logo {
+  width: 35px;
+}
+.navItem {
+  .active{
+    color: #e6781d;
+  }
+  a {
+    text-decoration: none;
+    color: #ffffffff;
+  }
+  a:nth-of-type(1) {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    p {
+      font-size: 25px;
+      font-family: "Cairo", sans-serif;
+      font-optical-sizing: auto;
+      font-weight: 500;
+      font-style: normal;
+      font-variation-settings: "slnt" 0;
+    }
+  }
+}
+.navSubList {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  gap: 20px;
+  font-family: sans-serif;
+  font-size: 15px;
+}
+
+.login-button {
+  @include mixins.button-style(#fff, #e6781d);
+}
+
+.signup-button{
+  font-weight: bold;
+}
+

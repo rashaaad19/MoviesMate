@@ -1,4 +1,5 @@
 //components
+import CategorySlider from "../components/CategorySlider";
 import MainWallpaper from "../components/MainWallpaper";
 import MovieSlider from "../components/MovieSlider";
 
@@ -14,6 +15,8 @@ const options = {
       "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjMjBmYTdlYzVlNmRiNjY0MzcxOGU1MzVjNTIzNGI5NSIsIm5iZiI6MTcyMjAyNjAzMi4xMDA3NTQsInN1YiI6IjY1YTE0MTdkYjM0NDA5MDEyZDY3MmM1NyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.49wnmbLJtgXWIFLx3Npd9hUk4xPIM5vuUrzbwaTdMr0",
   },
 };
+
+
 
 const Home = () => {
   return (
@@ -31,12 +34,8 @@ const Home = () => {
         options={options}
         type="regular"
       />
-       <MovieSlider
-        sliderHeader="Top Rated"
-        url={topRatedURL}
-        options={options}
-        type="category"
-      />
+    
+      <CategorySlider/>
     </>
   );
 };

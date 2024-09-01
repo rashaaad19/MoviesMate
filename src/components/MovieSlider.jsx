@@ -14,6 +14,11 @@ const MovieSlider = ({ sliderHeader, url, options, type }) => {
   if (loading) return <p>Loading</p>;
   if (error) return <p>Error: {error.message}</p>;
 
+
+
+
+
+  
   return (
     <div className="layout-container">
       <h2>{sliderHeader}</h2>

@@ -11,7 +11,10 @@
 
 .container {
   position: relative;
-  padding-top: 1rem;
+  margin-bottom: 2rem;
+  .wallpaper{
+    width: 100%;
+  }
   .image-description {
     @include center-content();
     color: white;

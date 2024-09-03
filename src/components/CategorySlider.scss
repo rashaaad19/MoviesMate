@@ -1,7 +1,12 @@
 .category-slide{
     height: 9rem !important;
+    cursor: pointer;
     img{
         height: 100%;
         width: 100%;
     }
+}
+
+.swiper-wrapper{
+    user-select: none;
 }

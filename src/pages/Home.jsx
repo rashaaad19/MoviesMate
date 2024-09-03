@@ -35,7 +35,8 @@ const Home = () => {
         type="regular"
       />
     
-      <CategorySlider/>
+      <CategorySlider
+      />
     </>
   );
 };

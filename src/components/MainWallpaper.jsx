@@ -17,7 +17,6 @@ const MainWallpaper = () => {
   const { data, loading, error } = useFetch(url, options);
 
 
- data&& console.log(data.results.map(movie=>movie.title))
   return (
     <div className="container">
       <img className="wallpaper" src="/MoviesMate-main.png" alt="Wallpaper" />

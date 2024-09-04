@@ -14,19 +14,28 @@ const MovieSlider = ({ sliderHeader, url, options, type }) => {
   if (loading) return <p>Loading</p>;
   if (error) return <p>Error: {error.message}</p>;
 
-
-
-
-
-  
   return (
     <div className="layout-container">
       <h2>{sliderHeader}</h2>
       <Swiper
         modules={[Navigation]}
+        slidesPerView={3}
         navigation={true}
         spaceBetween={20}
-        slidesPerView={7}
+        breakpoints={{
+          640: {
+            slidesPerView: 2,
+            spaceBetween: 20,
+          },
+          768: {
+            slidesPerView: 4,
+            spaceBetween: 40,
+          },
+          1024: {
+            slidesPerView: 5,
+            spaceBetween: 50,
+          },
+        }}
         allowTouchMove={false}
         loop={true}
       >
@@ -34,8 +43,9 @@ const MovieSlider = ({ sliderHeader, url, options, type }) => {
           return (
             <SwiperSlide
               key={movie.id}
-              className={type==='category'?`category-slide`:`normal-slide`}
-            
+              className={
+                type === "category" ? `category-slide` : `normal-slide`
+              }
             >
               <Link>
                 <img

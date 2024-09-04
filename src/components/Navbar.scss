@@ -1,8 +1,6 @@
 //mixins
 @use "../assets/mixins.scss";
 
-
-
 .navList {
   list-style: none;
   color: #ffffffff;
@@ -13,11 +11,14 @@
   padding-inline: 30px;
   padding-block: 10px;
 }
+.burger-button{
+  display: none;
+}
 .logo {
   width: 35px;
 }
 .navItem {
-  .active{
+  .active {
     color: #e6781d;
   }
   a {
@@ -51,7 +52,81 @@
   @include mixins.button-style(#fff, #e6781d);
 }
 
-.signup-button{
+.signup-button {
   font-weight: bold;
 }
+
+
+
+.fullPageContainer{
+  height: 100vh;
+}
+
+.burger-items-container{
+  display: none;
+}
+
+
+
+//media queries
+
+@media (max-width: 767px) {
+
+
+  
+
+  .navList{
+    padding-inline: 5px;
+    padding-block: 5px;
+    user-select: none;
+    display: flex;
+
+  }
+.burger-items-container{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 50px;
+  li{
+    list-style: none;
+  }
+}
+
+  .navSubList{
+    font-size: 10px;
+    gap: 5px;
+    .navItem{
+      a{
+        padding: 5px 5px;
+      }
+    }
+  }
+    .logo{
+      width: 20px;
+    }
+    .navItem a:nth-of-type(1) p{
+      font-size: 22px;
+      font-weight: bold;
+    }
+    .burger-button{
+      width: 25px;
+      display: block;
+    }
+
+
+    .navSection:nth-of-type(3){
+      display: none;
+    
+    }
+  
+  
+   
+    
+}
+
+
+
+
 

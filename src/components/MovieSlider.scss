@@ -57,8 +57,7 @@
         gap: 5px;
       }
     }
-    img {
-    }
+
     a:hover {
         .poster-img {
         filter: brightness(40%);
@@ -68,11 +67,27 @@
         }
     }
   }
-  .swiper-slide.category-slide{
-    // transform: scaleY(0.5); /* Reduce height by 50% */
-    height: 10rem;
-  }
+
 }
 
 
 
+
+
+
+
+
+
+//mobile and tablet media queries
+@media (min-width:100px) and (max-width:1024px) {
+  .layout-container{
+    h2{
+      font-size: 15px;
+    }
+    .swiper-slide{
+      .movieInfo-container{
+        font-size: 10px;
+      }
+    }
+  }
+}

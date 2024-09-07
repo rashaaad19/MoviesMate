@@ -10,3 +10,22 @@
 .swiper-wrapper{
     user-select: none;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+//mobile media queries
+@media (min-width:100px) and (max-width:767px) {
+    .category-slide{
+        height: 5.5rem !important;
+    }
+    
+}

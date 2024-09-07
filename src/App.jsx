@@ -12,10 +12,12 @@ import Discover from "./pages/Discover";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Home from "./pages/Home";
-
-
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
 
 function App() {
+  const showMenu = useSelector((state) => state.Ui.fullPageNav);
+  console.log(showMenu)
   const router = createBrowserRouter([
     {
       path: "/",
@@ -48,6 +50,17 @@ function App() {
       ],
     },
   ]);
+
+
+    // Add/remove class to body based on menuOpen state
+    useEffect(() => {
+      if (showMenu) {
+        document.body.classList.add('overflow-hidden');
+      } else {
+        document.body.classList.remove('overflow-hidden');
+      }
+    }, [showMenu]);
+  
   return (
     <>
       <RouterProvider router={router} />

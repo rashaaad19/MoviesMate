@@ -1,13 +1,16 @@
 import { NavLink } from "react-router-dom";
 import "./Navbar.scss";
 import { useState } from "react";
-
+import { useDispatch } from "react-redux";
+import { UiActions } from "../store/UiSlice";
 // TODO:  ------------- > Add conditional styles to preview different data based on showMenu state <--------------
 
 const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
+  const dispatch = useDispatch()
   const burgerButtonHandler = () => {
     setShowMenu(!showMenu);
+    dispatch(UiActions.toggleNav())
   };
 
   console.log(showMenu);

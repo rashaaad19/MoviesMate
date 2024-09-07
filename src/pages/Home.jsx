@@ -21,7 +21,7 @@ const options = {
 const Home = () => {
   return (
     <>
-      {/* <MainWallpaper />
+      <MainWallpaper />
       <MovieSlider
         sliderHeader="New Releases"
         url={newReleasesURL}
@@ -36,7 +36,7 @@ const Home = () => {
       />
     
       <CategorySlider
-      /> */}
+      />
     </>
   );
 };

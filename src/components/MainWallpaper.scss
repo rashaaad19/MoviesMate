@@ -12,8 +12,10 @@
 .container {
   position: relative;
   margin-bottom: 2rem;
-  .wallpaper{
+  .wallpaper {
     width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
   .image-description {
     @include center-content();
@@ -23,12 +25,11 @@
       font-weight: 500;
       font-style: normal;
       font-size: 45px;
-      
     }
     p {
       font-size: 16px;
       font-family: sans-serif;
-      padding-block: 25px
+      padding-block: 25px;
     }
     a {
       @include mixins.button-style(#fff, #e6781d);
@@ -50,4 +51,53 @@
   );
   width: 100%;
   height: 100%;
+}
+
+
+
+
+
+
+
+//mobile and tablet media queries
+
+@media (min-width:100px) and (max-width:1024px) {
+  .container {
+    height: 50vh;
+    .image-description {
+      width: 100%;
+      top: 25%;
+      right: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: center;
+      h1 {
+        font-size: 20px;
+      }
+    }
+  }
+}
+
+
+
+
+
+
+
+//mobile only media queries
+@media (min-width: 100px) and (max-width: 767px) {
+  .container {
+    .image-description {
+      h1::after {
+        display: block;
+        font-size: 10px;
+        font-weight: 300;
+        content: "Welcome to MoviesMate, your ultimate destination for discovering and exploring the finest movies from around the world. Whether you're a fan of timeless classics, the latest blockbusters, or hidden gems, MoviesMate offers a curated collection to satisfy your cinematic cravings.";
+      }
+      p {
+        display: none;
+      }
+    }
+  }
 }

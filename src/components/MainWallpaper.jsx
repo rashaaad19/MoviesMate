@@ -23,6 +23,7 @@ const MainWallpaper = () => {
       <div className="black-fallout"></div>
       <div className="image-description">
         <h1>The Best Movie Library</h1>
+        <span>
         <p>
           Welcome to MoviesMate, your ultimate destination for discovering and
           exploring the finest movies from around the world. Whether you&apos;re
@@ -33,6 +34,7 @@ const MainWallpaper = () => {
           Experience the magic of movies like never before with MoviesMate –
           your trusted companion for every movie night.
         </p>
+        </span>
         <Link to="signup">Join Now</Link>
       </div>
     </div>

@@ -19,21 +19,18 @@ const MovieSlider = ({ sliderHeader, url, options, type }) => {
       <h2>{sliderHeader}</h2>
       <Swiper
         modules={[Navigation]}
-        slidesPerView={3}
+        slidesPerView={4}
         navigation={true}
-        spaceBetween={20}
+        spaceBetween={10}
         breakpoints={{
-          640: {
-            slidesPerView: 2,
-            spaceBetween: 20,
-          },
+
           768: {
             slidesPerView: 4,
             spaceBetween: 40,
           },
           1024: {
-            slidesPerView: 5,
-            spaceBetween: 50,
+            slidesPerView: 7,
+            spaceBetween: 20,
           },
         }}
         allowTouchMove={false}

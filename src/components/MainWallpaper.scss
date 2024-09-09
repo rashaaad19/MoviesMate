@@ -1,25 +1,30 @@
 //mixins
 @use "../assets/mixins.scss";
 
-@mixin center-content {
-  position: absolute;
-  top: 50%;
-  right: 25%;
-  width: 50%;
-  text-align: center;
-}
+
 
 .container {
+  height: 40rem;
   position: relative;
   margin-bottom: 2rem;
+  background-image: url('/public/MoviesMate-main.png');
+  object-fit: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   .wallpaper {
     width: 100%;
     height: 100%;
     object-fit: cover;
   }
   .image-description {
-    @include center-content();
+    // @include center-content();
     color: white;
+    max-width: 75%;
+    text-align: center;
+    z-index: 10;
+
     h1 {
       font-family: "Mitr", sans-serif;
       font-weight: 500;
@@ -29,7 +34,7 @@
     p {
       font-size: 16px;
       font-family: sans-serif;
-      padding-block: 25px;
+      padding: 25px 15px 50px 15px;
     }
     a {
       @include mixins.button-style(#fff, #e6781d);
@@ -63,17 +68,19 @@
 
 @media (min-width:100px) and (max-width:1024px) {
   .container {
-    height: 50vh;
+    height: 60vh;
     .image-description {
-      width: 100%;
-      top: 25%;
-      right: 0;
+      max-width: 100%;
+
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 25px;
       align-items: center;
       h1 {
         font-size: 20px;
+      }
+      P{
+        padding-inline: 10px;
       }
     }
   }
@@ -91,8 +98,10 @@
     .image-description {
       h1::after {
         display: block;
-        font-size: 10px;
+        font-size: 13px;
         font-weight: 300;
+        padding-inline: 15px;
+        margin-top: 10px;
         content: "Welcome to MoviesMate, your ultimate destination for discovering and exploring the finest movies from around the world. Whether you're a fan of timeless classics, the latest blockbusters, or hidden gems, MoviesMate offers a curated collection to satisfy your cinematic cravings.";
       }
       p {

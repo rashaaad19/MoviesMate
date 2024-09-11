@@ -37,8 +37,9 @@ const CategorySlider = () => {
           navigation={true}
           spaceBetween={10}
           breakpoints={{
+            
             640: {
-              slidesPerView: 2,
+              slidesPerView: 3,
               spaceBetween: 20,
             },
             768: {

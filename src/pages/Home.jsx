@@ -2,11 +2,13 @@
 import CategorySlider from "../components/CategorySlider";
 import MainWallpaper from "../components/MainWallpaper";
 import MovieSlider from "../components/MovieSlider";
+import MovieCard from "../UI/MovieCard";
 
-const newReleasesURL =
+const popularURL =
   "https://api.themoviedb.org/3/movie/popular?language=en-US&page=1";
 const topRatedURL =
   "https://api.themoviedb.org/3/movie/top_rated?language=en&page=1";
+  const nowPlayingURL='https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1&api_key=c20fa7ec5e6db6643718e535c5234b95&region=us'
 const options = {
   method: "GET",
   headers: {
@@ -24,7 +26,7 @@ const Home = () => {
       <MainWallpaper />
       <MovieSlider
         sliderHeader="New Releases"
-        url={newReleasesURL}
+        url={nowPlayingURL}
         options={options}
         type="regular"
       />
@@ -37,6 +39,10 @@ const Home = () => {
     
       <CategorySlider
       />
+      <MovieSlider  sliderHeader="Trending"
+        url={popularURL}
+        options={options}
+        type="trending"/>
     </>
   );
 };

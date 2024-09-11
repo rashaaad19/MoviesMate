@@ -17,7 +17,6 @@ import { useEffect } from "react";
 
 function App() {
   const showMenu = useSelector((state) => state.Ui.fullPageNav);
-  console.log(showMenu)
   const router = createBrowserRouter([
     {
       path: "/",

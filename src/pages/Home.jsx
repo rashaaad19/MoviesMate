@@ -2,7 +2,7 @@
 import CategorySlider from "../components/CategorySlider";
 import MainWallpaper from "../components/MainWallpaper";
 import MovieSlider from "../components/MovieSlider";
-import MovieCard from "../UI/MovieCard";
+import FeaturedMovieCard from "../UI/FeaturedMovieCard";
 
 const popularURL =
   "https://api.themoviedb.org/3/movie/popular?language=en-US&page=1";
@@ -43,6 +43,7 @@ const Home = () => {
         url={popularURL}
         options={options}
         type="trending"/>
+        <FeaturedMovieCard/>
     </>
   );
 };

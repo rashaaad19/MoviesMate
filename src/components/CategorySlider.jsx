@@ -25,7 +25,6 @@ const CategorySlider = () => {
     setGenreId(id);
   };
   
-  console.log(data);
 
   return (
     <>

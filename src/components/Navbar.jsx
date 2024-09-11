@@ -12,7 +12,6 @@ const Navbar = () => {
     dispatch(UiActions.toggleNav())
   };
 
-  console.log(showMenu);
   return (
     <>
       <nav
@@ -24,7 +23,7 @@ const Navbar = () => {
           <li className="navItem burger-button">
             <img
               onClick={burgerButtonHandler}
-              src="/public/burger-menu-svgrepo-com.svg"
+              src="/burger-menu-svgrepo-com.svg"
             />
           </li>
 

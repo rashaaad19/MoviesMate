@@ -1,8 +1,7 @@
 //mixins
-@use '../assets/mixins.scss';
+@use "../assets/mixins.scss";
 
-
-*{
+* {
   box-sizing: border-box;
 }
 
@@ -16,26 +15,30 @@
   div:nth-of-type(1) {
     padding-bottom: 3rem;
     h3 {
-      font-size: clamp(1.5rem, 2vw, 3rem);
+      @include mixins.subHeader-stlye(clamp(1.5rem, 2vw, 3rem), #fff);
+
       padding-bottom: 10px;
       color: white;
     }
     p {
-      font-size: clamp(1rem, 1vw, 1.6rem);
-      color: #c5c5c7;
+      @include mixins.paragraph-style(clamp(1rem, 1vw, 1.6rem), #c5c5c7);
+
     }
   }
   div:nth-of-type(2) {
     // width: 50%;
     color: white;
     h4 {
-      font-size: clamp(1.5rem, 5vw, 3rem);
+      @include mixins.header-style(clamp(1.5rem, 5vw, 3rem), #fff);
+
       padding-block: 10px;
     }
     p:nth-of-type(1) {
       display: inline;
-      padding-right: 2px;
+      padding-right: 4px;
       border-right: 4px solid #fff;
+      @include mixins.paragraph-style(max(1.1vw, 13px), #fff);
+
 
       img {
         display: inline;
@@ -46,25 +49,24 @@
     p:nth-of-type(2) {
       display: inline;
       padding-left: 10px;
+      @include mixins.paragraph-style(max(1.1vw, 13px), #c5c5c7);
+
     }
-    p:nth-of-type(3){
+    p:nth-of-type(3) {
       padding-block: 2.5rem;
       width: max(50%, 15rem);
-      font-size: max(1.1vw, 13px);
-      
+      @include mixins.paragraph-style(max(1.1vw, 13px), #fff);
 
-      a{
+      a {
         color: #e6781d;
         font-weight: bold;
         padding-left: 5px;
         vertical-align: middle;
-
       }
-      
     }
-    button{
-      @include mixins.button-style(#fff,#e6781d);
-      img{
+    button {
+      @include mixins.button-style(#fff, #e6781d);
+      img {
         width: 1.2rem;
         display: inline;
         vertical-align: middle;

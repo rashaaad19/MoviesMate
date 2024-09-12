@@ -1,28 +1,26 @@
+@use "../assets/mixins.scss";
+
 .layout-container {
   padding-inline: 20px;
   padding-bottom: 25px;
   h2 {
-    font-family: "Roboto", sans-serif;
-    font-weight: 500;
-    font-style: normal;
-    font-size: 28px;
+    @include mixins.subHeader-stlye(28px, #fff);
     margin-bottom: 15px;
   }
 
-  .swiper{
-    .swiper-button-prev, .swiper-button-next{
+  .swiper {
+    .swiper-button-prev,
+    .swiper-button-next {
       color: white;
     }
-   
   }
 
-
   .swiper-slide {
-    a{
-        position:relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+    a {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .movieInfo-container {
@@ -39,19 +37,15 @@
       align-items: center;
       gap: 5px;
 
-      
-      img{
+      img {
         width: 1.3rem;
       }
 
-      h3{
-        font-family: "Black Han Sans", sans-serif;
-        font-weight: 200;
-        font-style: normal;
-        padding-inline: 10px;
-      
+      h3 {
+
+        @include mixins.header-style(clamp(8px, 2.5vw, 20px), #fff);
       }
-      p{
+      p {
         display: flex;
         align-items: center;
         gap: 5px;
@@ -59,33 +53,24 @@
     }
 
     a:hover {
-        .poster-img {
+      .poster-img {
         filter: brightness(40%);
-        }
-        .movieInfo-container{
-            visibility: visible;
-        }
+      }
+      .movieInfo-container {
+        visibility: visible;
+      }
     }
   }
-
 }
 
-
-
-
-
-
-
-
-
 //mobile and tablet media queries
-@media (min-width:100px) and (max-width:1024px) {
-  .layout-container{
-    h2{
+@media (min-width: 100px) and (max-width: 1024px) {
+  .layout-container {
+    h2 {
       font-size: 15px;
     }
-    .swiper-slide{
-      .movieInfo-container{
+    .swiper-slide {
+      .movieInfo-container {
         font-size: 10px;
       }
     }

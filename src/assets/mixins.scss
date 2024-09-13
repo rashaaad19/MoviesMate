@@ -8,5 +8,27 @@
     font-weight: bold;
   }
   
+  @mixin header-style($size,$color) {
+    color:$color;
+    font-size: $size;
+    font-family: "Mitr", sans-serif;
+    font-style: normal;
+    font-weight: bold;
+  }
+
+  @mixin subHeader-stlye($size, $color){
+    color: $color;
+    font-size: $size;
+    font-family: "Roboto", sans-serif;
+    font-style: normal;
+    font-weight: 500;
+  }
+
+  @mixin paragraph-style($size, $color){
+    color: $color;
+    font-size: $size;
+    font-family: 'Times New Roman', Times, serif;
+    font-style: normal;
+  }
 
   

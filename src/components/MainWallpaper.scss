@@ -1,5 +1,6 @@
-//mixins
+//mixins and variables
 @use "../assets/mixins.scss";
+@use "../assets/variables.scss";
 
 
 
@@ -20,22 +21,22 @@
   }
   .image-description {
     // @include center-content();
-    color: white;
+    color: variables.$primary-white;
     max-width: 75%;
     text-align: center;
     z-index: 10;
 
     h1 {
-      @include mixins.header-style(45px, #fff);
+      @include mixins.header-style(45px, variables.$primary-white);
     }
     p {
       // font-size: 16px;
       // font-family: sans-serif;
-      @include mixins.paragraph-style(20px, #fff);
+      @include mixins.paragraph-style(20px, variables.$primary-white);
       padding: 25px 15px 50px 15px;
     }
     a {
-      @include mixins.button-style(#fff, #e6781d);
+      @include mixins.button-style(variables.$primary-white, variables.$primary-orange);
       text-decoration: none;
     }
   }

@@ -1,9 +1,11 @@
-//mixins
+//mixins and variables
 @use "../assets/mixins.scss";
+@use "../assets/variables.scss";
+
 
 .navList {
   list-style: none;
-  color: #ffffffff;
+  color: variables.$primary-white;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -19,11 +21,11 @@
 }
 .navItem {
   .active {
-    color: #e6781d;
+    color: variables.$primary-orange;
   }
   a {
     text-decoration: none;
-    color: #ffffffff;
+    color: variables.$primary-white;
   }
   a:nth-of-type(1) {
     display: flex;
@@ -49,7 +51,7 @@
 }
 
 .login-button {
-  @include mixins.button-style(#fff, #e6781d);
+  @include mixins.button-style(variables.$primary-white, variables.$primary-orange);
 }
 
 .signup-button {
@@ -64,7 +66,7 @@
   top: 0;
   left: 0;
   z-index: 100;
-  background-color: #2D2E33;
+  background-color: variables.$light-black;
 }
 
 .burger-items-container{

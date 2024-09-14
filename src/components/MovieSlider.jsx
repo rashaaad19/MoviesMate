@@ -73,7 +73,7 @@ const largeBreakpoints={
                   title={movie.title}
                 />
               ) : (
-                <Link>
+                <Link className="movieSlide-container">
                   <img
                     className="poster-img"
                     src={`https://image.tmdb.org/t/p/w342${movie.poster_path}`}

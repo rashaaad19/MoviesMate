@@ -1,5 +1,7 @@
-//mixins
+//mixins and variables
 @use "../assets/mixins.scss";
+@use "../assets/variables.scss";
+
 
 .movieCard-container {
   display: grid;
@@ -18,7 +20,7 @@
   p:nth-of-type(2) {
     grid-column: 2 / 4;
     align-self: center;
-    @include mixins.header-style(clamp(15px, 3vw, 25px), #fff);
+    @include mixins.header-style(clamp(15px, 3vw, 25px), variables.$primary-white);
   }
 }
 

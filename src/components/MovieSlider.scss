@@ -1,17 +1,22 @@
+//mixins and variables
 @use "../assets/mixins.scss";
+@use "../assets/variables.scss";
 
 .layout-container {
   padding-inline: 20px;
   padding-bottom: 25px;
+  .movieSlide-container {
+    width: calc(100vw / 8);
+  }
   h2 {
-    @include mixins.subHeader-stlye(28px, #fff);
+    @include mixins.subHeader-stlye(28px, variables.$primary-white);
     margin-bottom: 15px;
   }
 
   .swiper {
     .swiper-button-prev,
     .swiper-button-next {
-      color: white;
+      color: variables.$primary-white;
     }
   }
 
@@ -24,7 +29,7 @@
     }
 
     .movieInfo-container {
-      color: white;
+      color: variables.$primary-white;
       position: absolute;
       font-weight: bold;
       font-size: 20px;
@@ -42,8 +47,10 @@
       }
 
       h3 {
-
-        @include mixins.header-style(clamp(8px, 2.5vw, 20px), #fff);
+        @include mixins.header-style(
+          clamp(8px, 2.5vw, 20px),
+          variables.$primary-white
+        );
       }
       p {
         display: flex;
@@ -66,6 +73,10 @@
 //mobile and tablet media queries
 @media (min-width: 100px) and (max-width: 1024px) {
   .layout-container {
+    .movieSlide-container {
+      width: calc(100vw / 5);
+    }
+
     h2 {
       font-size: 15px;
     }
@@ -76,3 +87,5 @@
     }
   }
 }
+
+

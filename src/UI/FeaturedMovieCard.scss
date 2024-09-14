@@ -1,5 +1,8 @@
-//mixins
+//mixins and variables
 @use "../assets/mixins.scss";
+@use "../assets/variables.scss";
+
+
 
 * {
   box-sizing: border-box;
@@ -15,29 +18,29 @@
   div:nth-of-type(1) {
     padding-bottom: 3rem;
     h3 {
-      @include mixins.subHeader-stlye(clamp(1.5rem, 2vw, 3rem), #fff);
+      @include mixins.subHeader-stlye(clamp(1.5rem, 2vw, 3rem), variables.$primary-white);
 
       padding-bottom: 10px;
-      color: white;
+      color: variables.$primary-white;
     }
     p {
-      @include mixins.paragraph-style(clamp(1rem, 1vw, 1.6rem), #c5c5c7);
+      @include mixins.paragraph-style(clamp(1rem, 1vw, 1.6rem), variables.$light-gray);
 
     }
   }
   div:nth-of-type(2) {
     // width: 50%;
-    color: white;
+    color: variables.$primary-white;
     h4 {
-      @include mixins.header-style(clamp(1.5rem, 5vw, 3rem), #fff);
+      @include mixins.header-style(clamp(1.5rem, 5vw, 3rem), variables.$primary-white);
 
       padding-block: 10px;
     }
     p:nth-of-type(1) {
       display: inline;
       padding-right: 4px;
-      border-right: 4px solid #fff;
-      @include mixins.paragraph-style(max(1.1vw, 13px), #fff);
+      border-right: 4px solid variables.$primary-white;
+      @include mixins.paragraph-style(max(1.1vw, 13px), variables.$primary-white);
 
 
       img {
@@ -49,23 +52,24 @@
     p:nth-of-type(2) {
       display: inline;
       padding-left: 10px;
-      @include mixins.paragraph-style(max(1.1vw, 13px), #c5c5c7);
+      @include mixins.paragraph-style(max(1.1vw, 13px), variables.$light-gray);
 
     }
     p:nth-of-type(3) {
       padding-block: 2.5rem;
       width: max(50%, 15rem);
-      @include mixins.paragraph-style(max(1.1vw, 13px), #fff);
+      @include mixins.paragraph-style(max(1.1vw, 13px), variables.$primary-white);
 
       a {
-        color: #e6781d;
+        color: variables.$primary-orange;
         font-weight: bold;
         padding-left: 5px;
         vertical-align: middle;
+        text-decoration: none
       }
     }
     button {
-      @include mixins.button-style(#fff, #e6781d);
+      @include mixins.button-style(variables.$primary-white, variables.$primary-orange);
       img {
         width: 1.2rem;
         display: inline;

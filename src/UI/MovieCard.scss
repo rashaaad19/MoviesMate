@@ -4,6 +4,7 @@
 
 
 .movieCard-container {
+  
   display: grid;
   grid-template-columns: 1fr 3fr 1fr;
   // width: clamp(2rem, 10vw + 6rem, 16rem);
@@ -16,11 +17,16 @@
     font-size: clamp(20px, 3vw, 50px);
     justify-self: baseline;
     margin-right: 5px;
+    color: variables.$primary-white;
+    text-decoration: none;
+
+    
   }
   p:nth-of-type(2) {
     grid-column: 2 / 4;
     align-self: center;
     @include mixins.header-style(clamp(15px, 3vw, 25px), variables.$primary-white);
+    
   }
 }
 

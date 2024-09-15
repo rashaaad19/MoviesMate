@@ -31,6 +31,7 @@ const CategorySlider = () => {
       <div className="layout-container">
         <h2>Categories</h2>
         <Swiper
+        className="categorySlider regularSlider"
           modules={[Navigation]}
           slidesPerView={3}
           navigation={true}

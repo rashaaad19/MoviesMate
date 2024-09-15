@@ -62,6 +62,7 @@ const largeBreakpoints={
         breakpoints={type==='trending'?largeBreakpoints:normalBreakpoints}
         allowTouchMove={false}
         loop={true}
+        className={type!=='trending'?'regularSlider':'trendingSlider'}
       >
         {data.results.map((movie) => {
           return (

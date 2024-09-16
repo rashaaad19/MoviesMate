@@ -14,6 +14,9 @@ import Signup from "./pages/Signup";
 import Home from "./pages/Home";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
+import MovieProfile from "./pages/MovieProfile";
+
+import { loader as movieDataLoader } from "./pages/MovieProfile";
 
 function App() {
   const showMenu = useSelector((state) => state.Ui.fullPageNav);
@@ -46,20 +49,24 @@ function App() {
           path: "signup",
           element: <Signup />,
         },
+        {
+          path: "movies/:movieID",
+          element: <MovieProfile />,
+          loader: movieDataLoader,
+        },
       ],
     },
   ]);
 
+  // Add/remove class to body based on menuOpen state
+  useEffect(() => {
+    if (showMenu) {
+      document.body.classList.add("overflow-hidden");
+    } else {
+      document.body.classList.remove("overflow-hidden");
+    }
+  }, [showMenu]);
 
-    // Add/remove class to body based on menuOpen state
-    useEffect(() => {
-      if (showMenu) {
-        document.body.classList.add('overflow-hidden');
-      } else {
-        document.body.classList.remove('overflow-hidden');
-      }
-    }, [showMenu]);
-  
   return (
     <>
       <RouterProvider router={router} />

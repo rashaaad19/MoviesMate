@@ -1,0 +1,33 @@
+@use "../assets/mixins.scss";
+@use "../assets/variables.scss";
+
+.movieHero-container {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  > * {
+    position: relative;
+    z-index: 1000;
+  }
+}
+
+.imdbInfo {
+  @include mixins.paragraph-style(16px, variables.$primary-white);
+  font-weight: bold;
+  text-decoration: none;
+  .imdbLogo {
+    width: 25px;
+    display: inline;
+  }
+}
+
+.movieHero-container::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #00000080;
+}

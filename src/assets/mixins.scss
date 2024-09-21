@@ -27,7 +27,7 @@
   @mixin paragraph-style($size, $color){
     color: $color;
     font-size: $size;
-    font-family: 'Times New Roman', Times, serif;
+    font-family: 'Roboto', sans-serif;
     font-style: normal;
   }
 

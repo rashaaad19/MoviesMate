@@ -48,8 +48,13 @@ const MovieProfileHero = ({
         </p>
 
         <p>
-          {genres.map((item) => (
-            <span key={item.id}>{item.name + "  "}</span>
+          {genres.map((item, index) => (
+            <span key={item.id}>
+              {item.name}{genres.length !== 1 &&
+              index !== genres.length - 1
+                ? " | "
+                : ""}
+            </span>
           ))}
         </p>
 

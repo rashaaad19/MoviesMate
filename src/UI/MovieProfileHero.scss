@@ -85,12 +85,15 @@
   .movieHero-container {
     padding: 1rem;
     height: fit-content;
-    img {
-      width: 6rem;
+    & > img {
+      width: 7rem;
       margin-right: 15px;
     }
     .movieHero-infoContainer {
       margin-left: 0;
+      .movieRating-container {
+        gap: 20px;
+      }
     }
   }
 }

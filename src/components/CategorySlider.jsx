@@ -51,7 +51,7 @@ const CategorySlider = () => {
               spaceBetween: 50,
             },
           }}
-            allowTouchMove={false}
+            allowTouchMove={true}
           loop={true}
         >
           {categories.map((item) => {

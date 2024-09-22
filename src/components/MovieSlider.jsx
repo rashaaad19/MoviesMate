@@ -58,7 +58,7 @@ const MovieSlider = ({ sliderHeader, url, options, type }) => {
         navigation={true}
         spaceBetween={5}
         breakpoints={type === "trending" ? largeBreakpoints : normalBreakpoints}
-        allowTouchMove={false}
+        allowTouchMove={true}
         loop={true}
         className={type !== "trending" ? "regularSlider" : "trendingSlider"}
       >

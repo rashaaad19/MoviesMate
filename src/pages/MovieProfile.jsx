@@ -1,5 +1,6 @@
 import { useLoaderData } from "react-router-dom";
 import MovieProfileHero from "../UI/MovieProfileHero";
+import CastSlider from "../components/CastSlider";
 
 const MovieProfile = () => {
   const data = useLoaderData();
@@ -8,7 +9,7 @@ const MovieProfile = () => {
   const castData = movieInformation.credits.cast;
   const crewData = movieInformation.credits.crew;
 
-  console.log(movieInformation)
+  console.log(movieInformation);
 
   return (
     <>
@@ -23,9 +24,10 @@ const MovieProfile = () => {
         poster={movieInformation.poster_path}
         releaseDate={movieInformation.release_date}
         runtime={movieInformation.runtime}
-        cast={castData}
         crew={crewData}
       />
+
+      <CastSlider cast={castData} />
     </>
   );
 };

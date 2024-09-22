@@ -1,0 +1,88 @@
+@use "../assets/mixins.scss";
+@use "../assets/variables.scss";
+.castSlider-container {
+  padding-top: 1.5rem;
+  h2 {
+    // @include mixins.subHeader-style(20px, variables.$primary-white);
+    @include mixins.subHeader-stlye(25px, variables.$primary-white);
+    margin-left: 15px;
+    padding: 1rem;
+  }
+  .swiper {
+    height: 15rem;
+    .swiper-slide {
+      height: 12rem;
+      img {
+        height: 100%;
+        border-radius: 50%;
+        width: 100%;
+        padding-bottom: 10px;
+      }
+      p {
+        @include mixins.paragraph-style(18px, variables.$primary-white);
+      }
+    }
+    .swiper-button-prev,
+    .swiper-button-next {
+      top: var(--swiper-navigation-top-offset, 40%);
+      color: white;
+    }
+    .swiper-button-prev {
+      background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M0%2C22L22%2C0l2.1%2C2.1L4.2%2C22l19.9%2C19.9L22%2C44L0%2C22L0%2C22L0%2C22z'%20fill%3D'%234c71ae'%2F%3E%3C%2Fsvg%3E");
+    }
+    .swiper-button-next {
+      background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M27%2C22L27%2C22L5%2C44l-2.1-2.1L22.8%2C22L2.9%2C2.1L5%2C0L27%2C22L27%2C22z'%20fill%3D'%234c71ae'%2F%3E%3C%2Fsvg%3E") !important;
+    }
+
+    .swiper-button-prev::after,
+    .swiper-button-next::after {
+      content: "";
+    }
+  }
+}
+
+.custom-navigation {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  position: relative;
+  bottom: 170px;
+  z-index: 100;
+  img {
+    width: 2.5rem;
+  }
+}
+
+.custom-prev,
+.custom-next {
+  background-color: transparent;
+
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.custom-prev svg:hover,
+.custom-next svg:hover {
+    fill: black;
+}
+
+@media (max-width: 768px) {
+  .castSlider-container {
+    .swiper {
+      .swiper-slide {
+        height: 8rem;
+      }
+      .swiper-button-prev,
+      .swiper-button-next {
+        top: var(--swiper-navigation-top-offset, 25%);
+      }
+    }
+  }
+  .custom-navigation {
+    bottom: 200px;
+    img {
+      width: 1.5rem;
+    }
+  }
+}

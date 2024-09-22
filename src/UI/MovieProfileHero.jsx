@@ -4,7 +4,6 @@ import "./MovieProfileHero.scss";
 import { useState } from "react";
 
 const MovieProfileHero = ({
-  cast,
   crew,
   title,
   runtime,

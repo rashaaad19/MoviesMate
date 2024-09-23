@@ -5,6 +5,9 @@
 .layout-container {
   padding-inline: 20px;
   padding-bottom: 25px;
+  .swiper{
+    height: 20rem;
+  }
   .movieSlide-container {
     width: calc(100vw / 8);
   }
@@ -13,7 +16,6 @@
     .swiper-button-next {
       color: variables.$primary-orange;
       top: 33%;
-
     }
   }
   h2 {
@@ -40,11 +42,16 @@
   }
 
   .swiper-slide {
+    height: 100%;
     a {
       position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
+      height: 100%;
+      img{
+        height: 100%;
+      }
     }
 
     .movieInfo-container {
@@ -100,15 +107,24 @@
       font-size: 15px;
     }
 
-    .swiper-button-prev,
-    .swiper-button-next {
-      display: none;
-    }
+    // .swiper-button-prev,
+    // .swiper-button-next {
+    //   display: none;
+    // }
 
     .swiper-slide {
       .movieInfo-container {
         font-size: 10px;
       }
     }
+  }
+}
+
+
+//mobile media queries
+
+@media (max-width:600px){
+  .layout-container .swiper{
+    height: 12rem;
   }
 }

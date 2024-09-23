@@ -20,6 +20,7 @@ const MovieSlider = ({ sliderHeader, url, options, type }) => {
       slidesPerView: 4,
       spaceBetween: 10,
     },
+   
     768: {
       slidesPerView: 4,
       spaceBetween: 40,
@@ -74,7 +75,7 @@ const MovieSlider = ({ sliderHeader, url, options, type }) => {
                 />
               ) : (
                 <Link
-                  to={`movies/${movie.id}`}
+                  to={`/movies/${movie.id}`}
                   className="movieSlide-container"
                 >
                   <img

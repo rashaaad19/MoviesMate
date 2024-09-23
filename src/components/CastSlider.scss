@@ -20,6 +20,7 @@
       }
       p {
         @include mixins.paragraph-style(18px, variables.$primary-white);
+        text-align: center;
       }
     }
     .swiper-button-prev,
@@ -57,18 +58,19 @@
 .custom-next {
   background-color: transparent;
 
-  color: white;
+  color: variables.$primary-white;
   border: none;
   cursor: pointer;
 }
 
 .custom-prev svg:hover,
 .custom-next svg:hover {
-    fill: black;
+    fill: variables.$primary-gray;
 }
 
 @media (max-width: 768px) {
   .castSlider-container {
+    height: 18rem;
     .swiper {
       .swiper-slide {
         height: 8rem;
@@ -80,9 +82,10 @@
     }
   }
   .custom-navigation {
-    bottom: 200px;
-    img {
-      width: 1.5rem;
-    }
+    bottom: 215px;
+    .custom-prev svg,
+.custom-next svg{
+  width: 25px;
+}
   }
 }

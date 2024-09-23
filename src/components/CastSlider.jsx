@@ -1,5 +1,6 @@
-import { Swiper, SwiperSlide } from "swiper/react";
 import "./CastSlider.scss";
+
+import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 
 import { imagesURL } from "./../data/tmdb";

@@ -1,4 +1,4 @@
-export const imagesURL = "https://image.tmdb.org/t/p/original";
+export const imagesURL = "http://image.tmdb.org/t/p/original";
 export const options = {
     method: "GET",
     headers: {

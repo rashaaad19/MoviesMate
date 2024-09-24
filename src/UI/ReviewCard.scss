@@ -1,0 +1,53 @@
+//mixins and variables
+
+@use "../assets/mixins.scss";
+@use "../assets/variables.scss";
+
+.reviewCard_container {
+  width: 22rem;
+  background-color: variables.$primary-black;
+  padding: 20px;
+  & > * {
+    padding: 5px;
+  }
+  .reviewCard_header {
+    display: flex;
+    align-items: center;
+    h4 {
+      flex-grow: 1;
+      font-weight: bold;
+      font-size: 20px;
+    }
+    img {
+      width: 2rem;
+      margin-left: 5px;
+    }
+    p{
+        span{
+            color: variables.$light-gray;
+        }
+    }
+  }
+  & > p {
+    text-align: left;
+    color: variables.$light-gray;
+  }
+
+  .reviewCard_footer {
+    display: flex;
+    align-items: center;
+    p {
+      flex-grow: 1;
+      color: variables.$primary-gray;
+    }
+    a {
+      background-color: variables.$primary-green;
+      border: transparent;
+      color: variables.$primary-white;
+      padding: 5px 15px;
+      border-radius: 5px;
+      user-select: none;
+      cursor: pointer;
+    }
+  }
+}

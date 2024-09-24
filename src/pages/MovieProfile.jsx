@@ -3,6 +3,8 @@ import MovieProfileHero from "../UI/MovieProfileHero";
 import CastSlider from "../components/CastSlider";
 import MovieSlider from "../components/MovieSlider";
 import { options } from "../data/tmdb";
+import ReviewCard from "../UI/ReviewCard";
+import ReviewCardsSlider from "../components/ReviewCardsSlider";
 
 const MovieProfile = () => {
   const data = useLoaderData();
@@ -10,7 +12,7 @@ const MovieProfile = () => {
   const imdbInformation = data.imdbData;
   const castData = movieInformation.credits.cast;
   const crewData = movieInformation.credits.crew;
-
+  const reviewsData = movieInformation.reviews;
   const similarMoviesURL = `https://api.themoviedb.org/3/movie/${movieInformation.id}/similar?language=en-US&page=1&api_key=c20fa7ec5e6db6643718e535c5234b95`;
 
   console.log(movieInformation);
@@ -37,6 +39,7 @@ const MovieProfile = () => {
         type="regular"
         options={options}
       />
+      <ReviewCardsSlider reviews={reviewsData} />
     </>
   );
 };

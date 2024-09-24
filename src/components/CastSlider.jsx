@@ -62,7 +62,7 @@ const CastSlider = ({ cast }) => {
       <div className="custom-navigation">
         <button ref={prevRef} className="custom-prev">
           <svg
-            fill="#fff"
+            fill="#e6781d"
             viewBox="0 0 32 32"
             xmlns="http://www.w3.org/2000/svg"
             width="50" // Set the width
@@ -74,7 +74,7 @@ const CastSlider = ({ cast }) => {
         </button>
         <button ref={nextRef} className="custom-next">
           <svg
-            fill="#fff"
+            fill="#e6781d"
             viewBox="0 0 32 32"
             width="50" // Set the width
             height="50" // Set the height

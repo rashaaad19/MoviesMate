@@ -96,6 +96,10 @@
   }
 }
 
+.swiper:has(.trendingCard){
+  height: fit-content;
+}
+
 //mobile and tablet media queries
 @media (min-width: 100px) and (max-width: 1023px) {
   .layout-container {
@@ -107,10 +111,7 @@
       font-size: 15px;
     }
 
-    // .swiper-button-prev,
-    // .swiper-button-next {
-    //   display: none;
-    // }
+
 
     .swiper-slide {
       .movieInfo-container {
@@ -127,4 +128,8 @@
   .layout-container .swiper{
     height: 12rem;
   }
+  .swiper:has(.trendingCard){
+    height: fit-content;
+  }
+  
 }

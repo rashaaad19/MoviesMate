@@ -6,24 +6,33 @@ import ReviewCard from "../UI/ReviewCard";
 
 const normalBreakpoints = {
   200: {
-    slidesPerView: 4,
-    spaceBetween: 10,
+    slidesPerView: 1,
+    spaceBetween:20,
   },
-  568: {
-    slidesPerView: 5,
+  515: {
+    slidesPerView: 2,
     spaceBetween: 40,
   },
-  1024: {
-    slidesPerView: 7,
+  800:{
+    slidesPerView: 3 ,
+    spaceBetween: 30,
+
+  },
+  1075: {
+    slidesPerView: 4 ,
     spaceBetween: 20,
   },
 };
 
 const ReviewCardsSlider = ({ reviews }) => {
-  console.log(reviews);
   return (
-    <div>
-      <Swiper modules={[Navigation]} slidesPerView={4} spaceBetween={15}>
+    <div className="reviewSection-container">
+      <Swiper
+        modules={[Navigation]}
+        slidesPerView={4}
+        spaceBetween={15}
+        breakpoints={normalBreakpoints}
+      >
         {reviews.results.map((review) => (
           <SwiperSlide key={review.id}>
             <ReviewCard

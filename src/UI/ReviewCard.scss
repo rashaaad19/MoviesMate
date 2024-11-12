@@ -4,9 +4,13 @@
 @use "../assets/variables.scss";
 
 .reviewCard_container {
-  width: 22rem;
-  background-color: variables.$primary-black;
+  width: 23vw;
+  background-color: #1a1b22;
   padding: 20px;
+  height: 12rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
   & > * {
     padding: 5px;
   }
@@ -22,15 +26,21 @@
       width: 2rem;
       margin-left: 5px;
     }
-    p{
-        span{
-            color: variables.$light-gray;
-        }
+    p {
+      span {
+        color: variables.$light-gray;
+      }
     }
   }
   & > p {
     text-align: left;
     color: variables.$light-gray;
+    padding-block: 0;
+    display: -webkit-box; /* Display as a flex container */
+    -webkit-line-clamp: 3; /* Limit to 3 lines */
+    -webkit-box-orient: vertical; /* Orient content vertically */
+    overflow: hidden; /* Hide any overflow */
+    text-overflow: ellipsis; /* Add ellipsis (...) */
   }
 
   .reviewCard_footer {
@@ -48,6 +58,31 @@
       border-radius: 5px;
       user-select: none;
       cursor: pointer;
+      text-decoration: none;
+      font-weight: bold;
     }
+  }
+}
+
+@media (min-width: 200px) and (max-width: 514px) {
+  .reviewCard_container {
+    width: 90vw;
+    padding: 5px;
+    
+  }
+}
+
+//large mobile screens
+@media (min-width: 515px) and (max-width: 799px) {
+  .reviewCard_container {
+    width: 48vw;
+  }
+}
+
+//tablets
+
+@media (min-width: 800px) and (max-width: 1074px) {
+  .reviewCard_container {
+    width: 31vw;
   }
 }

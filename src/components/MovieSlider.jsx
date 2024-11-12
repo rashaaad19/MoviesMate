@@ -72,6 +72,7 @@ const MovieSlider = ({ sliderHeader, url, options, type }) => {
                   image={`https://image.tmdb.org/t/p/w342${movie.poster_path}`}
                   title={movie.title}
                   id={movie.id}
+                  cardType="trendingCard"
                 />
               ) : (
                 <Link

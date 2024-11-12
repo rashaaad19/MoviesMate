@@ -1,8 +1,11 @@
+import DiscoverMovieSection from "../UI/DiscoverMovieSection";
 
 const Discover = () => {
   return (
-    <div>Discover</div>
-  )
-}
+    <>
+      <DiscoverMovieSection />
+    </>
+  );
+};
 
-export default Discover
+export default Discover;

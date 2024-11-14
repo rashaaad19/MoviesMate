@@ -36,6 +36,7 @@ function App() {
         {
           path: "discover",
           element: <Discover />,
+          // loader: moviesListLoader,
         },
         {
           path: "about",

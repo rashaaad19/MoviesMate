@@ -3,7 +3,6 @@ import MovieProfileHero from "../UI/MovieProfileHero";
 import CastSlider from "../components/CastSlider";
 import MovieSlider from "../components/MovieSlider";
 import { options } from "../data/tmdb";
-import ReviewCard from "../UI/ReviewCard";
 import ReviewCardsSlider from "../components/ReviewCardsSlider";
 
 const MovieProfile = () => {
@@ -64,6 +63,8 @@ export const loader = async ({ params }) => {
     throw new Error(movieResponse.statusText);
   }
   const movieData = await movieResponse.json();
+
+
 
   const movieIMDbId = movieData.imdb_id;
   const imdbDataURL = `https://www.omdbapi.com/?i=${movieIMDbId}&plot=short&r=json&apikey=ee6d6c20`;

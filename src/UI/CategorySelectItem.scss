@@ -1,0 +1,20 @@
+//mixins and variables
+@use "../assets/mixins.scss";
+@use "../assets/variables.scss";
+
+.categoryInput-container{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    label{
+    @include mixins.paragraph-style(14px, variables.$light-gray);
+    text-transform: capitalize;
+    padding-bottom: 5px;
+    }
+    select{
+        background-color: variables.$light-black;
+        color: variables.$light-gray;
+        border-color: variables.$primary-black;
+        padding: 10px;
+    }
+  }

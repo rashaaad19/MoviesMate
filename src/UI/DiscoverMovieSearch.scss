@@ -3,12 +3,10 @@
 @use "../assets/variables.scss";
 
 .searchSection-container {
-   
   width: 50vw;
   margin: 0 auto;
   background-color: variables.$primary-black;
   padding: 10px;
-  
 
   .searchInput-container {
     display: flex;
@@ -19,32 +17,25 @@
       outline: none;
       background-color: variables.$light-black;
       cursor: text;
-      color: variables.$light-gray
+      color: variables.$light-gray;
+      border: none;
+      font-size: 16px
     }
     button {
       @include mixins.button-style(
         variables.$primary-white,
         variables.$primary-orange
       );
-      padding: 5px 25px;
+      padding: 10px 25px;
       border-radius: 0;
     }
   }
-  .categoryInput-container{
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    label{
-    @include mixins.paragraph-style(14px, variables.$light-gray)
-    }
-    select{
-        background-color: variables.$light-black;
-        color: variables.$light-gray;
-        border-color: variables.$primary-black;
-        padding: 10px;
-    }
+  h1 {
+    @include mixins.subHeader-stlye(24px, variables.$primary-white);
+    padding-block: 10px;
   }
-  h1{
-    @include mixins.subHeader-stlye(24px, variables.$primary-white)
-}
+  .categoryFilters {
+    display: flex;
+    justify-content: space-evenly;
+  }
 }

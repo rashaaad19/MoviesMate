@@ -1,11 +1,14 @@
-import DiscoverMovieSection from "../UI/DiscoverMovieSection";
+import DiscoverMovieList from "../UI/DiscoverMovieList";
+import DiscoverMovieSearch from "../UI/DiscoverMovieSearch";
 
 const Discover = () => {
   return (
     <>
-      <DiscoverMovieSection />
+      <DiscoverMovieSearch />
+      <DiscoverMovieList />
     </>
   );
 };
 
 export default Discover;
+

@@ -5,25 +5,23 @@ const CategorySelectItem = ({ options, htmlFor, id, name }) => {
   const dispatch = useDispatch();
 
   const handleOnChange = (event) => {
-    const itemSelected = event.target.value;
-
+    let itemSelected = event.target.value;
     switch (event.target.name) {
       case "year":
-        console.log("year option is clicked");
-        console.log(itemSelected);
+        itemSelected = JSON.parse(itemSelected);
+        dispatch(discoverActions.changeYear(itemSelected));
         break;
+
       case "genre":
-        console.log("genre option is clicked");
-
+        dispatch(discoverActions.changeGenre(itemSelected));
         break;
+
       case "language":
-        console.log("language option is clicked");
-
+        dispatch(discoverActions.changeLanguage(itemSelected));
         break;
-      case "sort by":
-        console.log("sort by option is clicked");
-        dispatch(discoverActions.changeSortBy(itemSelected));
 
+      case "sort by":
+        dispatch(discoverActions.changeSortBy(itemSelected));
         break;
     }
   };
@@ -32,7 +30,18 @@ const CategorySelectItem = ({ options, htmlFor, id, name }) => {
       <label htmlFor={htmlFor}>{name}</label>
       <select name={name} id={id} onChange={handleOnChange}>
         {options.map((optionName) => (
-          <option key={optionName.name} value={optionName.name}>
+          <option
+            key={optionName.name}
+            value={
+              name === "year"
+                ? JSON.stringify(optionName.release_date)
+                : name === "language"
+                ? optionName.ISO_code
+                : name === "sort by"
+                ? optionName.code
+                : optionName.name
+            }
+          >
             {optionName.name}
           </option>
         ))}

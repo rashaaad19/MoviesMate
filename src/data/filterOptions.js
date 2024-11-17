@@ -3,53 +3,73 @@ import { currentDate } from "../utilties/functions";
 export const yearOptions = [
   {
     name: "All",
-    primary_release_date_gte: null,
-    primary_release_date_lte: null,
+    release_date: {
+      gte: null,
+      lte: null,
+    },
   },
   {
     name: "2020-Now",
-    primary_release_date_gte: "2020-01-01",
-    primary_release_date_lte: currentDate(),
+    release_date: {
+      gte: "2020-01-01",
+      lte: currentDate(),
+    },
   },
   {
     name: "2010-2019",
-    primary_release_date_gte: "2010-01-01",
-    primary_release_date_lte: "2019-12-31",
+    release_date: {
+      gte: "2010-01-01",
+      lte: "2019-12-31",
+    },
   },
   {
     name: "2000-2009",
-    primary_release_date_gte: "2000-01-01",
-    primary_release_date_lte: "2009-12-31",
+    release_date: {
+      gte: "2000-01-01",
+      lte: "2009-12-31",
+    },
   },
   {
     name: "1990-1999",
-    primary_release_date_gte: "1990-01-01",
-    primary_release_date_lte: "1999-12-31",
+    release_date: {
+      gte: "1990-01-01",
+      lte: "1999-12-31",
+    },
   },
   {
     name: "1980-1989",
-    primary_release_date_gte: "1980-01-01",
-    primary_release_date_lte: "1989-12-31",
+    release_date: {
+      gte: "1980-01-01",
+      lte: "1989-12-31",
+    },
   },
   {
     name: "1970-1979",
-    primary_release_date_gte: "1970-01-01",
-    primary_release_date_lte: "1979-12-31",
+    release_date: {
+      gte: "1970-01-01",
+      lte: "1979-12-31",
+    },
   },
   {
     name: "1960-1969",
-    primary_release_date_gte: "1960-01-01",
-    primary_release_date_lte: "1969-12-31",
+    release_date: {
+      gte: "1960-01-01",
+      lte: "1969-12-31",
+    },
   },
   {
     name: "1950-1959",
-    primary_release_date_gte: "1950-01-01",
-    primary_release_date_lte: "1959-12-31",
+    release_date: {
+      gte: "1950-01-01",
+      lte: "1959-12-31",
+    },
   },
   {
     name: "1900-1949",
-    primary_release_date_gte: "1900-01-01",
-    primary_release_date_lte: "1949-12-31",
+    release_date: {
+      gte: "1900-01-01",
+      lte: "1949-12-31",
+    },
   },
 ];
 

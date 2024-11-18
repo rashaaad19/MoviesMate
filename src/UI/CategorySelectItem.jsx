@@ -5,7 +5,8 @@ const CategorySelectItem = ({ options, htmlFor, id, name }) => {
   const dispatch = useDispatch();
 
   const handleOnChange = (event) => {
-    let itemSelected = event.target.value;
+    let itemSelected = event.target.value.toLowerCase();
+    console.log(itemSelected)
     switch (event.target.name) {
       case "year":
         itemSelected = JSON.parse(itemSelected);

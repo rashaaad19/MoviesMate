@@ -1,3 +1,5 @@
+import { genreOptions } from "../data/filterOptions";
+
 export const runtimeFormatter = (minutes) => {
   const hours = Math.floor(minutes / 60);
   const remainingMinutes = minutes % 60;
@@ -21,3 +23,4 @@ export const currentDate = () => {
   today = yyyy + "-" + mm + "-" + dd;
   return today;
 };
+

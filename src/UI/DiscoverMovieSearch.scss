@@ -6,7 +6,8 @@
   width: 50vw;
   margin: 0 auto;
   background-color: variables.$primary-black;
-  padding: 10px;
+  padding: 25px;
+  margin-bottom: 30px;
 
   .searchInput-container {
     display: flex;
@@ -19,7 +20,7 @@
       cursor: text;
       color: variables.$light-gray;
       border: none;
-      font-size: 16px
+      font-size: 16px;
     }
     button {
       @include mixins.button-style(
@@ -37,5 +38,33 @@
   .categoryFilters {
     display: flex;
     justify-content: space-evenly;
+  }
+}
+
+//mobile screens
+
+@media (min-width: 320px) and (max-width: 767px) {
+  .searchSection-container {
+    width: 100%;
+    padding: 10px;
+    .searchInput-container {
+      button {
+        padding: 5px 10px;
+      }
+    }
+  }
+}
+
+//tablet screens
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .searchSection-container {
+    width: 100%;
+    padding: 10px;
+    .searchInput-container {
+      button {
+        padding: 5px 10px;
+      }
+    }
   }
 }

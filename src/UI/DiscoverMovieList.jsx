@@ -96,14 +96,14 @@ const DiscoverMovieList = () => {
           data.results.map((movie) => {
             return (
               <div key={movie.id} className="movieCard">
-                <Link to={`/movies/${movie.id}`}>
+                <Link to={`/movies/${movie.id}`} className="posterLink">
                   <img
                     src={`http://image.tmdb.org/t/p/original/${movie.poster_path}`}
                     key={movie.title}
                     loading="lazy"
                   />
                 </Link>
-                <Link to={`/movies/${movie.id}`}>
+                <Link to={`/movies/${movie.id}`} className="titleLink">
                   <h3>{movie.title}</h3>
                 </Link>
               </div>

@@ -16,5 +16,34 @@
         color: variables.$light-gray;
         border-color: variables.$primary-black;
         padding: 10px;
+        cursor: pointer;
     }
   }
+
+  //mobile screens
+
+@media (min-width: 320px) and (max-width: 767px) {
+    .categoryInput-container {
+        select{
+            padding: 5px;
+            width: 80%;
+        }
+      
+    }
+  }
+  
+  //tablet screens
+  
+  @media (min-width:768px) and (max-width:1023px) {
+    .categoryInput-container {
+        select{
+            padding: 5px;
+            width: 80%;
+        }
+      
+    }
+  }
+
+  
+  
+  

@@ -1,9 +1,32 @@
+//mixins and variables
+@use "../assets/mixins.scss";
+@use "../assets/variables.scss";
+
 .discoverMovieList-container {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  .movieCard{
+  .movieCard {
     width: fit-content;
-    cursor: pointer;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    .posterLink,
+    .titleLink {
+      cursor: pointer;
+    }
+    .titleLink h3 {
+      max-width: 240px;
+      @include mixins.header-style(
+        clamp(1.2rem, 2vw, 1rem),
+        variables.$primary-white
+      );
+      transition: color 0.2s ease-in-out;
+    }
+    .posterLink:hover + .titleLink h3,
+    .titleLink h3:hover {
+      color: burlywood;
+    }
   }
   img {
     width: 15rem;
@@ -14,7 +37,21 @@
     display: block;
     width: fit-content;
   }
-  h3:hover{
-    color:#1AB7FD;
+}
+
+//mobile screens
+
+@media (min-width: 320px) and (max-width: 767px) {
+  .discoverMovieList-container {
+    grid-template-columns: 1fr 1fr ;
   }
+}
+
+//tablet screens
+
+@media (min-width:768px) and (max-width:1023px) {
+  .discoverMovieList-container {
+    grid-template-columns: 1fr 1fr 1fr ;
+  }
+
 }

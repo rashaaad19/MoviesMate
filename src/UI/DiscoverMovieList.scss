@@ -1,7 +1,20 @@
-.discoverMovieList-container{
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    img{
-        width: 15rem;
-    }
+.discoverMovieList-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  .movieCard{
+    width: fit-content;
+    cursor: pointer;
+  }
+  img {
+    width: 15rem;
+  }
+  a {
+    text-decoration: none;
+    color: white;
+    display: block;
+    width: fit-content;
+  }
+  h3:hover{
+    color:#1AB7FD;
+  }
 }

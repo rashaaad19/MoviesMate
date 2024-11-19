@@ -6,11 +6,14 @@ const CategorySelectItem = ({ options, htmlFor, id, name }) => {
 
   const handleOnChange = (event) => {
     let itemSelected = event.target.value.toLowerCase();
-    console.log(itemSelected)
+    dispatch(discoverActions.changePage(1));
+
+    //reset to page one when filter changes
     switch (event.target.name) {
       case "year":
         itemSelected = JSON.parse(itemSelected);
         dispatch(discoverActions.changeYear(itemSelected));
+
         break;
 
       case "genre":

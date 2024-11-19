@@ -1,20 +1,32 @@
 import "./DiscoverMovieList.scss";
 import useFetch from "../hooks/useFetch";
-import { useEffect, useMemo, useState } from "react";
-import { useSelector } from "react-redux";
 import { genreOptions } from "../data/filterOptions";
 
+import { useEffect, useMemo, useState } from "react";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import Pagination from "../components/Pagination";
+
 const DiscoverMovieList = () => {
+  //Extracting the states from the discover slice
+  const sortByState = useSelector((state) => state.discover.sortBy);
+  const yearState = useSelector((state) => state.discover.year);
+  const languageState = useSelector((state) => state.discover.language);
+  const genreState = useSelector((state) => state.discover.genre);
+  const pageState = useSelector((state) => state.discover.page);
+  console.log(pageState);
+
   //URL params state
   const [params, setParams] = useState({
     api_key: "c20fa7ec5e6db6643718e535c5234b95",
     include_adult: false,
     include_video: false,
-    page: 1,
+    page: pageState,
+    "vote_count.gte": 100,
   });
+  console.log(params);
 
   // Memoize the options object to avoid changing reference on each render
-
   const options = useMemo(
     () => ({
       method: "GET",
@@ -27,36 +39,22 @@ const DiscoverMovieList = () => {
     []
   );
 
-  //Extracting the states from the discover slice
-  const sortByState = useSelector((state) => state.discover.sortBy);
-  const yearState = useSelector((state) => state.discover.year);
-  const languageState = useSelector((state) => state.discover.language);
-  const genreState = useSelector((state) => state.discover.genre);
-
   //find genreID by name
-
   const findGenreID = (name) => {
     const genre = genreOptions.find(
       (genre) => genre.name.toLowerCase() === name.toLowerCase()
     );
     return genre ? genre.id : null;
   };
-
-  //find genre ID
-
   const genreID = findGenreID(genreState);
-  //processing the dates format to match the API
-  const queryString = new URLSearchParams(params).toString();
 
+  const queryString = new URLSearchParams(params).toString();
   let moviesURL = `https://api.themoviedb.org/3/discover/movie?${queryString}`;
 
   //dynamically changing the parameters based on the global state.
-
   useEffect(() => {
     const updateParams = () => {
-      const updatedParams = { ...params }; // Start with the current params
-
-      console.log(updatedParams);
+      const updatedParams = { ...params, page: pageState }; // Start with the current params
 
       if (languageState !== "all") {
         updatedParams.with_original_language = languageState;
@@ -84,27 +82,36 @@ const DiscoverMovieList = () => {
       return updatedParams;
     };
     setParams(updateParams());
-  }, [languageState, genreState, yearState, sortByState]);
+  }, [languageState, genreState, yearState, sortByState, pageState, genreID]);
 
+  //fetching the data using custom hook
   const { data, loading, error } = useFetch(moviesURL, options);
-  data && data.results.map((item) => console.log(item));
+
+  console.log(moviesURL);
 
   return (
-    <div className="discoverMovieList-container">
-      {data &&
-        data.results.map((movie) => {
-          return (
-            <div key={movie.title}>
-              <h3>{movie.title}</h3>
-              <img
-                src={`http://image.tmdb.org/t/p/original/${movie.poster_path}`}
-                key={movie.title}
-                loading="lazy"
-              />
-            </div>
-          );
-        })}
-    </div>
+    <>
+      <div className="discoverMovieList-container">
+        {data &&
+          data.results.map((movie) => {
+            return (
+              <div key={movie.id} className="movieCard">
+                <Link to={`/movies/${movie.id}`}>
+                  <img
+                    src={`http://image.tmdb.org/t/p/original/${movie.poster_path}`}
+                    key={movie.title}
+                    loading="lazy"
+                  />
+                </Link>
+                <Link to={`/movies/${movie.id}`}>
+                  <h3>{movie.title}</h3>
+                </Link>
+              </div>
+            );
+          })}
+      </div>
+      {data && <Pagination totalResults={data.total_results} />}
+    </>
   );
 };
 

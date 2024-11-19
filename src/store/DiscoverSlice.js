@@ -2,10 +2,11 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const DiscoverSlice = createSlice({
   initialState: {
-    sortBy: "primary_release_date.desc",
+    sortBy: "popularity.dsc",
     year: "all",
     genre: "all",
     language: "all",
+    page: 1,
   },
   name: "discover",
   reducers: {
@@ -20,6 +21,9 @@ const DiscoverSlice = createSlice({
     },
     changeGenre(state, action) {
       state.genre = action.payload;
+    },
+    changePage(state, action) {
+      state.page = action.payload;
     },
   },
 });

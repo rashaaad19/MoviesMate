@@ -226,14 +226,7 @@ export const sortOptions = [
     name: "Popularity",
     code: "popularity.desc",
   },
-  {
-    name: "Revenue",
-    code: "revenue.asc",
-  },
-  {
-    name: "Vote Average",
-    code: "vote_average.desc",
-  },
+
   {
     name: "Vote Count",
     code: "vote_count.desc",

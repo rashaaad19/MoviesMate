@@ -13,9 +13,10 @@ const MovieProfileHero = ({
   poster,
   backdrop,
   id,
-  imdbId,
+  imdbID,
   imdbRate,
 }) => {
+  console.log(imdbID)
   const [ratingValue, setRatingValue] = useState(0);
 
   const directors = crew.filter(({ job }) => job === "Director");
@@ -58,7 +59,7 @@ const MovieProfileHero = ({
         </p>
 
         <div className="movieRating-container">
-          <a className="imdbInfo" href="https://www.imdb.com/">
+          <a className="imdbInfo" href={`https://www.imdb.com/title/${imdbID}`} target="_blank">
             <img className="imdbLogo" src="/IMDB_Logo_2016.svg" />
             <span>{imdbRate}</span>
           </a>

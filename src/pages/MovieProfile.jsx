@@ -14,8 +14,7 @@ const MovieProfile = () => {
   const reviewsData = movieInformation.reviews;
   const similarMoviesURL = `https://api.themoviedb.org/3/movie/${movieInformation.id}/similar?language=en-US&page=1&api_key=c20fa7ec5e6db6643718e535c5234b95`;
 
-  console.log(movieInformation);
-
+console.log(imdbInformation)
   return (
     <>
       <MovieProfileHero
@@ -24,7 +23,7 @@ const MovieProfile = () => {
         genres={movieInformation.genres}
         id={movieInformation.id}
         overview={movieInformation.overview}
-        imdbId={movieInformation.imdbID}
+        imdbID={imdbInformation.imdbID}
         imdbRate={imdbInformation.imdbRating}
         poster={movieInformation.poster_path}
         releaseDate={movieInformation.release_date}

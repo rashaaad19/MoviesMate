@@ -1,0 +1,80 @@
+@use "../assets/variables.scss";
+@use "../assets/mixins.scss";
+
+.registerForm-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 25px;
+  background-color: variables.$secondary-gray;
+  .registerForm {
+    background: variables.$primary-white;
+    color: black;
+    width: 640px;
+    display: flex;
+    flex-direction: column;
+    padding: 32px;
+    border-radius: 8px;
+    border: 1px solid #dcdcdc;
+  }
+  .registerInput-container {
+    display: flex;
+    gap: 5px;
+    flex-direction: column;
+    margin-bottom: 10px;
+    input {
+      padding: 10px;
+      outline: none;
+      background-color: variables.$secondary-gray;
+      border: 1px solid variables.$secondary-gray;
+      border-radius: 3px;
+    }
+    label {
+      @include mixins.paragraph-style(14px, variables.$light-black);
+    }
+  }
+  input:focus {
+    border: 1px solid variables.$primary-black;
+  }
+  h1 {
+    text-align: center;
+    @include mixins.subHeader-stlye(24px, variables.$light-black);
+    padding-bottom: 20px;
+  }
+  button {
+    align-self: center;
+  }
+  .submitForm-button {
+    @include mixins.button-style(
+      variables.$primary-white,
+      variables.$light-blue
+    );
+    margin-block: 10px;
+  }
+  .submitForm-button:hover {
+    background-color: #1ab5fdb9;
+  }
+  .formSeprator {
+    font-family: Open Sans Regular, sans-serif;
+    display: flex;
+    flex: 1 1 auto;
+    justify-content: center;
+    align-items: center;
+    color: variables.$primary-gray;
+    padding-block: 20px;
+    margin-inline: 5px;
+  }
+  .formSeprator::after,
+  .formSeprator::before {
+    background-color: variables.$light-gray;
+    content: "";
+    width: 100%;
+    height: 1px;
+  }
+  .formSeprator::after {
+    margin-left: 5px;
+  }
+  .formSeprator::before {
+    margin-right: 5px;
+  }
+}

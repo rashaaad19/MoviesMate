@@ -1,8 +1,33 @@
-
+import "./SignUp.scss";
 const Signup = () => {
   return (
-    <div>Signup</div>
-  )
-}
+    <div className="registerForm-container">
+      <form className="registerForm">
+        <h1>Let&apos;s get started.</h1>
+        <p className="registerInput-container">
+          <label htmlFor="email">Email</label>
+          <input type="email" name="email" id="email" />
+        </p>
+        <p className="registerInput-container">
+          <label htmlFor="name">First Name</label>
+          <input type="text" name="name" id="name" />
+        </p>
+        <p className="registerInput-container">
+          <label htmlFor="password">Password</label>
+          <input type="password" name="password" id="password" />
+        </p>
+        <p className="registerInput-container">
+          <label htmlFor="confirmPassword">Confirm Password</label>
+          <input type="password" name="confirmPassword" id="confirmPassword" />
+        </p>
+        <button className="submitForm-button">Create Account</button>
+        <span className="formSeprator">or</span>
+        <button>Continue with Google</button>
+        <button>Continue with Facebook</button>
 
-export default Signup
+      </form>
+    </div>
+  );
+};
+
+export default Signup;

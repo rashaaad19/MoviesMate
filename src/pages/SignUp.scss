@@ -10,7 +10,7 @@
   .registerForm {
     background: variables.$primary-white;
     color: black;
-    width: 640px;
+    width: min(100%, 640px);
     display: flex;
     flex-direction: column;
     padding: 32px;
@@ -77,4 +77,27 @@
   .formSeprator::before {
     margin-right: 5px;
   }
+  .thirdParty-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 14rem;
+    padding: 5px 20px;
+    margin-block: 5px;
+    font-weight: bold;
+    border: 1px solid variables.$light-gray;
+    border-radius: 20px;
+    cursor: pointer;
+    background-color: variables.$secondary-gray;
+    img {
+      width: 20px;
+      height: 20px;
+      display: inline;
+      padding-right: 5px;
+    }
+  }
+  .thirdParty-button:hover{
+    background-color: #f3f5f636;
+  }
+
 }

@@ -22,9 +22,14 @@ const Signup = () => {
         </p>
         <button className="submitForm-button">Create Account</button>
         <span className="formSeprator">or</span>
-        <button>Continue with Google</button>
-        <button>Continue with Facebook</button>
-
+        <button type="button" className="thirdParty-button">
+          <img  src="/google-icon-logo-svgrepo-com.svg" />
+          Continue with Google
+        </button>
+        <button type="button" className="thirdParty-button">
+          <img  src="/facebook-icon-logo-svgrepo-com.svg" />
+          Continue with Facebook
+        </button>
       </form>
     </div>
   );

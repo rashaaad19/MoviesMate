@@ -7,7 +7,7 @@ const ReviewCard = ({ author, date, content, reviewURL }) => {
         <p>
           9<span>/10</span>
         </p>
-        <img src="/public/tmdbLogo_small.svg" />
+        <img src="/tmdbLogo_small.svg" />
       </div>
       <p>{content} </p>
       <div className="reviewCard_footer">

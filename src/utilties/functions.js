@@ -24,3 +24,10 @@ export const currentDate = () => {
   return today;
 };
 
+export const validatePassword = (password) => {
+  const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password); // Checks for special characters
+  const hasCapitalLetter = /[A-Z]/.test(password); // Checks for capital letters
+  if (hasCapitalLetter && hasSpecialChar) {
+    return true;
+  } else return false;
+};

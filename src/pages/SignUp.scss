@@ -33,6 +33,10 @@
       @include mixins.paragraph-style(14px, variables.$light-black);
     }
   }
+  input.errorBorder,
+  input.errorBorder:focus {
+    border: 1px solid variables.$error-red;
+  }
   input:focus {
     border: 1px solid variables.$primary-black;
   }
@@ -52,7 +56,7 @@
     margin-block: 10px;
   }
   .submitForm-button:hover {
-    background-color: #1ab5fdb9;
+    background-color: variables.$light-blue-hover;
   }
   .formSeprator {
     font-family: Open Sans Regular, sans-serif;
@@ -84,6 +88,8 @@
     width: 14rem;
     padding: 5px 20px;
     margin-block: 5px;
+    font-family: "Roboto", sans-serif;
+    color: variables.$light-black;
     font-weight: bold;
     border: 1px solid variables.$light-gray;
     border-radius: 20px;
@@ -96,8 +102,25 @@
       padding-right: 5px;
     }
   }
-  .thirdParty-button:hover{
+  .thirdParty-button:hover {
     background-color: #f3f5f636;
   }
-
+  .accountLogin-text {
+    align-self: center;
+    padding-top: 20px;
+    color: variables.$primary-gray;
+    font-size: 17px;
+    a {
+      color: variables.$light-blue;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    a:hover {
+      color: variables.$light-blue-hover;
+    }
+  }
+  .errorMessage {
+    color: variables.$error-red;
+    font-size: 14px;
+  }
 }

@@ -17,7 +17,14 @@ const Signup = () => {
     errorType: "",
   });
 
-  // reference to manipulate input element
+  const [emailIsInvalid, setEmailIsInvalid] = useState({
+    invalid: false,
+    errorType: "",
+  });
+  console.log(emailIsInvalid);
+
+  // reference to manipulate input elements
+  const emailRef = useRef(null);
   const confirmPasswordRef = useRef(null);
   const passwordRef = useRef(null);
 
@@ -39,7 +46,6 @@ const Signup = () => {
       userPassword: password,
       confirmUserPassword: confirmPasword,
     };
-    console.log(validatePassword(userData.userPassword));
 
     //password validation
 
@@ -60,19 +66,20 @@ const Signup = () => {
       passwordRef.current.focus();
     } else {
       setPasswordIsInvalid({ invalid: false, errorType: "" });
-
       createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           // Signed up
-          const user = userCredential.user;
           console.log(userCredential);
-
-          // ...
+          setEmailIsInvalid({ invalid: false, errorType: "" });
         })
         .catch((error) => {
-          const errorCode = error.code;
           const errorMessage = error.message;
-          // ..
+          console.log(error.message)
+          if (errorMessage === "Firebase: Error (auth/email-already-in-use).") {
+            setEmailIsInvalid({ invalid: true, errorType: "email exists" });
+            emailRef.current.focus();
+            console.log(errorMessage, emailIsInvalid)
+          }
         });
     }
   };
@@ -138,7 +145,19 @@ const Signup = () => {
         <h1>Let&apos;s get started.</h1>
         <p className="registerInput-container">
           <label htmlFor="email">Email</label>
-          <input type="email" name="email" id="email" required />
+          <input
+            type="email"
+            name="email"
+            id="email"
+            className={emailIsInvalid.invalid ? "errorBorder" : ""}
+            ref={emailRef}
+            required
+          />
+          {
+            (emailIsInvalid.errorType === "email exists" && (
+              <p className="errorMessage">Email already exists</p>
+            ))
+          }
         </p>
         <p className="registerInput-container">
           <label htmlFor="name">First Name</label>

@@ -1,15 +1,16 @@
 import { Link } from "react-router-dom";
-import "./SignUp.scss";
+import "./Register.scss";
 
 import { useRef, useState } from "react";
-import {
-  createUserWithEmailAndPassword,
-  signInWithPopup,
-  FacebookAuthProvider,
-  GoogleAuthProvider,
-} from "firebase/auth";
+
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
+
 import { validatePassword } from "../utilties/functions";
+import {
+  handleFacebookSignup,
+  handleGoogleSignup,
+} from "../utilties/authFunctions";
 
 const Signup = () => {
   const [passwordIsInvalid, setPasswordIsInvalid] = useState({
@@ -27,10 +28,6 @@ const Signup = () => {
   const emailRef = useRef(null);
   const confirmPasswordRef = useRef(null);
   const passwordRef = useRef(null);
-
-  // assigning third party register providers
-  const googleProvider = new GoogleAuthProvider();
-  const facebookProvider = new FacebookAuthProvider();
 
   const handleOnSubmit = (event) => {
     event.preventDefault();
@@ -74,76 +71,21 @@ const Signup = () => {
         })
         .catch((error) => {
           const errorMessage = error.message;
-          console.log(error.message)
+          console.log(error.message);
           if (errorMessage === "Firebase: Error (auth/email-already-in-use).") {
             setEmailIsInvalid({ invalid: true, errorType: "email exists" });
             emailRef.current.focus();
-            console.log(errorMessage, emailIsInvalid)
+            console.log(errorMessage, emailIsInvalid);
           }
         });
     }
-  };
-
-  const handleGoogleSignup = () => {
-    console.log("google");
-
-    signInWithPopup(auth, googleProvider)
-      .then((result) => {
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
-        // The signed-in user info.
-        const user = result.user;
-        console.log(user);
-        // IdP data available using getAdditionalUserInfo(result)
-        // ...
-      })
-      .catch((error) => {
-        // Handle Errors here.
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // The email of the user's account used.
-        const email = error.customData.email;
-        // The AuthCredential type that was used.
-        const credential = GoogleAuthProvider.credentialFromError(error);
-        console.log(error);
-        // ...
-      });
-  };
-
-  const handleFacebookSignup = () => {
-    console.log("facebook");
-    signInWithPopup(auth, facebookProvider)
-      .then((result) => {
-        // The signed-in user info.
-        const user = result.user;
-        console.log(user);
-
-        // This gives you a Facebook Access Token. You can use it to access the Facebook API.
-        const credential = FacebookAuthProvider.credentialFromResult(result);
-        const accessToken = credential.accessToken;
-
-        // IdP data available using getAdditionalUserInfo(result)
-        // ...
-      })
-      .catch((error) => {
-        // Handle Errors here.
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // The email of the user's account used.
-        const email = error.customData.email;
-        // The AuthCredential type that was used.
-        const credential = FacebookAuthProvider.credentialFromError(error);
-
-        // ...
-      });
   };
 
   return (
     <div className="registerForm-container">
       <form className="registerForm" onSubmit={handleOnSubmit}>
         <h1>Let&apos;s get started.</h1>
-        <p className="registerInput-container">
+        <div className="registerInput-container">
           <label htmlFor="email">Email</label>
           <input
             type="email"
@@ -153,17 +95,15 @@ const Signup = () => {
             ref={emailRef}
             required
           />
-          {
-            (emailIsInvalid.errorType === "email exists" && (
-              <p className="errorMessage">Email already exists</p>
-            ))
-          }
-        </p>
-        <p className="registerInput-container">
+          {emailIsInvalid.errorType === "email exists" && (
+            <p className="errorMessage">Email already exists</p>
+          )}
+        </div>
+        <div className="registerInput-container">
           <label htmlFor="name">First Name</label>
           <input type="text" name="name" id="name" required />
-        </p>
-        <p className="registerInput-container">
+        </div>
+        <div className="registerInput-container">
           <label htmlFor="password">Password</label>
           <input
             ref={passwordRef}
@@ -194,8 +134,8 @@ const Signup = () => {
           ) : (
             ""
           )}
-        </p>
-        <p className="registerInput-container">
+        </div>
+        <div className="registerInput-container">
           <label htmlFor="confirmPassword">Confirm Password</label>
           <input
             type="password"
@@ -214,7 +154,7 @@ const Signup = () => {
               The password you entered does not match the password above.
             </p>
           )}
-        </p>
+        </div>
         <button className="submitForm-button">Create Account</button>
         <span className="formSeprator">or</span>
         <button

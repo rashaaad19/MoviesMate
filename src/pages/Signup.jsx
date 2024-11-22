@@ -1,16 +1,14 @@
 import { Link } from "react-router-dom";
+
 import "./Register.scss";
 
 import { useRef, useState } from "react";
+import { useAuth } from "../hooks/useAuth";
 
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
 
 import { validatePassword } from "../utilties/functions";
-import {
-  handleFacebookSignup,
-  handleGoogleSignup,
-} from "../utilties/authFunctions";
 
 const Signup = () => {
   const [passwordIsInvalid, setPasswordIsInvalid] = useState({
@@ -22,7 +20,8 @@ const Signup = () => {
     invalid: false,
     errorType: "",
   });
-  console.log(emailIsInvalid);
+  
+  const { handleFacebookSignup, handleGoogleSignup } = useAuth();
 
   // reference to manipulate input elements
   const emailRef = useRef(null);

@@ -1,20 +1,22 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import "./Register.scss";
 
 import { auth } from "../firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import {
-  handleFacebookSignup,
-  handleGoogleSignup,
-} from "../utilties/authFunctions";
+
 import { useState } from "react";
+import { useAuth } from "../hooks/useAuth";
 
 const Login = () => {
   const [loginError, setLoginError] = useState({
     errorStatus: false,
     type: "",
   });
+  const navigate = useNavigate();
+  const { handleFacebookSignup, handleGoogleSignup } = useAuth();
+
+  //handling normal login submission
   const handleOnSubmit = (event) => {
     event.preventDefault();
     const userData = new FormData(event.target);
@@ -26,6 +28,7 @@ const Login = () => {
         // Signed in
         console.log(userCredential.user);
         setLoginError({ errorStatus: false, type: "" });
+        navigate("/");
         // ...
       })
       .catch((error) => {
@@ -37,6 +40,8 @@ const Login = () => {
         }
       });
   };
+
+  
 
   return (
     <div className="registerForm-container">

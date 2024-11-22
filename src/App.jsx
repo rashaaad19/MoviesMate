@@ -17,6 +17,8 @@ import { useEffect } from "react";
 import MovieProfile from "./pages/MovieProfile";
 
 import { loader as movieDataLoader } from "./pages/MovieProfile";
+import MyProfile from "./pages/MyProfile";
+import ProtectedRoute from "./pages/ProtectedRoute";
 
 function App() {
   const showMenu = useSelector((state) => state.Ui.fullPageNav);
@@ -44,11 +46,34 @@ function App() {
         },
         {
           path: "login",
-          element: <Login />,
+          element: <ProtectedRoute type="kickAuthUser" />,
+          children: [
+            {
+              index: true,
+              element: <Login />,
+            },
+          ],
         },
         {
           path: "signup",
-          element: <Signup />,
+          element: <ProtectedRoute type="kickAuthUser" />,
+          children: [
+            {
+              index: true,
+              element: <Signup />,
+            },
+          ],
+        },
+
+        {
+          path: "myprofile",
+          element: <ProtectedRoute type="kickNonAuthUser" />,
+          children: [
+            {
+              index: true,
+              element: <MyProfile />,
+            },
+          ],
         },
         {
           path: "movies/:movieID",

@@ -27,7 +27,7 @@ const Navbar = () => {
     signOut(auth)
       .then(() => {
         //Sign-out successful.
-        
+
         //reset userData state
         dispatch(
           userDataActions.updateUserCredentials({ email: "", name: "" })
@@ -35,6 +35,7 @@ const Navbar = () => {
         //reset local storage;
         localStorage.setItem("isAuth", "false");
         localStorage.removeItem("userEmail");
+        localStorage.removeItem("userID");
         navigate("/");
       })
       .catch((error) => {

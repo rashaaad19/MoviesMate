@@ -7,7 +7,6 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 
 import { useState } from "react";
 import { useAuth } from "../hooks/useAuth";
-import { useSelector } from "react-redux";
 
 const Login = () => {
   const [loginError, setLoginError] = useState({
@@ -16,7 +15,6 @@ const Login = () => {
   });
   const navigate = useNavigate();
   const { handleFacebookSignup, handleGoogleSignup } = useAuth();
-  console.log(useSelector((state) => state.userData.userCredentials.email));
   //handling normal login submission
   const handleOnSubmit = (event) => {
     event.preventDefault();
@@ -30,8 +28,9 @@ const Login = () => {
         console.log(userCredential.user);
         setLoginError({ errorStatus: false, type: "" });
         // Persist authentication data
-        localStorage.setItem("isAuth", 'true');
+        localStorage.setItem("isAuth", "true");
         localStorage.setItem("userEmail", userEmail);
+        localStorage.setItem("userID", userCredential.user.uid);
 
         navigate("/");
         // ...
@@ -92,12 +91,8 @@ const Login = () => {
 export default Login;
 
 export const loader = () => {
-  const isAuth = localStorage.getItem("isAuth");
-  const userEmail = localStorage.getItem("userEmail");
-
-  console.log({ isAuth, userEmail });
-
-  if (isAuth === 'true') {
+  const isAuth = localStorage.getItem("isAuth"); //extracting auth status from local storage
+  if (isAuth === "true") {
     return redirect("/");
   }
 

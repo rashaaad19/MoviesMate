@@ -6,9 +6,10 @@ import { useRef, useState } from "react";
 import { useAuth } from "../hooks/useAuth";
 
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebase";
+import { auth, db } from "../firebase";
 
 import { validatePassword } from "../utilties/functions";
+import { collection, doc, setDoc } from "firebase/firestore";
 
 const Signup = () => {
   const [passwordIsInvalid, setPasswordIsInvalid] = useState({
@@ -22,7 +23,8 @@ const Signup = () => {
   });
 
   const navigate = useNavigate(); //extracting navigate function
-  const { handleFacebookSignup, handleGoogleSignup } = useAuth();
+  const { handleFacebookSignup, handleGoogleSignup } = useAuth(); //extract third party register custom hooks
+  const usersRef = collection(db, "users"); //adding reference to the users collection
 
   // reference to manipulate input elements
   const emailRef = useRef(null);
@@ -38,7 +40,6 @@ const Signup = () => {
     const email = data.get("email");
     const password = data.get("password");
     const confirmPasword = data.get("confirmPassword");
-
     const userData = {
       userName: name,
       userEmail: email,
@@ -47,7 +48,6 @@ const Signup = () => {
     };
 
     //password validation
-
     if (password !== confirmPasword) {
       setPasswordIsInvalid({
         invalid: true,
@@ -71,10 +71,24 @@ const Signup = () => {
       createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           // Signed up
+          const userInfo = userCredential.user;
+          //create unique doc for the new user including all his relevant information.
+          setDoc(doc(usersRef, userInfo.uid), {
+            email: userInfo.email,
+            id: userInfo.uid,
+            name: userData.userName,
+            image: userInfo.photoURL,
+            movies: {
+              favourites: [],
+              watched: [],
+            },
+          });
 
           // Persist authentication data
-          localStorage.setItem("isAuth", 'true');
+          localStorage.setItem("isAuth", "true");
           localStorage.setItem("userEmail", userData.userEmail);
+          localStorage.setItem("userID", userInfo.uid);
+
           setEmailIsInvalid({ invalid: false, errorType: "" });
           //navigate to root page
           navigate("/");
@@ -197,8 +211,7 @@ export const loader = () => {
   const isAuth = localStorage.getItem("isAuth");
   const userEmail = localStorage.getItem("userEmail");
 
-
-  if (isAuth === 'true') {
+  if (isAuth === "true") {
     return redirect("/");
   }
 

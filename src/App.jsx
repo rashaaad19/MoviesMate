@@ -22,7 +22,6 @@ import { loader as signupLoader } from "./pages/Signup";
 import { loader as myProfileLoader } from "./pages/MyProfile";
 
 import MyProfile from "./pages/MyProfile";
-import ProtectedRoute from "./pages/ProtectedRoute";
 
 function App() {
   const showMenu = useSelector((state) => state.Ui.fullPageNav);
@@ -42,7 +41,6 @@ function App() {
         {
           path: "discover",
           element: <Discover />,
-          // loader: moviesListLoader,
         },
         {
           path: "about",
@@ -50,37 +48,19 @@ function App() {
         },
         {
           path: "login",
-          element: <ProtectedRoute type="kickAuthUser" />,
-          children: [
-            {
-              index: true,
-              element: <Login />,
-              loader: loginLoader,
-            },
-          ],
+          element: <Login />,
+          loader: loginLoader,
         },
         {
           path: "signup",
-          element: <ProtectedRoute type="kickAuthUser" />,
-          children: [
-            {
-              index: true,
-              element: <Signup />,
-              loader: signupLoader,
-            },
-          ],
+          element: <Signup />,
+          loader: signupLoader,
         },
 
         {
           path: "myprofile",
-          element: <ProtectedRoute type="kickNonAuthUser" />,
-          children: [
-            {
-              index: true,
-              element: <MyProfile />,
-              loader: myProfileLoader,
-            },
-          ],
+          element: <MyProfile />,
+          loader: myProfileLoader,
         },
         {
           path: "movies/:movieID",

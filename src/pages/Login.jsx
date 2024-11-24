@@ -7,9 +7,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 
 import { useState } from "react";
 import { useAuth } from "../hooks/useAuth";
-import { useDispatch, useSelector } from "react-redux";
-import { userDataActions } from "../store/UserDataSlice";
-import store from "../store";
+import { useSelector } from "react-redux";
 
 const Login = () => {
   const [loginError, setLoginError] = useState({
@@ -18,7 +16,6 @@ const Login = () => {
   });
   const navigate = useNavigate();
   const { handleFacebookSignup, handleGoogleSignup } = useAuth();
-  const dispatch = useDispatch();
   console.log(useSelector((state) => state.userData.userCredentials.email));
   //handling normal login submission
   const handleOnSubmit = (event) => {

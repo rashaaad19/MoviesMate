@@ -9,8 +9,6 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
 
 import { validatePassword } from "../utilties/functions";
-import { useDispatch } from "react-redux";
-import { userDataActions } from "../store/UserDataSlice";
 
 const Signup = () => {
   const [passwordIsInvalid, setPasswordIsInvalid] = useState({

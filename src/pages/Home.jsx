@@ -8,6 +8,7 @@ import { options } from "../data/tmdb";
 
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../firebase";
+import { userNameGenerator } from "./../utilties/functions";
 
 const popularURL =
   "https://api.themoviedb.org/3/movie/popular?language=en-US&page=1";
@@ -22,7 +23,7 @@ const Home = () => {
       // User is signed in, see docs for a list of available properties
       // https://firebase.google.com/docs/reference/js/auth.user
       const uid = user.uid;
-      console.log(user);
+      // console.log(user);
       // ...
     } else {
       // User is signed out

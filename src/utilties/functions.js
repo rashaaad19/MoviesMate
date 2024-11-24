@@ -1,4 +1,5 @@
-import { genreOptions } from "../data/filterOptions";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../firebase";
 
 export const runtimeFormatter = (minutes) => {
   const hours = Math.floor(minutes / 60);
@@ -31,3 +32,26 @@ export const validatePassword = (password) => {
     return true;
   } else return false;
 };
+
+export const userNameGenerator = async (name) => {
+  let userNamesArray = [] //initializing empty array
+  //getting a copy of all userNames in the database
+  const querySnapshot = await getDocs(collection(db, "users"));
+  querySnapshot.forEach((doc) => {
+    userNamesArray.push(doc.data().userName);
+  });
+
+  // Generate a random number 
+  const randomNumber = Math.floor(Math.random() * 9000) + 1000;
+  // Combine the name with the random number
+  let uniqueUsername = `${name.replaceAll(' ', '').toLowerCase()}${randomNumber}`;
+  // Check if the generated username already exists in the database
+  while (userNamesArray.includes(uniqueUsername)) {
+    // If the username exists, generate a new one
+    uniqueUsername = `${name}${Math.floor(Math.random() * 9000) + 1000}`;
+  }
+
+  return uniqueUsername;
+}
+
+

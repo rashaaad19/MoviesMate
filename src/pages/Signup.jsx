@@ -8,8 +8,8 @@ import { useAuth } from "../hooks/useAuth";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "../firebase";
 
-import { validatePassword } from "../utilties/functions";
-import { collection, doc, setDoc } from "firebase/firestore";
+import { userNameGenerator, validatePassword } from "../utilties/functions";
+import { collection, doc, getDocs, setDoc } from "firebase/firestore";
 
 const Signup = () => {
   const [passwordIsInvalid, setPasswordIsInvalid] = useState({
@@ -21,7 +21,6 @@ const Signup = () => {
     invalid: false,
     errorType: "",
   });
-
   const navigate = useNavigate(); //extracting navigate function
   const { handleFacebookSignup, handleGoogleSignup } = useAuth(); //extract third party register custom hooks
   const usersRef = collection(db, "users"); //adding reference to the users collection
@@ -31,9 +30,10 @@ const Signup = () => {
   const confirmPasswordRef = useRef(null);
   const passwordRef = useRef(null);
 
-  const handleOnSubmit = (event) => {
-    event.preventDefault();
+  //get all users usernames to check availability
 
+  const handleOnSubmit = async (event) => {
+    event.preventDefault();
     //handling input data
     const data = new FormData(event.target);
     const name = data.get("name");
@@ -65,9 +65,13 @@ const Signup = () => {
       passwordRef.current.focus();
     }
 
-    //creating new user using firebase auth
+    //creating new user
     else {
+      //reseting password error state
       setPasswordIsInvalid({ invalid: false, errorType: "" });
+      //generating new user name
+      const userName = await userNameGenerator(userData.userName);
+      //proceed to create new user
       createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           // Signed up
@@ -76,6 +80,7 @@ const Signup = () => {
           setDoc(doc(usersRef, userInfo.uid), {
             email: userInfo.email,
             id: userInfo.uid,
+            userName: userName,
             name: userData.userName,
             image: userInfo.photoURL,
             movies: {

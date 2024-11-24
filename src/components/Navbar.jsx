@@ -15,7 +15,7 @@ const Navbar = () => {
   const [currentUser, setCurrentUser] = useState(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  
+
   //listen to changes in user state to update th UI
   useEffect(() => {
     //firebase returns cleaner function to detach listener when not needed
@@ -38,19 +38,26 @@ const Navbar = () => {
     return () => unsubscribe();
   }, []);
 
-  console.log(currentUser);
+  //handle navigation menu changes in mobile screens
   const burgerButtonHandler = () => {
     setShowMenu(!showMenu);
     dispatch(UiActions.toggleNav());
   };
 
+  //handle user signing out
   const handleSignOut = () => {
     signOut(auth)
       .then(() => {
         //Sign-out successful.
-        console.log("user signed out");
         setCurrentUser(null);
-        navigate('/')
+        //reset userData state
+        dispatch(
+          userDataActions.updateUserCredentials({ email: "", name: "" })
+        );
+        //reset local storage;
+        localStorage.setItem("isAuth", "false");
+        localStorage.removeItem("userEmail");
+        navigate("/");
       })
       .catch((error) => {
         //an error happened

@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, redirect, useNavigate } from "react-router-dom";
 
 import "./Register.scss";
 
@@ -7,6 +7,9 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 
 import { useState } from "react";
 import { useAuth } from "../hooks/useAuth";
+import { useDispatch, useSelector } from "react-redux";
+import { userDataActions } from "../store/UserDataSlice";
+import store from "../store";
 
 const Login = () => {
   const [loginError, setLoginError] = useState({
@@ -15,7 +18,8 @@ const Login = () => {
   });
   const navigate = useNavigate();
   const { handleFacebookSignup, handleGoogleSignup } = useAuth();
-
+  const dispatch = useDispatch();
+  console.log(useSelector((state) => state.userData.userCredentials.email));
   //handling normal login submission
   const handleOnSubmit = (event) => {
     event.preventDefault();
@@ -28,6 +32,10 @@ const Login = () => {
         // Signed in
         console.log(userCredential.user);
         setLoginError({ errorStatus: false, type: "" });
+        // Persist authentication data
+        localStorage.setItem("isAuth", 'true');
+        localStorage.setItem("userEmail", userEmail);
+
         navigate("/");
         // ...
       })
@@ -40,8 +48,6 @@ const Login = () => {
         }
       });
   };
-
-  
 
   return (
     <div className="registerForm-container">
@@ -87,3 +93,16 @@ const Login = () => {
 };
 
 export default Login;
+
+export const loader = () => {
+  const isAuth = localStorage.getItem("isAuth");
+  const userEmail = localStorage.getItem("userEmail");
+
+  console.log({ isAuth, userEmail });
+
+  if (isAuth === 'true') {
+    return redirect("/");
+  }
+
+  return null;
+};

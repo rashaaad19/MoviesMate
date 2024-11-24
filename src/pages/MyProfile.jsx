@@ -1,4 +1,5 @@
 import { useSelector } from "react-redux";
+import { redirect } from "react-router-dom";
 
 const MyProfile = () => {
   const userCred = useSelector((state) => state.userData.userCredentials);
@@ -7,3 +8,16 @@ const MyProfile = () => {
 };
 
 export default MyProfile;
+
+
+export const loader = () => {
+  const isAuth = localStorage.getItem("isAuth");
+
+  console.log({ isAuth });
+
+  if (isAuth === 'false') {
+    return redirect("/");
+  }
+
+  return null;
+};

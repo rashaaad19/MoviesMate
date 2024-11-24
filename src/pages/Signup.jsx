@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, redirect, useNavigate } from "react-router-dom";
 
 import "./Register.scss";
 
@@ -9,6 +9,8 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
 
 import { validatePassword } from "../utilties/functions";
+import { useDispatch } from "react-redux";
+import { userDataActions } from "../store/UserDataSlice";
 
 const Signup = () => {
   const [passwordIsInvalid, setPasswordIsInvalid] = useState({
@@ -20,7 +22,8 @@ const Signup = () => {
     invalid: false,
     errorType: "",
   });
-  
+
+  const navigate = useNavigate(); //extracting navigate function
   const { handleFacebookSignup, handleGoogleSignup } = useAuth();
 
   // reference to manipulate input elements
@@ -30,6 +33,8 @@ const Signup = () => {
 
   const handleOnSubmit = (event) => {
     event.preventDefault();
+
+    //handling input data
     const data = new FormData(event.target);
     const name = data.get("name");
     const email = data.get("email");
@@ -60,13 +65,21 @@ const Signup = () => {
         errorType: "no capital and special characters",
       });
       passwordRef.current.focus();
-    } else {
+    }
+
+    //creating new user using firebase auth
+    else {
       setPasswordIsInvalid({ invalid: false, errorType: "" });
       createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           // Signed up
-          console.log(userCredential);
+
+          // Persist authentication data
+          localStorage.setItem("isAuth", 'true');
+          localStorage.setItem("userEmail", userData.userEmail);
           setEmailIsInvalid({ invalid: false, errorType: "" });
+          //navigate to root page
+          navigate("/");
         })
         .catch((error) => {
           const errorMessage = error.message;
@@ -181,3 +194,15 @@ const Signup = () => {
 };
 
 export default Signup;
+
+export const loader = () => {
+  const isAuth = localStorage.getItem("isAuth");
+  const userEmail = localStorage.getItem("userEmail");
+
+
+  if (isAuth === 'true') {
+    return redirect("/");
+  }
+
+  return null;
+};

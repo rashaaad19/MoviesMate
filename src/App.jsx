@@ -17,6 +17,10 @@ import { useEffect } from "react";
 import MovieProfile from "./pages/MovieProfile";
 
 import { loader as movieDataLoader } from "./pages/MovieProfile";
+import { loader as loginLoader } from "./pages/Login";
+import { loader as signupLoader } from "./pages/Signup";
+import { loader as myProfileLoader } from "./pages/MyProfile";
+
 import MyProfile from "./pages/MyProfile";
 import ProtectedRoute from "./pages/ProtectedRoute";
 
@@ -51,6 +55,7 @@ function App() {
             {
               index: true,
               element: <Login />,
+              loader: loginLoader,
             },
           ],
         },
@@ -61,6 +66,7 @@ function App() {
             {
               index: true,
               element: <Signup />,
+              loader: signupLoader,
             },
           ],
         },
@@ -72,6 +78,7 @@ function App() {
             {
               index: true,
               element: <MyProfile />,
+              loader: myProfileLoader,
             },
           ],
         },

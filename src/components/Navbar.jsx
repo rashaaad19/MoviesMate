@@ -2,41 +2,19 @@ import { NavLink, useNavigate } from "react-router-dom";
 
 import "./Navbar.scss";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { useDispatch } from "react-redux";
 import { UiActions } from "../store/UiSlice";
 import { auth } from "../firebase";
-import { onAuthStateChanged, signOut } from "firebase/auth";
+import { signOut } from "firebase/auth";
 import { userDataActions } from "../store/UserDataSlice";
 
 const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
-  const [currentUser, setCurrentUser] = useState(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  //listen to changes in user state to update th UI
-  useEffect(() => {
-    //firebase returns cleaner function to detach listener when not needed
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setCurrentUser(user);
-        dispatch(
-          userDataActions.updateUserCredentials({
-            email: user.email,
-            name: user.displayName,
-          })
-        );
-        // ...
-      } else {
-        // User is signed out
-        setCurrentUser(null);
-        // ...
-      }
-    });
-    return () => unsubscribe();
-  }, []);
+  const authStatus = localStorage.getItem("isAuth"); //extract authentication status to update UI
 
   //handle navigation menu changes in mobile screens
   const burgerButtonHandler = () => {
@@ -49,7 +27,7 @@ const Navbar = () => {
     signOut(auth)
       .then(() => {
         //Sign-out successful.
-        setCurrentUser(null);
+        
         //reset userData state
         dispatch(
           userDataActions.updateUserCredentials({ email: "", name: "" })
@@ -129,7 +107,7 @@ const Navbar = () => {
             </ul>
           </li>
           <li className="navSection">
-            {currentUser ? (
+            {authStatus === "true" ? (
               <ul className="navSubList">
                 <li className="navItem ">
                   <button onClick={handleSignOut}>Sign out</button>

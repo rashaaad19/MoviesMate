@@ -4,7 +4,8 @@ import EditCard from "../UI/EditCard";
 
 const EditProfile = () => {
   const profileData = useLoaderData();
-  console.log(profileData);
+
+    //TODO: add the rest EditCard components
   return (
     <div style={{paddingInline:'10%'}}>
       <ProfileHeader type={"profileEdit"} name={profileData.name} />

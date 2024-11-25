@@ -2,13 +2,17 @@ import { useState } from "react";
 import "./EditCard.scss";
 
 const EditCard = ({ image }) => {
-  const [currentImage, setCurrentImage] = useState(image);
-  const [displaySave, setDisplaySave] = useState(false);
+  const [currentImage, setCurrentImage] = useState(image); //state to keep the image
+  const [displaySave, setDisplaySave] = useState(false); //state to control save button
+
+    //function listening to changes in the image input
   const handleOnImageChange = (event) => {
+    //extracting the first selected element
     const file = event.target.files[0];
+    //check the selection of image
     if (file) {
-      setDisplaySave(true);
-      const reader = new FileReader();
+      setDisplaySave(true); //displaying the save button to the user
+      const reader = new FileReader(); // using FileReader constructor to read the data selected
       reader.onload = () => {
         setCurrentImage(reader.result); //update image with base64 URL
       };
@@ -17,13 +21,17 @@ const EditCard = ({ image }) => {
   };
   console.log(currentImage);
 
+    //manipulate the input dom element to open when edit button is clicked
   const handleEditClick = () => {
     document.getElementById("imageUpload").click();
   };
 
+//TODO: add edited data to firestore
   const handleOnSave = () => {
     console.log("saved");
   };
+
+
   return (
     <div className="editCard-container">
       <div className="editCard-header">

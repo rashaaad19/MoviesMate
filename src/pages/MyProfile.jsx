@@ -1,53 +1,39 @@
+import "./MyProfile.scss";
+
 import { doc, getDoc } from "firebase/firestore";
-import { redirect } from "react-router-dom";
+import { Link, redirect, useLoaderData } from "react-router-dom";
 import { db } from "../firebase";
-import { useEffect, useMemo, useState } from "react";
+import ProfileHeader from "../UI/ProfileHeader";
 const MyProfile = () => {
-  const documentID = localStorage.getItem("userID"); //extract userID from local storage
-
-  const docRef = useMemo(() => {
-    //  Memoize docRef to prevent re-creation on each render and get reference to user doc in firestore
-    return doc(db, "users", documentID);
-  }, [documentID]);
-
-  const [profileData, setProfileData] = useState(); //profile state to display the data
-  const [isLoading, setIsLoading] = useState(true); //loading state
-
-  useEffect(() => {
-    const getData = async () => {
-      setIsLoading(true);
-      try {
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-          setProfileData(docSnap.data());
-        } else {
-          console.log("No such document!");
-        }
-      } catch (error) {
-        console.log("Error fetching document:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    getData();
-  }, [docRef]);
-
+  const profileData = useLoaderData();
   console.log(profileData);
   return (
     <div>
-      {isLoading && <h1>Loading..</h1>}
       {profileData && (
         <div className="profilePage-container">
-          <div className="profilePage-header">
-            <span>My Profile</span>
-            <span>•</span>
-            <span>{profileData.name}</span>
-          </div>
-          <div>
-            <img src={profileData.image}/>
-            <div>
-              <h1>{profileData.name}</h1>
-              
+          <ProfileHeader type={"profileOnly"} name={profileData.name} />
+          <div className="profileData-container">
+            <img
+              className="personalImg"
+              alt="profile image"
+              src={profileData.image}
+            />
+            <div className="personalData-container">
+              <div>
+                <h1>{profileData.name}</h1>
+                <p className="userName">{profileData.userName}</p>
+                <p className="dateJoined">Joined 2024</p>
+              </div>
+              <Link to={"edit"}>Edit Profile</Link>
+            </div>
+
+            <div className="userDiary">
+              <p>
+                <span>0</span> <span>Watched</span>
+              </p>
+              <p>
+                <span>0</span> <span>Favourites</span>
+              </p>
             </div>
           </div>
         </div>
@@ -58,8 +44,21 @@ const MyProfile = () => {
 
 export default MyProfile;
 
-export const loader = () => {
+export const loader = async () => {
+  const documentID = localStorage.getItem("userID"); //extract userID from local storage
   const isAuth = localStorage.getItem("isAuth");
+  const docRef = doc(db, "users", documentID);
+
+  try {
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      return docSnap.data();
+    } else {
+      console.log("No such document!");
+    }
+  } catch (error) {
+    console.log("Error fetching document:", error);
+  }
 
   console.log({ isAuth });
 

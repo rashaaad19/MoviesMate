@@ -15,7 +15,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const authStatus = localStorage.getItem("isAuth"); //extract authentication status to update UI
-
+  const userID = localStorage.getItem("userID"); //extract user id
   //handle navigation menu changes in mobile screens
   const burgerButtonHandler = () => {
     setShowMenu(!showMenu);
@@ -118,7 +118,7 @@ const Navbar = () => {
                     className={({ isActive }) =>
                       isActive ? `active signup-button` : `signup-button`
                     }
-                    to="/myprofile"
+                    to={`/user/${userID}`}
                   >
                     My Profile
                   </NavLink>

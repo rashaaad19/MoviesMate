@@ -22,9 +22,11 @@ import { loader as signupLoader } from "./pages/Signup";
 import { loader as myProfileLoader } from "./pages/MyProfile";
 
 import MyProfile from "./pages/MyProfile";
+import EditProfile from "./pages/EditProfile";
 
 function App() {
   const showMenu = useSelector((state) => state.Ui.fullPageNav);
+  const userID = localStorage.getItem("userID");
   const router = createBrowserRouter([
     {
       path: "/",
@@ -58,9 +60,14 @@ function App() {
         },
 
         {
-          path: "myprofile",
+          path: "user/:userID",
           element: <MyProfile />,
           loader: myProfileLoader,
+        },
+        {
+          path: "user/:userID/edit",
+          element: <EditProfile />,
+          loader:myProfileLoader //using same profile data
         },
         {
           path: "movies/:movieID",

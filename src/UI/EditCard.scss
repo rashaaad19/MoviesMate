@@ -1,0 +1,50 @@
+//mixins and variables
+@use "../assets/mixins.scss";
+@use "../assets/variables.scss";
+@use "../assets//functions.scss";
+
+.editCard-container {
+  padding: 2rem;
+  background: variables.$primary-black;
+  margin-bottom: 2rem;
+  .editCard-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 15px;
+    color: variables.$light-gray;
+    button {
+      background-color: transparent;
+      color: variables.$secondary-orange;
+      border-color: transparent;
+      cursor: pointer;
+    }
+  }
+
+  .editCard-footer {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    img {
+      border-radius: 50%;
+      width: 96px;
+      height: 96px;
+    }
+    button {
+      background-color: variables.$button-orange;
+      border: none;
+      padding: 10px 25px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: functions.hover-lighten(variables.$button-orange, 10%);
+    }
+    button:disabled {
+      color: black;
+      background-color: variables.$button-orange; 
+      opacity: 0.6; /* Reduce opacity for a disabled look */
+      cursor: not-allowed; /* Change cursor to indicate disabled state */
+    }
+  }
+}

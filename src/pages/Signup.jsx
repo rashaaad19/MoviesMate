@@ -94,6 +94,7 @@ const Signup = () => {
           localStorage.setItem("userEmail", userData.userEmail);
           localStorage.setItem("userID", userInfo.uid);
 
+
           setEmailIsInvalid({ invalid: false, errorType: "" });
           //navigate to root page
           navigate("/");

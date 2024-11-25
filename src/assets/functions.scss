@@ -1,0 +1,3 @@
+@function hover-lighten($color, $amount: 10%) {
+  @return lighten($color, $amount);
+}

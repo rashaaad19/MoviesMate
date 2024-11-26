@@ -7,17 +7,28 @@
   padding: 2rem;
   background: variables.$primary-black;
   margin-bottom: 2rem;
+  cursor: pointer;
+  p {
+    font-family: sans-serif;
+  }
   .editCard-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding-bottom: 15px;
     color: variables.$light-gray;
+    p {
+      font-weight: bold;
+    }
     button {
       background-color: transparent;
       color: variables.$secondary-orange;
       border-color: transparent;
       cursor: pointer;
+      transition: color 0.2s ease-in-out;
+    }
+    button:hover{
+      color: functions.hover-lighten(variables.$secondary-orange, 50%);
     }
   }
 
@@ -42,9 +53,31 @@
     }
     button:disabled {
       color: black;
-      background-color: variables.$button-orange; 
+      background-color: variables.$button-orange;
       opacity: 0.6; /* Reduce opacity for a disabled look */
       cursor: not-allowed; /* Change cursor to indicate disabled state */
     }
   }
+}
+
+.editCard-container:hover{
+  background-color: functions.hover-lighten(variables.$primary-black, 3%);
+}
+.editCard-textInput {
+  align-self: flex-start;
+  padding: 5px 15px;
+  width: min(360px, 50%);
+  background-color: #565656;
+  border-color: transparent;
+  border-radius: 4px;
+  color: variables.$secondary-gray;
+  outline: none;
+  transition: background-color 0.15s ease-in-out;
+}
+.editCard-textInput:focus {
+  background-color: variables.$primary-white;
+  color: variables.$light-black;
+}
+.editCard-textData {
+  align-self: flex-start;
 }

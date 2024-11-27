@@ -19,7 +19,6 @@ const EditImageCard = ({ image }) => {
       reader.readAsDataURL(file); //convert the file to base64 string
     }
   };
-  console.log(currentImage);
 
   //manipulate the input dom element to open when edit button is clicked
   const handleEditClick = () => {

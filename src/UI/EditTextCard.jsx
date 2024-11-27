@@ -21,7 +21,12 @@ const EditTextCard = ({
         {!displaySave && (
           <button onClick={() => onEditClick(cardID)}>Edit</button>
         )}
-        {displaySave && <button onClick={onCancelClick}>Cancel</button>}
+        {displaySave && (
+          <button onClick={(event) => onCancelClick(event, cardID)}>
+            {/* passing the event object to prevent propagation to the parent event function */}
+            Cancel
+          </button>
+        )}
       </div>
       <div className="editCard-footer">
         {!displaySave ? (

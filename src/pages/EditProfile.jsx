@@ -39,117 +39,25 @@ const EditProfile = () => {
       tempValue: "",
     },
   ]);
-  // console.log(textCards.map((card) => ({ ...card, tempValue: card.data })));
 
-  const handleEditClick = (id) => {
-    //reseting all input fields
-    const updatedTextCards = textCards.map(
-      //mapping through cards to check which card is clicked and needs to be updated
-      (card) =>
-        card.id === id
-          ? { ...card, displaySave: true } // Activate clicked card
-          : { ...card, displaySave: false, tempValue: card.data } // deactivate card and reset value
+  const handleEditClick = ( id) => {
+    const selectedCard = textCards.find((card) => card.id === id); //extract the selected card
+    const updatedCard = { ...selectedCard, displaySave: true }; // update the selected card with the new value
+    const newUpdatedCards = textCards.map((card) => //create new cards array with the updated one
+      card.id === updatedCard.id ? updatedCard : card
     );
-    //update text cards state
-    setTextCards(updatedTextCards);
+    setTextCards(newUpdatedCards);
   };
 
-  const handleCancelClick = (event) => {
-    //prevent triggering parent onClick  listeners -  Event Propagation
+  const handleCancelClick = (event, id) => {
     event.stopPropagation();
-
-    //reesetting card properties after cancelation
-    const updatedTextCards = textCards.map((card) => ({
-      ...card,
-      displaySave: false,
-      tempValue: card.data,
-    }));
-    //update text cards state
-    setTextCards(updatedTextCards);
-    console.log("cancel");
-  };
-
-  //handle change in inputs
-  const handleInputChange = (id, event) => {
-    //update the text cards properties
-    switch (id) {
-      case "username": {
-        const updatedInput = textCards.map(
-          (card) =>
-            card.id === "username"
-              ? { ...card, tempValue: event.target.value } //updating the input field for clicked input
-              : card // using same atributes for uncliked inputs
-        );
-        setTextCards(updatedInput); //updating the state with new tempValues
-        break;
-      }
-      case "name": {
-        console.log("name slected");
-        const updatedInput = textCards.map(
-          (card) =>
-            card.id === "name"
-              ? { ...card, tempValue: event.target.value } //updating the input field for clicked input
-              : card // using same atributes for uncliked inputs
-        );
-        setTextCards(updatedInput); //updating the state with new tempValues
-
-        break;
-      }
-      case "bio": {
-        console.log("bio selected");
-        const updatedInput = textCards.map(
-          (card) =>
-            card.id === "bio"
-              ? { ...card, tempValue: event.target.value } //updating the input field for clicked input
-              : card // using same atributes for uncliked inputs
-        );
-        setTextCards(updatedInput); //updating the state with new tempValues
-
-        break;
-      }
-      case "nationality": {
-        console.log("nationality selected");
-        const updatedInput = textCards.map(
-          (card) =>
-            card.id === "nationality"
-              ? { ...card, data: event.target.value } //updating the input field for clicked input
-              : card // using same atributes for uncliked inputs
-        );
-        setTextCards(updatedInput); //updating the state with new tempValues
-
-        break;
-      }
-      case "links": {
-        console.log("links selected");
-        const updatedInput = textCards.map(
-          (card) =>
-            card.id === "links"
-              ? { ...card, data: event.target.value } //updating the input field for clicked input
-              : card // using same atributes for uncliked inputs
-        );
-        setTextCards(updatedInput); //updating the state with new tempValues
-
-        break;
-      }
-    }
-  };
-  const handleSaveClick = (id) => {
-    console.log(textCards);
-    const updatedTextCards = textCards.map((card) =>
-      card.id === id
-        ? {
-            ...card,
-            displaySave: false,
-            data: card.tempValue,
-          }
-        : card
+    const selectedCard = textCards.find((card) => card.id === id); //extract the selected card
+    const updatedCard = { ...selectedCard, displaySave: false }; // update the selected card with the new value
+    const newUpdatedCards = textCards.map((card) => //create new cards array with the updated one
+      card.id === updatedCard.id ? updatedCard : card
     );
-    console.log(updatedTextCards);
-    //update text cards state
-    setTextCards(updatedTextCards);
+    setTextCards(newUpdatedCards);
   };
-  // console.log(textCards);
-
   return (
     <div style={{ paddingInline: "10%" }}>
       <ProfileHeader type={"profileEdit"} name={profileData.name} />
@@ -164,8 +72,8 @@ const EditProfile = () => {
           displaySave={card.displaySave}
           onEditClick={handleEditClick}
           onCancelClick={handleCancelClick}
-          onSaveClick={handleSaveClick}
-          onInputChange={handleInputChange}
+          // onSaveClick={handleSaveClick}
+          // onInputChange={handleInputChange}
         />
       ))}
     </div>

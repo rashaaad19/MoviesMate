@@ -2,6 +2,10 @@
   background-color: #2d2e33;
   color: white;
   cursor: default;
+
+}
+body{
+  background-color: #1a1b22;
 }
 body,h1,h2,h3,h4,h5,h6,p,ul,ol{
   margin: 0;

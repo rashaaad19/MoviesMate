@@ -15,39 +15,40 @@ const EditProfile = () => {
 
   const [textCards, setTextCards] = useState([
     {
-      id: "userName",
-      label: "USERNAME",
-      data: profileData.userName,
-      displaySave: false,
-      tempValue: profileData.userName,
-    },
-    {
       id: "name",
       label: "FULL NAME",
+      text: "Add your full name or a nickname",
       data: profileData.name,
       displaySave: false,
       tempValue: profileData.name,
+      required: true,
     },
     {
       id: "bio",
       label: "BIO",
       data: profileData.bio || "",
+      text: "Share something about yourself. Try starting with some of your favourite films and genres",
       displaySave: false,
       tempValue: profileData.bio || "",
+      required: false,
     },
     {
-      id: "nationality",
-      label: "NATIONALITY",
-      data: "" || profileData.nationality,
+      id: "location",
+      label: "LOCATION",
+      data: "" || profileData.location,
+      text: "Adding location to your profile lets friends know where you are in this big beautiful world",
       displaySave: false,
-      tempValue: profileData.nationality || "",
+      tempValue: profileData.location || "",
+      required: false,
     },
     {
       id: "links",
       label: "LINKS",
       data: "" || profileData.links,
+      text: "Provide a link on your profile for a personal website or social media profile.",
       displaySave: false,
       tempValue: profileData.links || "",
+      required: false,
     },
   ]);
 
@@ -92,6 +93,8 @@ const EditProfile = () => {
 
   const handleSaveClick = async (id, event) => {
     event.stopPropagation(); //prevent activating the parent function
+    event.preventDefault();
+
     const selectedCard = textCards.find((card) => card.id === id); //extract the selected card
     //update the real value based on input
     const newValue = {
@@ -111,28 +114,34 @@ const EditProfile = () => {
   };
 
   //update the image to firestore funciton
-  const handleSaveImage= async(newImage)=>{
-   await updateDoc(userRef,{
-    image: newImage
-   })
-  }
+  const handleSaveImage = async (newImage) => {
+    await updateDoc(userRef, {
+      image: newImage,
+    });
+  };
 
   return (
     <div style={{ paddingInline: "10%" }}>
-      <ProfileHeader type={"profileEdit"} name={profileData.name}  />
+      <ProfileHeader type={"profileEdit"} name={profileData.name} />
 
-      <EditImageCard image={profileData.image} id={"image"} onSaveImage={handleSaveImage} />
+      <EditImageCard
+        image={profileData.image}
+        id={"image"}
+        onSaveImage={handleSaveImage}
+      />
       {textCards.map((card) => (
         <EditTextCard
           key={card.id}
           cardID={card.id}
           label={card.label}
           data={card.tempValue}
+          text={card.text}
           displaySave={card.displaySave}
           onEditClick={handleEditClick}
           onCancelClick={handleCancelClick}
           onSaveClick={handleSaveClick}
           onInputChange={handleInputChange}
+          required={card.required}
         />
       ))}
     </div>

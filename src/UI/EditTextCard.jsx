@@ -2,7 +2,9 @@ import "./EditCard.scss";
 const EditTextCard = ({
   label,
   data,
+  text,
   cardID,
+  required,
   onEditClick,
   onSaveClick,
   onCancelClick,
@@ -33,23 +35,26 @@ const EditTextCard = ({
         {!displaySave ? (
           <p className="editCard-textData">{data}</p>
         ) : (
-          <input
-            className="editCard-textInput"
-            type="text"
-            value={data}
-            onChange={(event) => onInputChange(event, cardID)}
-          />
+          // <form onSubmit={(event) => onSaveClick(cardID, event)}>
+
+          <div className="inputText-container">
+            <input
+              className="editCard-textInput"
+              type="text"
+              value={data}
+              onChange={(event) => onInputChange(event, cardID)}
+              required={required}
+            />
+            <p>{text}</p>
+          </div>
+          // </form>
         )}
-        {
-          <button
-            onClick={(event) => 
-              onSaveClick(cardID,event)
-            }
-            disabled={!displaySave}
-          >
-            Save
-          </button>
-        }
+        <button
+          disabled={!displaySave}
+          onClick={(event) => onSaveClick(cardID, event)}
+        >
+          Save
+        </button>
       </div>
     </div>
   );

@@ -53,7 +53,7 @@ const EditImageCard = ({ image, id, onSaveImage }) => {
         />
       </div>
       <div className="editCard-footer">
-        <img src={currentImage} alt="profile" />
+        <img src={currentImage?currentImage:'/Default-Avatar.jpg'} alt="profile" />
         {/*passing new image to parent component */}
         {
           <button

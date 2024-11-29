@@ -70,7 +70,7 @@ const Navbar = () => {
                 src="/film-svgrepo-com.svg"
                 alt="MoviesMate Logo"
               />
-              <p>MoviesMate</p>
+              <p style={{cursor:'pointer'}}>MoviesMate</p>
             </NavLink>
           </li>
           <li className="navSection">

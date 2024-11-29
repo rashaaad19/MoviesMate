@@ -1,3 +1,7 @@
+//mixins and variables
+@use "../assets/mixins.scss";
+@use "../assets/variables.scss";
+
 .profilePage-container {
   padding-inline: 10%;
 }
@@ -20,17 +24,8 @@
       color: #a5a5a5;
       margin-bottom: 10px;
     }
-    .dateJoined {
-      color: #bbbbbb;
-      background: #464646;
-      border-radius: 5px;
-      font-size: 12px;
-      width: 5rem;
-      text-align: center;
-      padding-block: 5px;
-      display: block;
-    }
-    a {
+
+    .editProfile-anchor {
       color: #bbbbbb;
       background: #464646;
       border-radius: 5px;
@@ -40,6 +35,22 @@
       padding-block: 5px;
       display: block;
       cursor: pointer;
+      text-decoration: none;
+    }
+    .profileData-bio {
+      color: variables.$light-gray;
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+    .profileBadges-container {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .userLinks {
+      display: flex;
+      align-items: center;
+      color: variables.$light-gray;
       text-decoration: none;
     }
   }
@@ -54,16 +65,21 @@
     width: 100%;
     height: 15rem;
     font-size: 20px;
-    padding-left: 5rem;
-    box-shadow: #1e1b1b 4px 6px 18px 5px;
-    p {
+    box-shadow: #25262d 4px -3px 5px 14px;
+    .diaryMovies-content {
       display: flex;
       align-items: center;
       gap: 10px;
-
+      width: 8rem;
       span:nth-of-type(1) {
         font-size: 50px;
       }
+    }
+    .diaryMovies-label {
+      align-self: center;
+      font-size: 14px;
+      color: variables.$light-gray;
+      padding-top: 2rem;
     }
   }
 }
@@ -79,8 +95,9 @@
       width: 35%;
     }
     .userDiary {
-      height: 10rem;
-      width: 75%;
+      height: 12rem;
+      width: 85%;
+      padding: 10px;
     }
   }
   .personalData-container {

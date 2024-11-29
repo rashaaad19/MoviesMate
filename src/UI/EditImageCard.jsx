@@ -1,14 +1,17 @@
 import { useState } from "react";
 import "./EditCard.scss";
 
-const EditImageCard = ({ image }) => {
+const EditImageCard = ({ image, id, onSaveImage }) => {
   const [currentImage, setCurrentImage] = useState(image); //state to keep the image
   const [displaySave, setDisplaySave] = useState(false); //state to control save button
-
   //function listening to changes in the image input
   const handleOnImageChange = (event) => {
     //extracting the first selected element
     const file = event.target.files[0];
+    console.log(file);
+    // Reset the input value to ensure onChange triggers even for the same file
+    event.target.value = null;
+
     //check the selection of image
     if (file) {
       setDisplaySave(true); //displaying the save button to the user
@@ -31,9 +34,9 @@ const EditImageCard = ({ image }) => {
   };
 
   //TODO: add edited data to firestore
-  const handleOnSave = () => {
-    console.log("saved");
-  };
+  // const handleOnSave = () => {
+  //   console.log("saved");
+  // };
 
   return (
     <div className="editCard-container">
@@ -51,8 +54,15 @@ const EditImageCard = ({ image }) => {
       </div>
       <div className="editCard-footer">
         <img src={currentImage} alt="profile" />
+        {/*passing new image to parent component */}
         {
-          <button onClick={handleOnSave} disabled={!displaySave}>
+          <button
+            onClick={() => {
+              onSaveImage(currentImage);
+              setDisplaySave(false);
+            }}
+            disabled={!displaySave}
+          >
             Save
           </button>
         }

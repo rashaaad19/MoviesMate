@@ -1,15 +1,21 @@
 import { useLoaderData } from "react-router-dom";
+import { useState } from "react";
+
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from "../firebase";
+
 import ProfileHeader from "../UI/ProfileHeader";
 import EditImageCard from "../UI/EditImageCard";
 import EditTextCard from "../UI/EditTextCard";
-import { useState } from "react";
 
 const EditProfile = () => {
-
   const profileData = useLoaderData(); //extracting profile data
+  const userID = profileData.id;
+  const userRef = doc(db, "users", userID); //reference to user document in firestore
+
   const [textCards, setTextCards] = useState([
     {
-      id: "username",
+      id: "userName",
       label: "USERNAME",
       data: profileData.userName,
       displaySave: false,
@@ -22,20 +28,26 @@ const EditProfile = () => {
       displaySave: false,
       tempValue: profileData.name,
     },
-    { id: "bio", label: "BIO", data: "", displaySave: false, tempValue: "" },
+    {
+      id: "bio",
+      label: "BIO",
+      data: profileData.bio || "",
+      displaySave: false,
+      tempValue: profileData.bio || "",
+    },
     {
       id: "nationality",
       label: "NATIONALITY",
-      data: "",
+      data: "" || profileData.nationality,
       displaySave: false,
-      tempValue: "",
+      tempValue: profileData.nationality || "",
     },
     {
       id: "links",
       label: "LINKS",
-      data: "",
+      data: "" || profileData.links,
       displaySave: false,
-      tempValue: "",
+      tempValue: profileData.links || "",
     },
   ]);
 
@@ -49,7 +61,7 @@ const EditProfile = () => {
   };
 
   const handleCancelClick = (event, id) => {
-    event.stopPropagation();    //prevent activating the parent function
+    event.stopPropagation(); //prevent activating the parent function
     const selectedCard = textCards.find((card) => card.id === id); //extract the selected card
     // reset the card states after canceling
     const updatedCard = {
@@ -76,12 +88,9 @@ const EditProfile = () => {
     setTextCards(newUpdatedCards);
   };
 
-
   //TODO: Push the new values to the user's firestore document
 
-  
-  const handleSaveClick = (id, event) => {
-
+  const handleSaveClick = async (id, event) => {
     event.stopPropagation(); //prevent activating the parent function
     const selectedCard = textCards.find((card) => card.id === id); //extract the selected card
     //update the real value based on input
@@ -90,22 +99,29 @@ const EditProfile = () => {
       data: selectedCard.tempValue,
       displaySave: false,
     };
-    setTextCards(false);
     //updage the text cards with the new text card
     const newUpdatedCards = textCards.map((card) =>
       card.id === newValue.id ? newValue : card
     );
-    console.log(newUpdatedCards);
+    await updateDoc(userRef, {
+      [id]: newValue.data,
+    });
     //update the state after editing temp value
     setTextCards(newUpdatedCards);
   };
 
-  console.log(textCards);
+  //update the image to firestore funciton
+  const handleSaveImage= async(newImage)=>{
+   await updateDoc(userRef,{
+    image: newImage
+   })
+  }
+
   return (
     <div style={{ paddingInline: "10%" }}>
-      <ProfileHeader type={"profileEdit"} name={profileData.name} />
+      <ProfileHeader type={"profileEdit"} name={profileData.name}  />
 
-      <EditImageCard image={profileData.image} />
+      <EditImageCard image={profileData.image} id={"image"} onSaveImage={handleSaveImage} />
       {textCards.map((card) => (
         <EditTextCard
           key={card.id}

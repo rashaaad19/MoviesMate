@@ -27,14 +27,14 @@
       cursor: pointer;
       transition: color 0.2s ease-in-out;
     }
-    button:hover{
+    button:hover {
       color: functions.hover-lighten(variables.$secondary-orange, 50%);
     }
   }
 
   .editCard-footer {
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: space-between;
     img {
       border-radius: 50%;
@@ -44,7 +44,7 @@
     button {
       background-color: variables.$button-orange;
       border: none;
-      padding: 10px 25px;
+      padding: 5px 20px;
       border-radius: 5px;
       cursor: pointer;
     }
@@ -60,7 +60,7 @@
   }
 }
 
-.editCard-container:hover{
+.editCard-container:hover {
   background-color: functions.hover-lighten(variables.$primary-black, 3%);
 }
 .editCard-textInput {
@@ -79,5 +79,6 @@
   color: variables.$light-black;
 }
 .editCard-textData {
-  align-self: flex-start;
+  overflow-x: hidden;
+  margin-right: 10px;
 }

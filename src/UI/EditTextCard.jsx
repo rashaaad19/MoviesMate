@@ -6,6 +6,7 @@ const EditTextCard = ({
   onEditClick,
   onSaveClick,
   onCancelClick,
+  onInputChange,
   displaySave,
 }) => {
   return (
@@ -32,10 +33,20 @@ const EditTextCard = ({
         {!displaySave ? (
           <p className="editCard-textData">{data}</p>
         ) : (
-          <input className="editCard-textInput" type="text" value={data} />
+          <input
+            className="editCard-textInput"
+            type="text"
+            value={data}
+            onChange={(event) => onInputChange(event, cardID)}
+          />
         )}
         {
-          <button onClick={() => onSaveClick(cardID)} disabled={!displaySave}>
+          <button
+            onClick={(event) => 
+              onSaveClick(cardID,event)
+            }
+            disabled={!displaySave}
+          >
             Save
           </button>
         }

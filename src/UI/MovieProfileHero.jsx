@@ -1,7 +1,14 @@
-import { Rating } from "react-simple-star-rating";
-import { releaseDateFormatter, runtimeFormatter } from "../utilties/functions";
 import "./MovieProfileHero.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+import { releaseDateFormatter, runtimeFormatter } from "../utilties/functions";
+
+import { Rating } from "react-simple-star-rating";
+import { TbEyeCheck, TbHeartPlus } from "react-icons/tb";
+import TooltipIcon from "./TooltipIcon";
+import { updateDoc } from "firebase/firestore";
+
+//TODO: link watched and favs to user's firestore doc.
 
 const MovieProfileHero = ({
   crew,
@@ -16,9 +23,11 @@ const MovieProfileHero = ({
   imdbID,
   imdbRate,
 }) => {
-  console.log(imdbID)
   const [ratingValue, setRatingValue] = useState(0);
+  const [isWatched, setIsWatched] = useState(false);
+  const [isFav, setIsFav] = useState(false);
 
+  const isAuth = localStorage.getItem("isAuth");
   const directors = crew.filter(({ job }) => job === "Director");
   const writers = crew.filter(
     ({ job }) => job === "Screenplay" || job === "Writer"
@@ -29,6 +38,17 @@ const MovieProfileHero = ({
   const handleRating = (rate) => {
     setRatingValue(rate);
   };
+
+  const handleWatchedClick = () => {
+    setIsWatched(!isWatched);
+  };
+  const handleFavClick = () => {
+    setIsFav(!isFav);
+  };
+
+  // useEffect( async() => {
+  //     updateDoc
+  // }, []);
 
   return (
     <div
@@ -50,20 +70,56 @@ const MovieProfileHero = ({
         <p>
           {genres.map((item, index) => (
             <span key={item.id}>
-              {item.name}{genres.length !== 1 &&
-              index !== genres.length - 1
-                ? " | "
-                : ""}
+              {item.name}
+              {genres.length !== 1 && index !== genres.length - 1 ? " | " : ""}
             </span>
           ))}
         </p>
 
         <div className="movieRating-container">
-          <a className="imdbInfo" href={`https://www.imdb.com/title/${imdbID}`} target="_blank">
+          <a
+            className="imdbInfo"
+            href={`https://www.imdb.com/title/${imdbID}`}
+            target="_blank"
+          >
             <img className="imdbLogo" src="/IMDB_Logo_2016.svg" />
             <span>{imdbRate}</span>
           </a>
-          <Rating onClick={handleRating} size={25} />
+          {isAuth && (
+            <TooltipIcon
+              icon={
+                <TbEyeCheck
+                  size={"1.5em"}
+                  className={
+                    isWatched ? "active-tooltipIcon" : "nonActive-tooltipIcon"
+                  }
+                  onClick={handleWatchedClick}
+                />
+              }
+              tooltip={isWatched ? "Remove from watched" : "Add to watched"}
+            />
+          )}
+          {isAuth && (
+            <TooltipIcon
+              icon={
+                <TbHeartPlus
+                  size={"1.5em"}
+                  className={
+                    isFav ? "active-tooltipIcon" : "nonActive-tooltipIcon"
+                  }
+                  onClick={handleFavClick}
+                />
+              }
+              tooltip={isFav ? "Remove from favourites" : "Add to favourites"}
+            />
+          )}
+
+          <Rating
+            readonly={isAuth === "true" ? false : true}
+            disableFillHover={false}
+            onClick={handleRating}
+            size={25}
+          />
         </div>
         <p>{overview}</p>
 

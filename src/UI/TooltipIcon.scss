@@ -1,0 +1,42 @@
+//mixins and variables
+
+@use "../assets/mixins.scss";
+@use "../assets/variables.scss";
+
+.tooltipIcon-container {
+  position: relative;
+  display: inline-block;
+  svg {
+    cursor: pointer;
+  }
+  .nonActive-tooltipIcon:hover {
+    color: variables.$primary-gray;
+  }
+  .active-tooltipIcon {
+    color: variables.$button-orange;
+  }
+
+  .tooltip {
+    visibility: hidden;
+    width: auto;
+    background-color: variables.$primary-black;
+    color: variables.$secondary-gray;
+    text-align: center;
+    padding: 8px;
+    border-radius: 5px;
+    position: absolute;
+    bottom: 100%; /* Position above the icon */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+}
+
+.tooltipIcon-container:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
+}

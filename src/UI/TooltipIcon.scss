@@ -12,8 +12,11 @@
   .nonActive-tooltipIcon:hover {
     color: variables.$primary-gray;
   }
-  .active-tooltipIcon {
-    color: variables.$button-orange;
+  .active-fav {
+    color: variables.$secondary-red;
+  }
+  .active-watched{
+    color:variables.$primary-green
   }
 
   .tooltip {

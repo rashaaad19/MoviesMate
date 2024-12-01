@@ -4,6 +4,8 @@ import CastSlider from "../components/CastSlider";
 import MovieSlider from "../components/MovieSlider";
 import { options } from "../data/tmdb";
 import ReviewCardsSlider from "../components/ReviewCardsSlider";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../firebase";
 
 const MovieProfile = () => {
   const data = useLoaderData();
@@ -13,8 +15,7 @@ const MovieProfile = () => {
   const crewData = movieInformation.credits.crew;
   const reviewsData = movieInformation.reviews;
   const similarMoviesURL = `https://api.themoviedb.org/3/movie/${movieInformation.id}/similar?language=en-US&page=1&api_key=c20fa7ec5e6db6643718e535c5234b95`;
-
-console.log(imdbInformation)
+  const userData =  data.userData;
   return (
     <>
       <MovieProfileHero
@@ -29,6 +30,7 @@ console.log(imdbInformation)
         releaseDate={movieInformation.release_date}
         runtime={movieInformation.runtime}
         crew={crewData}
+        userData={userData}
       />
       <CastSlider cast={castData} />
       <MovieSlider
@@ -46,6 +48,7 @@ export default MovieProfile;
 
 export const loader = async ({ params }) => {
   const id = params.movieID;
+  const userID = localStorage.getItem("userID"); // extract User ID from local storage
 
   const movieDataURL = `https://api.themoviedb.org/3/movie/${id}?language=en-US&append_to_response=credits,reviews`;
   const options = {
@@ -63,13 +66,15 @@ export const loader = async ({ params }) => {
   }
   const movieData = await movieResponse.json();
 
-
-
   const movieIMDbId = movieData.imdb_id;
   const imdbDataURL = `https://www.omdbapi.com/?i=${movieIMDbId}&plot=short&r=json&apikey=ee6d6c20`;
 
   const imdbResponse = await fetch(imdbDataURL);
   const imdbData = await imdbResponse.json();
 
-  return { movieData, imdbData };
+  const userRef = doc(db, "users", userID);
+  const userDocSnap = await getDoc(userRef);
+  const userData = userDocSnap.data();
+
+  return { movieData, imdbData, userData };
 };

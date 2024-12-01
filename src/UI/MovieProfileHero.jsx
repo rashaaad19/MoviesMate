@@ -15,7 +15,7 @@ import {
 } from "firebase/firestore";
 import { db } from "../firebase";
 
-//TODO: Add watched movies and favourites to user document in firestore
+//TODO: Add user's raitings to his document in firestore
 
 const MovieProfileHero = ({
   crew,

@@ -47,6 +47,7 @@ export const useAuth = () => {
           userDoc.movies = {
             favourites: [],
             watched: [],
+            reviews: [],
           };
         } else if (userDocSnapshot.exists()) {
           // If the user exists, retain the existing data
@@ -102,6 +103,7 @@ export const useAuth = () => {
           userDoc.movies = {
             favourites: [],
             watched: [],
+            reviews: [],
           };
         } else if (userDocSnapshot.exists()) {
           // If the user exists, retain the existing data

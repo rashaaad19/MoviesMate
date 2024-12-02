@@ -6,16 +6,10 @@ import { releaseDateFormatter, runtimeFormatter } from "../utilties/functions";
 import { Rating } from "react-simple-star-rating";
 import { TbEyeCheck, TbHeartPlus } from "react-icons/tb";
 import TooltipIcon from "./TooltipIcon";
-import {
-  arrayRemove,
-  arrayUnion,
-  doc,
-  getDoc,
-  updateDoc,
-} from "firebase/firestore";
+import { arrayRemove, arrayUnion, doc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase";
 
-//TODO: Add user's raitings to his document in firestore
+// ! Error: Review handler is creating new object in the array each time even for existing objects
 
 const MovieProfileHero = ({
   crew,
@@ -31,33 +25,58 @@ const MovieProfileHero = ({
   imdbRate,
   userData,
 }) => {
-  const [ratingValue, setRatingValue] = useState(0);
-
-  //adding the state based on the user current movies
-  const [currentFav, setCurrentFav] = useState(
-    userData.movies.favourites.includes(id)
-  );
-  const [currentWatched, setCurrentWatched] = useState(
-    userData.movies.watched.includes(id)
-  );
-
-
   const isAuth = localStorage.getItem("isAuth"); //extract authentication status from local storage
-  const userEmail = localStorage.getItem("userEmail"); // extract User ID from local storage
   const userID = localStorage.getItem("userID"); // extract User ID from local storage
 
-  const userRef = doc(db, "users", userID); //getting reference to the user doc
-
-
-  const directors = crew.filter(({ job }) => job === "Director"); 
+  let isUserFav = userData.movies.favourites.includes(id);
+  let isUserWatched = userData.movies.watched.includes(id);
+  let userCurrentReviews = userData.movies.reviews;
+  const userRef = useMemo(() => doc(db, "users", userID), [userID]); //getting reference to the user doc
+  const formatedRuntime = runtimeFormatter(runtime);
+  const releaseYear = releaseDateFormatter(releaseDate);
+  const directors = crew.filter(({ job }) => job === "Director");
   const writers = crew.filter(
     ({ job }) => job === "Screenplay" || job === "Writer"
   );
-  const formatedRuntime = runtimeFormatter(runtime);
-  const releaseYear = releaseDateFormatter(releaseDate);
 
-  const handleRating = (rate) => {
-    setRatingValue(rate);
+  const [currentFav, setCurrentFav] = useState(isUserFav);
+  const [currentWatched, setCurrentWatched] = useState(isUserWatched);
+  const [userReviews, setUserReviews] = useState(userCurrentReviews);
+
+  const existingReview = userReviews.find((review) => review.id === id);
+
+  useEffect(() => {
+    const updateReviews = async () => {
+      await updateDoc(userRef, {
+        "movies.reviews": userReviews,
+      });
+    };
+    updateReviews();
+  }, [userReviews, userRef]);
+
+  const handleRating = async (rate) => {
+    let updatedUserReviews;
+
+    //if review already exists, find it's index and update it with the new value
+    if (existingReview) {
+      const existingReviewIndex = userReviews.findIndex(
+        (review) => review.id === id
+      );
+      updatedUserReviews = userReviews.map(
+        (
+          review,
+          index // create new updated array with the review updated
+        ) =>
+          index === existingReviewIndex ? { ...review, rate: rate } : review
+      );
+    }
+    //if review is new, append it to the reviews array
+    if (!existingReview) {
+      updatedUserReviews = [...userReviews, { id: id, rate: rate }];
+    }
+
+    //update the state to trigger the firestore update
+    setUserReviews(updatedUserReviews);
   };
 
   const handleWatchedClick = async () => {
@@ -85,8 +104,7 @@ const MovieProfileHero = ({
         "movies.favourites": arrayUnion(id),
       });
     }
-        //if the movie is in the user's database, remove it onclick
-
+    //if the movie is in the user's database, remove it onclick
     if (currentFav) {
       setCurrentFav(false);
       await updateDoc(userRef, {
@@ -136,9 +154,7 @@ const MovieProfileHero = ({
                 <TbEyeCheck
                   size={"1.5em"}
                   className={
-                    currentWatched
-                      ? "active-watched"
-                      : "nonActive-tooltipIcon"
+                    currentWatched ? "active-watched" : "nonActive-tooltipIcon"
                   }
                   onClick={handleWatchedClick}
                 />
@@ -170,6 +186,8 @@ const MovieProfileHero = ({
             disableFillHover={false}
             onClick={handleRating}
             size={25}
+            allowFraction
+            initialValue={existingReview ? existingReview.rate : 0}
           />
         </div>
         <p>{overview}</p>

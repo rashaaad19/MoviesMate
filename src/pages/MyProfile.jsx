@@ -13,6 +13,8 @@ import { TiAttachment } from "react-icons/ti";
 const MyProfile = () => {
   const profileData = useLoaderData();
   console.log(profileData);
+  const watchedMovies = profileData.movies.watched.length;
+  const favMovies = profileData.movies.favourites.length;
   return (
     <div>
       {profileData && (
@@ -22,7 +24,9 @@ const MyProfile = () => {
             <img
               className="personalImg"
               alt="profile image"
-              src={profileData.image?profileData.image:'/Default-Avatar.jpg'}
+              src={
+                profileData.image ? profileData.image : "/Default-Avatar.jpg"
+              }
             />
             <div className="personalData-container">
               <div>
@@ -54,7 +58,11 @@ const MyProfile = () => {
                   )}
                 </div>
                 {profileData.links && (
-                  <a className="userLinks" href={profileData.links} target="_blank">
+                  <a
+                    className="userLinks"
+                    href={profileData.links}
+                    target="_blank"
+                  >
                     <TiAttachment
                       // style={{ paddingRight: "5px" }}
                       size={"1.2em"}
@@ -63,17 +71,21 @@ const MyProfile = () => {
                   </a>
                 )}
               </div>
-              <Link to={"edit"} className="editProfile-anchor">Edit Profile</Link>
+              <Link to={"edit"} className="editProfile-anchor">
+                Edit Profile
+              </Link>
             </div>
 
             <div className="userDiary">
               <p className="diaryMovies-content">
-                <span>0</span> <span>Watched</span>
+                <span>{watchedMovies}</span> <span>Watched</span>
               </p>
               <p className="diaryMovies-content">
-                <span>0</span> <span>Favourite</span>
+                <span>{favMovies}</span> <span>Favourite</span>
               </p>
-              <p className="diaryMovies-label">Movies since joining MoviesMate</p>
+              <p className="diaryMovies-label">
+                Movies since joining MoviesMate
+              </p>
             </div>
           </div>
         </div>

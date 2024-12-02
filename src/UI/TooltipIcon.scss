@@ -2,6 +2,8 @@
 
 @use "../assets/mixins.scss";
 @use "../assets/variables.scss";
+@use "../assets//functions.scss";
+
 
 .tooltipIcon-container {
   position: relative;
@@ -13,10 +15,15 @@
     color: variables.$primary-gray;
   }
   .active-fav {
+    fill: variables.$secondary-red;
     color: variables.$secondary-red;
   }
-  .active-watched{
-    color:variables.$primary-green
+  .active-watched {
+    color: variables.$primary-green;
+    fill: #c5c5c75c;
+  }
+  .active-watched, .active-fav{
+    transition: all 0.2s ease-in-out;
   }
 
   .tooltip {

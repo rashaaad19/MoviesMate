@@ -1,7 +1,7 @@
 //mixins and variables
 @use "../assets/mixins.scss";
 @use "../assets/variables.scss";
-
+@use "../assets/functions.scss";
 .profilePage-container {
   padding-inline: 10%;
 }
@@ -36,6 +36,9 @@
       display: block;
       cursor: pointer;
       text-decoration: none;
+    }
+    .editProfile-anchor:hover{
+      background-color: functions.hover-lighten(#464646, 10%);
     }
     .profileData-bio {
       color: variables.$light-gray;

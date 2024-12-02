@@ -11,7 +11,7 @@ import { auth } from "../firebase";
 import { userNameGenerator } from "./../utilties/functions";
 
 const popularURL =
-  "https://api.themoviedb.org/3/movie/popular?language=en-US&page=1";
+  "https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&vote_count.gte=100";
 const topRatedURL =
   "https://api.themoviedb.org/3/movie/top_rated?language=en&page=1";
 const nowPlayingURL =

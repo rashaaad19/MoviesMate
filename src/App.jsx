@@ -12,21 +12,22 @@ import Discover from "./pages/Discover";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Home from "./pages/Home";
+import MyProfile from "./pages/MyProfile";
+import EditProfile from "./pages/EditProfile";
+import MovieProfile from "./pages/MovieProfile";
+
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
-import MovieProfile from "./pages/MovieProfile";
 
 import { loader as movieDataLoader } from "./pages/MovieProfile";
 import { loader as loginLoader } from "./pages/Login";
 import { loader as signupLoader } from "./pages/Signup";
 import { loader as myProfileLoader } from "./pages/MyProfile";
 
-import MyProfile from "./pages/MyProfile";
-import EditProfile from "./pages/EditProfile";
 
 function App() {
+  
   const showMenu = useSelector((state) => state.Ui.fullPageNav);
-  const userID = localStorage.getItem("userID");
   const router = createBrowserRouter([
     {
       path: "/",

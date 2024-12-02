@@ -3,24 +3,16 @@ import Navbar from "./Navbar";
 import Footer from "../UI/Footer";
 import ScrollToTop from "./ScrollToTop";
 import { FadeLoader } from "react-spinners";
+import LoadingScreen from "../UI/LoadingScreen";
 
 const Root = () => {
   const naviagtion = useNavigation();
 
-  const loadingStyles = {
-    height: "100vh",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  };
   return (
     <>
       <Navbar />
       {naviagtion.state === "loading" ? (
-        <div style={loadingStyles}>
-          <FadeLoader color="#f98727" />
-          <ScrollToTop />
-        </div>
+        <LoadingScreen />
       ) : (
         <main>
           <ScrollToTop />

@@ -7,17 +7,26 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 
 import { useState } from "react";
 import { useAuth } from "../hooks/useAuth";
+import LoadingScreen from "../UI/LoadingScreen";
 
 const Login = () => {
   const [loginError, setLoginError] = useState({
     errorStatus: false,
     type: "",
   });
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const { handleFacebookSignup, handleGoogleSignup } = useAuth();
+  const { handleFacebookSignup, handleGoogleSignup, loading, error } =
+    useAuth();
+
+  // handling loading state
+  if (loading || isLoading) {
+    return <LoadingScreen />;
+  }
   //handling normal login submission
   const handleOnSubmit = (event) => {
     event.preventDefault();
+    setIsLoading(true);
     const userData = new FormData(event.target);
     const userEmail = userData.get("email");
     const userPassword = userData.get("password");
@@ -25,13 +34,12 @@ const Login = () => {
     signInWithEmailAndPassword(auth, userEmail, userPassword)
       .then((userCredential) => {
         // Signed in
-        console.log(userCredential.user);
         setLoginError({ errorStatus: false, type: "" });
         // Persist authentication data
         localStorage.setItem("isAuth", "true");
         localStorage.setItem("userEmail", userEmail);
         localStorage.setItem("userID", userCredential.user.uid);
-
+        setIsLoading(false);
         navigate("/");
         // ...
       })
@@ -39,6 +47,8 @@ const Login = () => {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log(error.code);
+        setIsLoading(false);
+
         if (errorCode === "auth/invalid-credential") {
           setLoginError({ errorStatus: true, type: "wrong credentials" });
         }

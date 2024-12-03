@@ -8,6 +8,7 @@ import {
 import { auth, db } from "../firebase";
 import { collection, doc, getDoc, setDoc } from "firebase/firestore";
 import { userNameGenerator } from "../utilties/functions";
+import { useState } from "react";
 
 // Assign third-party register providers
 const googleProvider = new GoogleAuthProvider();
@@ -15,12 +16,15 @@ const facebookProvider = new FacebookAuthProvider();
 
 // Custom hook to handle authentication
 export const useAuth = () => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const navigate = useNavigate(); // Get the navigate function
   const usersRef = collection(db, "users"); //adding reference to the users collection
 
   const handleGoogleSignup = () => {
     signInWithPopup(auth, googleProvider)
       .then(async (result) => {
+        setLoading(true)
         // This gives you a Google Access Token. You can use it to access the Google API.
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const token = credential.accessToken;
@@ -57,7 +61,7 @@ export const useAuth = () => {
         }
         //save the updated or new document
         await setDoc(userDocRef, userDoc);
-
+        setLoading(false);
         //persist authentication data
         localStorage.setItem("isAuth", "true");
         localStorage.setItem("userEmail", user.email);
@@ -69,6 +73,8 @@ export const useAuth = () => {
         const errorCode = error.code;
         const errorMessage = error.message;
         const credential = GoogleAuthProvider.credentialFromError(error);
+        setError(error);
+        setLoading(false)
         console.log(error);
       });
   };
@@ -76,6 +82,7 @@ export const useAuth = () => {
   const handleFacebookSignup = () => {
     signInWithPopup(auth, facebookProvider)
       .then(async (result) => {
+        setLoading(true)
         const credential = FacebookAuthProvider.credentialFromResult(result);
         const token = credential.accessToken;
         const user = result.user;
@@ -113,7 +120,7 @@ export const useAuth = () => {
         }
         //save the updated or new document
         await setDoc(userDocRef, userDoc);
-
+        setLoading(false);
         //persist authentication data
         localStorage.setItem("isAuth", "true");
         localStorage.setItem("userEmail", user.email);
@@ -126,6 +133,8 @@ export const useAuth = () => {
         const errorCode = error.code;
         const errorMessage = error.message;
         const credential = FacebookAuthProvider.credentialFromError(error);
+        setError(error);
+        setLoading(false)
         console.log(error);
       });
   };
@@ -133,5 +142,7 @@ export const useAuth = () => {
   return {
     handleGoogleSignup,
     handleFacebookSignup,
+    loading,
+    error,
   };
 };

@@ -9,7 +9,8 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "../firebase";
 
 import { userNameGenerator, validatePassword } from "../utilties/functions";
-import { collection, doc, getDocs, setDoc } from "firebase/firestore";
+import { collection, doc, setDoc } from "firebase/firestore";
+import LoadingScreen from "../UI/LoadingScreen";
 
 const Signup = () => {
   const [passwordIsInvalid, setPasswordIsInvalid] = useState({
@@ -21,8 +22,10 @@ const Signup = () => {
     invalid: false,
     errorType: "",
   });
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate(); //extracting navigate function
-  const { handleFacebookSignup, handleGoogleSignup } = useAuth(); //extract third party register custom hooks
+  const { handleFacebookSignup, handleGoogleSignup, loading, error } =
+    useAuth(); //extract third party register custom hooks
   const usersRef = collection(db, "users"); //adding reference to the users collection
 
   // reference to manipulate input elements
@@ -30,10 +33,14 @@ const Signup = () => {
   const confirmPasswordRef = useRef(null);
   const passwordRef = useRef(null);
 
+  if (loading || isLoading) {
+    return <LoadingScreen />;
+  }
   //get all users usernames to check availability
 
   const handleOnSubmit = async (event) => {
     event.preventDefault();
+    setIsLoading(true);
     //handling input data
     const data = new FormData(event.target);
     const name = data.get("name");
@@ -94,7 +101,7 @@ const Signup = () => {
           localStorage.setItem("isAuth", "true");
           localStorage.setItem("userEmail", userData.userEmail);
           localStorage.setItem("userID", userInfo.uid);
-
+          setIsLoading(false);
           setEmailIsInvalid({ invalid: false, errorType: "" });
           //navigate to root page
           navigate("/");
@@ -102,6 +109,7 @@ const Signup = () => {
         .catch((error) => {
           const errorMessage = error.message;
           console.log(error.message);
+          setIsLoading(false);
           if (errorMessage === "Firebase: Error (auth/email-already-in-use).") {
             setEmailIsInvalid({ invalid: true, errorType: "email exists" });
             emailRef.current.focus();

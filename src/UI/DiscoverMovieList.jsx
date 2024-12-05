@@ -6,6 +6,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Pagination from "../components/Pagination";
+import LoadingScreen from './LoadingScreen';
 
 const DiscoverMovieList = () => {
   //Extracting the states from the discover slice
@@ -14,7 +15,6 @@ const DiscoverMovieList = () => {
   const languageState = useSelector((state) => state.discover.language);
   const genreState = useSelector((state) => state.discover.genre);
   const pageState = useSelector((state) => state.discover.page);
-  console.log(pageState);
 
   //URL params state
   const [params, setParams] = useState({
@@ -24,7 +24,6 @@ const DiscoverMovieList = () => {
     page: pageState,
     "vote_count.gte": 100,
   });
-  console.log(params);
 
   // Memoize the options object to avoid changing reference on each render
   const options = useMemo(
@@ -87,7 +86,9 @@ const DiscoverMovieList = () => {
   //fetching the data using custom hook
   const { data, loading, error } = useFetch(moviesURL, options);
 
-  console.log(moviesURL);
+  if (loading) {
+    return <LoadingScreen />;
+  }
 
   return (
     <>

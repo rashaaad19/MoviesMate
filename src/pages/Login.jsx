@@ -39,6 +39,7 @@ const Login = () => {
         localStorage.setItem("isAuth", "true");
         localStorage.setItem("userEmail", userEmail);
         localStorage.setItem("userID", userCredential.user.uid);
+        console.log(userCredential.user)
         setIsLoading(false);
         navigate("/");
         // ...

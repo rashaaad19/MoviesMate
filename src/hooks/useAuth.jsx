@@ -24,7 +24,7 @@ export const useAuth = () => {
   const handleGoogleSignup = () => {
     signInWithPopup(auth, googleProvider)
       .then(async (result) => {
-        setLoading(true)
+        setLoading(true);
         // This gives you a Google Access Token. You can use it to access the Google API.
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const token = credential.accessToken;
@@ -66,6 +66,8 @@ export const useAuth = () => {
         localStorage.setItem("isAuth", "true");
         localStorage.setItem("userEmail", user.email);
         localStorage.setItem("userID", user.uid);
+        // localStorage.setItem("userImg", user.image);
+        console.log(user);
         // Navigate after successful login
         navigate("/");
       })
@@ -74,7 +76,7 @@ export const useAuth = () => {
         const errorMessage = error.message;
         const credential = GoogleAuthProvider.credentialFromError(error);
         setError(error);
-        setLoading(false)
+        setLoading(false);
         console.log(error);
       });
   };
@@ -82,7 +84,7 @@ export const useAuth = () => {
   const handleFacebookSignup = () => {
     signInWithPopup(auth, facebookProvider)
       .then(async (result) => {
-        setLoading(true)
+        setLoading(true);
         const credential = FacebookAuthProvider.credentialFromResult(result);
         const token = credential.accessToken;
         const user = result.user;
@@ -125,6 +127,7 @@ export const useAuth = () => {
         localStorage.setItem("isAuth", "true");
         localStorage.setItem("userEmail", user.email);
         localStorage.setItem("userID", user.uid);
+        localStorage.setItem("userImg", user.image);
 
         // Navigate after successful login
         navigate("/");
@@ -134,7 +137,7 @@ export const useAuth = () => {
         const errorMessage = error.message;
         const credential = FacebookAuthProvider.credentialFromError(error);
         setError(error);
-        setLoading(false)
+        setLoading(false);
         console.log(error);
       });
   };

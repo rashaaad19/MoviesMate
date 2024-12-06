@@ -2,7 +2,6 @@
 @use "../assets/mixins.scss";
 @use "../assets/variables.scss";
 
-
 .navList {
   list-style: none;
   color: variables.$primary-white;
@@ -13,7 +12,7 @@
   padding-inline: 30px;
   padding-block: 10px;
 }
-.burger-button{
+.burger-button {
   display: none;
 }
 .logo {
@@ -52,16 +51,17 @@
 }
 
 .login-button {
-  @include mixins.button-style(variables.$primary-white, variables.$primary-orange);
+  @include mixins.button-style(
+    variables.$primary-white,
+    variables.$primary-orange
+  );
 }
 
 .signup-button {
   font-weight: bold;
 }
 
-
-
-.fullPageContainer{
+.fullPageContainer {
   height: 100vh;
   position: sticky;
   top: 0;
@@ -70,71 +70,86 @@
   background-color: variables.$light-black;
 }
 
-.burger-items-container{
+.burger-items-container {
   display: none;
 }
 
+.user-navMenu {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  border: transparent;
+  cursor: pointer;
+  padding-inline: 20px;
+  svg {
+    color: variables.$primary-gray;
+    margin-left: 5px;
+    transition: all 0.2s ease-in-out;
+  }
+  img {
+    height: 2.5rem;
+    width: 2.5rem;
+    border-radius: 50%;
+  }
+}
+.user-navMenu:hover {
+  svg {
+    color: variables.$secondary-gray;
+  }
+}
 
+.activeArrow{
+  transform: rotate(180deg);
+}
+.nonActiveArrow{
+  transform: rotate(360deg);
+
+}
 
 //media queries
 
 @media (max-width: 767px) {
-
-
-  
-
-  .navList{
+  .navList {
     padding-inline: 5px;
     padding-block: 5px;
     user-select: none;
     display: flex;
-
   }
-.burger-items-container{
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 50px;
-  li{
-    list-style: none;
+  .burger-items-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 50px;
+    li {
+      list-style: none;
+    }
   }
-}
 
-  .navSubList{
+  .navSubList {
     font-size: 10px;
     gap: 5px;
-    .navItem{
-      a{
+    .navItem {
+      a {
         padding: 5px 5px;
       }
     }
   }
-    .logo{
-      width: 20px;
-    }
-    .navItem a:nth-of-type(1) p{
-      font-size: 22px;
-      font-weight: bold;
-    }
-    .burger-button{
-      width: 25px;
-      display: block;
-    }
+  .logo {
+    width: 20px;
+  }
+  .navItem a:nth-of-type(1) p {
+    font-size: 22px;
+    font-weight: bold;
+  }
+  .burger-button {
+    width: 25px;
+    display: block;
+  }
 
-
-    .navSection:nth-of-type(3){
-      display: none;
-    
-    }
-  
-  
-   
-    
+  .navSection:nth-of-type(3) {
+    display: none;
+  }
 }
-
-
-
-
-

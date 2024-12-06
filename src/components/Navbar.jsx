@@ -1,21 +1,52 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 
 import "./Navbar.scss";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { IoIosArrowDown } from "react-icons/io";
 
 import { useDispatch } from "react-redux";
 import { UiActions } from "../store/UiSlice";
-import { auth } from "../firebase";
+import { auth, db } from "../firebase";
 import { signOut } from "firebase/auth";
 import { userDataActions } from "../store/UserDataSlice";
+import { doc, getDoc } from "firebase/firestore";
+import UserMenu from "../UI/UserMenu";
 
 const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
+  const [userData, setUserData] = useState({});
+  const [showUserMenu, setShowUserMenu] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const authStatus = localStorage.getItem("isAuth"); //extract authentication status to update UI
-  const userID = localStorage.getItem("userID"); //extract user id
+  let docRef;
+  let userID;
+  if (authStatus === "true") {
+    userID = localStorage.getItem("userID"); //extract user id
+    docRef = doc(db, "users", userID);
+  }
+
+  useEffect(() => {
+    const fetchUserImage = async () => {
+      if (authStatus === "true") {
+        try {
+          const docSnap = await getDoc(docRef);
+          if (docSnap.exists()) {
+            setUserData(docSnap.data());
+          } else {
+            console.log("No such document!");
+          }
+        } catch (error) {
+          console.log("Error fetching document:", error);
+        }
+      }
+    };
+    fetchUserImage();
+  }, [authStatus]);
+
+  userData && console.log(userData);
+
   //handle navigation menu changes in mobile screens
   const burgerButtonHandler = () => {
     setShowMenu(!showMenu);
@@ -36,7 +67,9 @@ const Navbar = () => {
         localStorage.setItem("isAuth", "false");
         localStorage.removeItem("userEmail");
         localStorage.removeItem("userID");
-        navigate("/");
+        setShowUserMenu(false);
+        setUserData({})
+        navigate("/login");
       })
       .catch((error) => {
         //an error happened
@@ -44,6 +77,10 @@ const Navbar = () => {
       });
   };
 
+  const handleUserMenu = () => {
+    setShowUserMenu(!showUserMenu);
+  };
+  console.log(userData);
   return (
     <>
       <nav
@@ -70,7 +107,7 @@ const Navbar = () => {
                 src="/film-svgrepo-com.svg"
                 alt="MoviesMate Logo"
               />
-              <p style={{cursor:'pointer'}}>MoviesMate</p>
+              <p style={{ cursor: "pointer" }}>MoviesMate</p>
             </NavLink>
           </li>
           <li className="navSection">
@@ -109,21 +146,27 @@ const Navbar = () => {
           </li>
           <li className="navSection">
             {authStatus === "true" ? (
-              <ul className="navSubList">
-                <li className="navItem ">
-                  <button onClick={handleSignOut}>Sign out</button>
-                </li>
-                <li className="navItem ">
-                  <NavLink
-                    className={({ isActive }) =>
-                      isActive ? `active signup-button` : `signup-button`
-                    }
-                    to={`/user/${userID}`}
-                  >
-                    My Profile
-                  </NavLink>
-                </li>
-              </ul>
+              // <ul className="navSubList">
+              //   <li className="navItem ">
+              //     <button onClick={handleSignOut}>Sign out</button>
+              //   </li>
+              //   <li className="navItem ">
+              //     <NavLink
+              //       className={({ isActive }) =>
+              //         isActive ? `active signup-button` : `signup-button`
+              //       }
+              //       to={`/user/${userID}`}
+              //     >
+              //       My Profile
+              //     </NavLink>
+              //   </li>
+              // </ul>
+              <p className="navItem">
+                <button className="user-navMenu" onClick={handleUserMenu}>
+                  {userData.image && <img src={userData.image} alt="profile" />}
+                  <IoIosArrowDown className={showUserMenu?'activeArrow':'nonActiveArrow'} />
+                </button>
+              </p>
             ) : (
               <ul className="navSubList">
                 <li className="navItem ">
@@ -150,6 +193,17 @@ const Navbar = () => {
             )}
           </li>
         </ul>
+        {showUserMenu && userData && (
+          <UserMenu
+            name={userData.name}
+            image={userData.image}
+            userName={userData.userName}
+            userID={userID}
+            onSignout={handleSignOut}
+            isActive={showUserMenu}
+          />
+        )}
+
         {showMenu && (
           <ul className="burger-items-container">
             <li className="burger-menu-item">Home</li>

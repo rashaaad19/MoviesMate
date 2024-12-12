@@ -21,7 +21,9 @@
         clamp(1.2rem, 2vw, 1rem),
         variables.$primary-white
       );
-      transition: color 0.2s ease-in-out;
+      transition: all 0.2s ease-in-out;
+      // transition: filter 0.2s ease-in-out;
+
     }
     .posterLink:hover + .titleLink h3,
     .titleLink h3:hover {
@@ -30,6 +32,12 @@
   }
   img {
     width: 15rem;
+    
+  }
+  img:hover{
+    filter: brightness(0.5);
+    transition: filter 0.2s ease-in-out;
+    
   }
   a {
     text-decoration: none;

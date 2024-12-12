@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import "./Pagination.scss";
 import { useState } from "react";
 import { discoverActions } from "../store/DiscoverSlice";
+import { GrLink, GrLinkNext, GrLinkPrevious } from "react-icons/gr";
 
 const Pagination = ({ totalResults }) => {
   const [currentStart, setCurrentStart] = useState(1);
@@ -59,7 +60,7 @@ const Pagination = ({ totalResults }) => {
           }}
           style={
             activePage === i
-              ? { color: "#1ab7fd", cursor: "pointer" }
+              ? { color: "burlywood", cursor: "pointer" }
               : { cursor: "pointer" }
           }
           key={i}
@@ -102,12 +103,18 @@ const Pagination = ({ totalResults }) => {
 
   return (
     <div className="pagination_container">
-      {currentStart !== 1 && <button onClick={handlePrev}>Previous</button>}
+      {currentStart !== 1 && (
+        <button onClick={handlePrev}>
+          <GrLinkPrevious size={'1.1rem'} />
+        </button>
+      )}
 
       {paginationCreator()}
 
       {currentStart !== totalPages - maxVisiblePages + 1 && (
-        <button onClick={handleNext}>Next</button>
+        <button onClick={handleNext}>
+          <GrLinkNext size={'1.1rem'}/>
+        </button>
       )}
     </div>
   );

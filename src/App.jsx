@@ -15,19 +15,16 @@ import Home from "./pages/Home";
 import MyProfile from "./pages/MyProfile";
 import EditProfile from "./pages/EditProfile";
 import MovieProfile from "./pages/MovieProfile";
-
-import { useSelector } from "react-redux";
-import { useEffect } from "react";
+import Favourites from "./pages/Favourites";
+import Watched from "./pages/Watched";
+import Reviews from "./pages/Reviewes";
 
 import { loader as movieDataLoader } from "./pages/MovieProfile";
 import { loader as loginLoader } from "./pages/Login";
 import { loader as signupLoader } from "./pages/Signup";
 import { loader as myProfileLoader } from "./pages/MyProfile";
 
-
 function App() {
-  
-  const showMenu = useSelector((state) => state.Ui.fullPageNav);
   const router = createBrowserRouter([
     {
       path: "/",
@@ -66,9 +63,18 @@ function App() {
           loader: myProfileLoader,
         },
         {
+          path: "/:userID/favourites",
+          element: <Favourites />,
+        },
+        { path: "/:userID/watched", element: <Watched /> },
+        {
+          path: "/:userID/reviews",
+          element: <Reviews />,
+        },
+        {
           path: "user/:userID/edit",
           element: <EditProfile />,
-          loader:myProfileLoader //using same profile data
+          loader: myProfileLoader, //using same profile data
         },
         {
           path: "movies/:movieID",

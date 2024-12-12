@@ -76,6 +76,7 @@ const Navbar = () => {
         //an error happened
         console.log(error);
       });
+    setShowSideBar(false);
   };
 
   const handleUserMenu = () => {
@@ -139,15 +140,39 @@ const Navbar = () => {
           >
             Home
           </NavLink>
-          <NavLink
-            className={({ isActive }) => (isActive ? `active` : undefined)}
-            to="/my-movies"
-            onClick={() => {
-              setShowSideBar(false);
-            }}
-          >
-            My Movies
-          </NavLink>
+          {mobileScreen && (
+            <NavLink
+              className={({ isActive }) => (isActive ? `active` : undefined)}
+              to={`/${userID}/reviews`}
+              onClick={() => {
+                setShowSideBar(false);
+              }}
+            >
+              Reviews
+            </NavLink>
+          )}
+          {mobileScreen && (
+            <NavLink
+              className={({ isActive }) => (isActive ? `active` : undefined)}
+              to={`/${userID}/favourites`}
+              onClick={() => {
+                setShowSideBar(false);
+              }}
+            >
+              Favourites
+            </NavLink>
+          )}
+          {mobileScreen && (
+            <NavLink
+              className={({ isActive }) => (isActive ? `active` : undefined)}
+              to={`/${userID}/watched`}
+              onClick={() => {
+                setShowSideBar(false);
+              }}
+            >
+              Watched
+            </NavLink>
+          )}
           <NavLink
             className={({ isActive }) => (isActive ? `active` : undefined)}
             to="/discover"
@@ -198,6 +223,13 @@ const Navbar = () => {
               >
                 Sign Up
               </NavLink>
+            </>
+          )}
+          {mobileScreen && authStatus === "true" && (
+            <>
+              <button className="sidebar-logout" onClick={handleSignOut}>
+                Log out
+              </button>
             </>
           )}
         </div>

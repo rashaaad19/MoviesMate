@@ -2,78 +2,21 @@
 @use "../assets/mixins.scss";
 @use "../assets/variables.scss";
 
-.navList {
-  list-style: none;
-  color: variables.$primary-white;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 50px;
-  padding-inline: 30px;
-  padding-block: 10px;
-}
-.burger-button {
-  display: none;
-}
-.logo {
+.logo{
   width: 35px;
 }
-.navItem {
-  .active {
-    color: variables.$primary-orange;
-    background-color: transparent;
-  }
-  a {
-    text-decoration: none;
-    color: variables.$primary-white;
-  }
-  a:nth-of-type(1) {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    p {
-      font-size: 25px;
-      font-family: "Cairo", sans-serif;
-      font-optical-sizing: auto;
-      font-weight: 500;
-      font-style: normal;
-      font-variation-settings: "slnt" 0;
-    }
-  }
-}
-.navSubList {
-  display: flex;
-  align-items: center;
-  list-style: none;
-  gap: 20px;
-  font-family: sans-serif;
-  font-size: 15px;
-}
-
-.login-button {
-  @include mixins.button-style(
-    variables.$primary-white,
-    variables.$primary-orange
-  );
-}
-
-.signup-button {
+.navbarLogo{
+  cursor: pointer;
   font-weight: bold;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: 24px;
 }
-
-.fullPageContainer {
-  height: 100vh;
-  position: sticky;
-  top: 0;
-  left: 0;
-  z-index: 100;
-  background-color: variables.$light-black;
-}
-
 .burger-items-container {
   display: none;
 }
-
+.active{
+  color:variables.$primary-orange
+}
 .user-navMenu {
   display: flex;
   align-items: center;
@@ -99,57 +42,148 @@
   }
 }
 
-.activeArrow{
+.activeArrow {
   transform: rotate(180deg);
 }
-.nonActiveArrow{
+.nonActiveArrow {
   transform: rotate(360deg);
-
 }
 
-//media queries
-
-@media (max-width: 767px) {
-  .navList {
-    padding-inline: 5px;
-    padding-block: 5px;
-    user-select: none;
-    display: flex;
+nav {
+  height: 60px;
+  background-color: variables.$light-black;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  .sidebar-userData{
+    display: none;
   }
-  .burger-items-container {
+  .signup-button, .login-button{
+    height: fit-content;
+  }
+  
+  a {
+    height: 100%;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: white;
+  }
+
+  a:first-child {
+    margin-right: auto;
+  }
+
+  .open-sidebar-button,
+  .close-sidebar-button {
+    fill: variables.$primary-orange;
+    display: none;
+    padding: 0 20px;
+  }
+
+  .sidebarLinks-container {
     height: 100%;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    justify-content: center;
-    gap: 50px;
-    li {
-      list-style: none;
-    }
   }
+}
+.hide-user-navMenu {
+  display: none;
+}
 
-  .navSubList {
-    font-size: 10px;
-    gap: 5px;
-    .navItem {
+@media (max-width: 700px) {
+  .user-navMenu {
+    display: none;
+  }
+  nav {
+    .sidebarLinks-container {
+      flex-direction: column;
+      align-items: flex-end;
+      position: fixed;
+      top: 0;
+      right: -100%;
+      z-index: 1000;
+      width: 75%;
+      background: rgba(0, 0, 0, 0.839);
+      transition: 0.75s ease-out;
       a {
-        padding: 5px 5px;
+        box-sizing: border-box;
+        height: auto;
+        width: 100%;
+        padding: 10px 20px;
+        justify-content: flex-start;
+      }
+      .login-button{
+        background-color: variables.$button-orange;
+        color: variables.$primary-white;
+        width: 6rem;
+        align-self: flex-start;
+        margin-left: 20px;
+        position: absolute;
+        bottom: 5rem;
+        border-radius: 15px;
+        justify-content: center;
+        font-weight: bold;
+        margin-bottom: 3px;
+      
+      }
+      .signup-button{
+        position: absolute;
+        bottom:2rem;
+        background-color: variables.$dark-gray;
+        color: variables.$primary-white;
+        width: 6rem;
+        align-self: flex-start;
+        margin-left: 20px;
+        border-radius: 15px;
+        justify-content: center;
+        font-weight: bold;
+
+    
       }
     }
-  }
-  .logo {
-    width: 20px;
-  }
-  .navItem a:nth-of-type(1) p {
-    font-size: 22px;
-    font-weight: bold;
-  }
-  .burger-button {
-    width: 25px;
-    display: block;
-  }
-
-  .navSection:nth-of-type(3) {
-    display: none;
+    .open-sidebar-button,
+    .close-sidebar-button {
+      fill: variables.$primary-orange;
+      display: block;
+      padding: 0 20px;
+      font-size: 4rem;
+    }
+    .sidebar-isActive {
+      right: 0;
+    }
+    #overlay {
+      height: 100%;
+      width: 100%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 999;
+    }
+    .sidebar-userData {
+      padding: 10px 20px;
+      align-self: flex-start;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      border-bottom: 2px solid variables.$dark-gray;
+      width: 100%;
+      font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+      h3{
+        font-weight: bolds;
+        font-size: 20px;
+      }
+      p{
+        color:variables.$light-gray
+      }
+      img {
+        width: 5rem;
+        height: 5rem;
+        border-radius: 50%;
+      }
+    }
+   
   }
 }

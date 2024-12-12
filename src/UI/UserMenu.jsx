@@ -1,7 +1,7 @@
 import "./UserMenu.scss";
 import { Link } from "react-router-dom";
 
-const UserMenu = ({ image, name, userName, userID, onSignout }) => {
+const UserMenu = ({ image, name, userName, userID, onSignout, removeMenu }) => {
   return (
     <div className="userMenu-container">
       <Link to={`/user/${userID}`} className="userMenu-header">
@@ -11,10 +11,10 @@ const UserMenu = ({ image, name, userName, userID, onSignout }) => {
       </Link>
 
       <div className="userMenu-list">
-          <Link to={`/user/${userID}`}> View Profile</Link>
-          <Link to={`/user/${userID}`}> Favourites</Link>
-          <Link to={`/user/${userID}`}> Watched</Link>
-          <Link to={`/user/${userID}`}> Ratings</Link>
+          <Link to={`/user/${userID}`} onClick={removeMenu}> View Profile</Link>
+          <Link to={`/user/${userID}`} onClick={removeMenu}> Favourites</Link>
+          <Link to={`/user/${userID}`} onClick={removeMenu}> Watched</Link>
+          <Link to={`/user/${userID}`} onClick={removeMenu}> Ratings</Link>
           <p onClick={onSignout}> Sign Out </p>
 
 

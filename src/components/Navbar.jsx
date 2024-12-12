@@ -1,31 +1,40 @@
-import { Link, NavLink, useNavigate } from "react-router-dom";
-
 import "./Navbar.scss";
 
-import { useEffect, useState } from "react";
-import { IoIosArrowDown } from "react-icons/io";
+import UserMenu from "../UI/UserMenu";
 
+import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { UiActions } from "../store/UiSlice";
+import { useEffect, useState } from "react";
+import useCheckMobileScreen from "../hooks/useCheckMobileScreen";
+
 import { auth, db } from "../firebase";
 import { signOut } from "firebase/auth";
 import { userDataActions } from "../store/UserDataSlice";
 import { doc, getDoc } from "firebase/firestore";
-import UserMenu from "../UI/UserMenu";
+
+import { IoIosArrowDown } from "react-icons/io";
+import { IoMdClose } from "react-icons/io";
+import { GiHamburgerMenu } from "react-icons/gi";
 
 const Navbar = () => {
-  const [showMenu, setShowMenu] = useState(false);
   const [userData, setUserData] = useState({});
   const [showUserMenu, setShowUserMenu] = useState(false);
+  const [showSideBar, setShowSideBar] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const mobileScreen = useCheckMobileScreen();
+
   const authStatus = localStorage.getItem("isAuth"); //extract authentication status to update UI
   let docRef;
   let userID;
+
   if (authStatus === "true") {
     userID = localStorage.getItem("userID"); //extract user id
     docRef = doc(db, "users", userID);
   }
+
+  //todo: enhance the sidebar design and fix the error of moving to desktop screen without pressing buttons.
+  //todo: --->  useCheckMobileScreen hook
 
   useEffect(() => {
     const fetchUserImage = async () => {
@@ -45,14 +54,6 @@ const Navbar = () => {
     fetchUserImage();
   }, [authStatus]);
 
-  userData && console.log(userData);
-
-  //handle navigation menu changes in mobile screens
-  const burgerButtonHandler = () => {
-    setShowMenu(!showMenu);
-    dispatch(UiActions.toggleNav());
-  };
-
   //handle user signing out
   const handleSignOut = () => {
     signOut(auth)
@@ -68,7 +69,7 @@ const Navbar = () => {
         localStorage.removeItem("userEmail");
         localStorage.removeItem("userID");
         setShowUserMenu(false);
-        setUserData({})
+        setUserData({});
         navigate("/login");
       })
       .catch((error) => {
@@ -80,140 +81,139 @@ const Navbar = () => {
   const handleUserMenu = () => {
     setShowUserMenu(!showUserMenu);
   };
-  console.log(userData);
+
+  const handleSideBar = () => {
+    setShowSideBar(!showSideBar);
+  };
+
+  //automatically changing sidebar and menubar visibility based on screen size.
+  useEffect(() => {
+    !mobileScreen && setShowSideBar(false);
+    mobileScreen && setShowUserMenu(false);
+  }, [mobileScreen]);
+
   return (
     <>
-      <nav
-        className={showMenu ? `fullPageContainer` : `navContainer`}
-        style={showMenu ? { height: "100vh" } : { height: "4rem" }}
-      >
-        <ul className="navList">
-          {/* Burger button for small screens  */}
-          <li className="navItem burger-button">
-            <img
-              onClick={burgerButtonHandler}
-              src="/burger-menu-svgrepo-com.svg"
-            />
-          </li>
-
-          <li className="navItem ">
-            <NavLink
-              to=""
-              //to prevent glitch with the home element below
-              className={({ isActive }) => (isActive ? `` : undefined)}
-            >
-              <img
-                className="logo"
-                src="/film-svgrepo-com.svg"
-                alt="MoviesMate Logo"
-              />
-              <p style={{ cursor: "pointer" }}>MoviesMate</p>
-            </NavLink>
-          </li>
-          <li className="navSection">
-            <ul className="navSubList">
-              <li className="navItem">
-                <NavLink
-                  className={({ isActive }) =>
-                    isActive ? `active` : undefined
-                  }
-                  to=""
-                >
-                  Home
-                </NavLink>
-              </li>
-              <li className="navItem">
-                <NavLink
-                  className={({ isActive }) =>
-                    isActive ? `active` : undefined
-                  }
-                  to="/my-movies"
-                >
-                  My Movies
-                </NavLink>
-              </li>
-              <li className="navItem">
-                <NavLink
-                  className={({ isActive }) =>
-                    isActive ? `active` : undefined
-                  }
-                  to="/discover"
-                >
-                  Discover
-                </NavLink>
-              </li>
-            </ul>
-          </li>
-          <li className="navSection">
-            {authStatus === "true" ? (
-              // <ul className="navSubList">
-              //   <li className="navItem ">
-              //     <button onClick={handleSignOut}>Sign out</button>
-              //   </li>
-              //   <li className="navItem ">
-              //     <NavLink
-              //       className={({ isActive }) =>
-              //         isActive ? `active signup-button` : `signup-button`
-              //       }
-              //       to={`/user/${userID}`}
-              //     >
-              //       My Profile
-              //     </NavLink>
-              //   </li>
-              // </ul>
-              <p className="navItem">
-                <button className="user-navMenu" onClick={handleUserMenu}>
-                  {userData.image && <img src={userData.image} alt="profile" />}
-                  <IoIosArrowDown className={showUserMenu?'activeArrow':'nonActiveArrow'} />
-                </button>
-              </p>
-            ) : (
-              <ul className="navSubList">
-                <li className="navItem ">
-                  <NavLink
-                    className={({ isActive }) =>
-                      isActive ? `active login-button` : "login-button"
-                    }
-                    to="/login"
-                  >
-                    Log In
-                  </NavLink>
-                </li>
-                <li className="navItem ">
-                  <NavLink
-                    className={({ isActive }) =>
-                      isActive ? `active signup-button` : `signup-button`
-                    }
-                    to="/signup"
-                  >
-                    Sign Up
-                  </NavLink>
-                </li>
-              </ul>
-            )}
-          </li>
-        </ul>
-        {showUserMenu && userData && (
-          <UserMenu
-            name={userData.name}
-            image={userData.image}
-            userName={userData.userName}
-            userID={userID}
-            onSignout={handleSignOut}
-            isActive={showUserMenu}
+      <nav>
+        <NavLink
+          to=""
+          //to prevent glitch with the home element below
+          className={({ isActive }) => (isActive ? `` : undefined)}
+        >
+          <img
+            className="logo"
+            src="/film-svgrepo-com.svg"
+            alt="MoviesMate Logo"
           />
-        )}
+          <p className="navbarLogo">MoviesMate</p>
+        </NavLink>
+        <GiHamburgerMenu
+          onClick={handleSideBar}
+          className="open-sidebar-button"
+        />
+        {showSideBar && <label id="overlay" onClick={handleSideBar} />}
+        {/* overlay element to close the sidemenu*/}
+        <div
+          className={
+            showSideBar
+              ? "sidebarLinks-container sidebar-isActive"
+              : "sidebarLinks-container"
+          }
+        >
+          <IoMdClose className="close-sidebar-button" onClick={handleSideBar} />
 
-        {showMenu && (
-          <ul className="burger-items-container">
-            <li className="burger-menu-item">Home</li>
-            <li className="burger-menu-item">Home</li>
-            <li className="burger-menu-item">Home</li>
-            <li className="burger-menu-item">Home</li>
-            <li className="burger-menu-item">Home</li>
-          </ul>
-        )}
+          {authStatus === "true" && userData && (
+            <div className="sidebar-userData">
+              <img src={userData.image} />
+              <h3>{userData.name}</h3>
+              <p>{userData.userName}</p>
+            </div>
+          )}
+
+          <NavLink
+            className={({ isActive }) => (isActive ? `active` : undefined)}
+            to=""
+            onClick={() => {
+              setShowSideBar(false);
+            }}
+          >
+            Home
+          </NavLink>
+          <NavLink
+            className={({ isActive }) => (isActive ? `active` : undefined)}
+            to="/my-movies"
+            onClick={() => {
+              setShowSideBar(false);
+            }}
+          >
+            My Movies
+          </NavLink>
+          <NavLink
+            className={({ isActive }) => (isActive ? `active` : undefined)}
+            to="/discover"
+            onClick={() => {
+              setShowSideBar(false);
+            }}
+          >
+            Discover
+          </NavLink>
+          <NavLink
+            className={({ isActive }) => (isActive ? `active` : undefined)}
+            to={`/user/${userID}`}
+            onClick={() => {
+              setShowSideBar(false);
+            }}
+          >
+            My Profile
+          </NavLink>
+          {/*move this section to the to of the sidebar*/}
+          {authStatus === "true" ? (
+            <button className={"user-navMenu"} onClick={handleUserMenu}>
+              {userData.image && <img src={userData.image} alt="profile" />}
+              <IoIosArrowDown
+                className={showUserMenu ? "activeArrow" : "nonActiveArrow"}
+              />
+            </button>
+          ) : (
+            <>
+              <NavLink
+                className={({ isActive }) =>
+                  isActive ? `active login-button` : "login-button"
+                }
+                onClick={() => {
+                  setShowSideBar(false);
+                }}
+                to="/login"
+              >
+                Log In
+              </NavLink>
+              <NavLink
+                className={({ isActive }) =>
+                  isActive ? `active signup-button` : `signup-button`
+                }
+                to="/signup"
+                onClick={() => {
+                  setShowSideBar(false);
+                }}
+              >
+                Sign Up
+              </NavLink>
+            </>
+          )}
+        </div>
       </nav>
+
+      {!showSideBar && showUserMenu && userData && (
+        <UserMenu
+          name={userData.name}
+          image={userData.image}
+          userName={userData.userName}
+          userID={userID}
+          onSignout={handleSignOut}
+          isActive={showUserMenu}
+          removeMenu={() => setShowUserMenu(false)}
+        />
+      )}
     </>
   );
 };

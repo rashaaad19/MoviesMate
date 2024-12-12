@@ -18,6 +18,7 @@
     list-style: none;
     background-color: #25292c;
     width: 100%;
+    padding: 5px;
     * {
       margin-block: 10px;
       text-align: start; 
@@ -29,8 +30,10 @@
       font-size: 14px;
     }
     p{
-        border-top: 2px solid #3b4347 ;
+        border-top: 4px solid #3b4347 ;
         padding-top: 10px;
+        color: variables.$primary-white;
+        font-weight: bold;
 
     }
     a:hover, p:hover{

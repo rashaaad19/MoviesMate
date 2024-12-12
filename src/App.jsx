@@ -80,13 +80,13 @@ function App() {
   ]);
 
   // Add/remove class to body based on menuOpen state
-  useEffect(() => {
-    if (showMenu) {
-      document.body.classList.add("overflow-hidden");
-    } else {
-      document.body.classList.remove("overflow-hidden");
-    }
-  }, [showMenu]);
+  // useEffect(() => {
+  //   if (showMenu) {
+  //     document.body.classList.add("overflow-hidden");
+  //   } else {
+  //     document.body.classList.remove("overflow-hidden");
+  //   }
+  // }, [showMenu]);
 
   return (
     <>

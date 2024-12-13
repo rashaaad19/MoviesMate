@@ -48,8 +48,9 @@ export default MovieProfile;
 
 export const loader = async ({ params }) => {
   const id = params.movieID;
+  let userData;
   const userID = localStorage.getItem("userID"); // extract User ID from local storage
-
+  console.log(id, userID)
   const movieDataURL = `https://api.themoviedb.org/3/movie/${id}?language=en-US&append_to_response=credits,reviews`;
   const options = {
     method: "GET",
@@ -72,9 +73,11 @@ export const loader = async ({ params }) => {
   const imdbResponse = await fetch(imdbDataURL);
   const imdbData = await imdbResponse.json();
 
+if(userID){
   const userRef = doc(db, "users", userID);
   const userDocSnap = await getDoc(userRef);
-  const userData = userDocSnap.data();
+     userData = userDocSnap.data();
+}
 
   return { movieData, imdbData, userData };
 };

@@ -9,8 +9,6 @@ import TooltipIcon from "./TooltipIcon";
 import { arrayRemove, arrayUnion, doc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase";
 
-// ! Error: Review handler is creating new object in the array each time even for existing objects
-
 const MovieProfileHero = ({
   crew,
   title,
@@ -28,10 +26,17 @@ const MovieProfileHero = ({
   const isAuth = localStorage.getItem("isAuth"); //extract authentication status from local storage
   const userID = localStorage.getItem("userID"); // extract User ID from local storage
 
-  let isUserFav = userData.movies.favourites.includes(id);
-  let isUserWatched = userData.movies.watched.includes(id);
-  let userCurrentReviews = userData.movies.reviews;
-  const userRef = useMemo(() => doc(db, "users", userID), [userID]); //getting reference to the user doc
+  let isUserFav;
+  let isUserWatched;
+  let userCurrentReviews;
+  let userRef; //getting reference to the user doc
+
+  if (userData) {
+    isUserFav = userData.movies.favourites.includes(id);
+    isUserWatched = userData.movies.watched.includes(id);
+    userCurrentReviews = userData.movies.reviews;
+    userRef = doc(db, "users", userID);
+  }
   const formatedRuntime = runtimeFormatter(runtime);
   const releaseYear = releaseDateFormatter(releaseDate);
   const directors = crew.filter(({ job }) => job === "Director");
@@ -43,7 +48,7 @@ const MovieProfileHero = ({
   const [currentWatched, setCurrentWatched] = useState(isUserWatched);
   const [userReviews, setUserReviews] = useState(userCurrentReviews);
 
-  const existingReview = userReviews.find((review) => review.id === id);
+  // const existingReview = ;
 
   useEffect(() => {
     const updateReviews = async () => {
@@ -58,7 +63,7 @@ const MovieProfileHero = ({
     let updatedUserReviews;
 
     //if review already exists, find it's index and update it with the new value
-    if (existingReview) {
+    if (userReviews.find((review) => review.id === id)) {
       const existingReviewIndex = userReviews.findIndex(
         (review) => review.id === id
       );
@@ -71,7 +76,7 @@ const MovieProfileHero = ({
       );
     }
     //if review is new, append it to the reviews array
-    if (!existingReview) {
+    if (!userReviews.find((review) => review.id === id)) {
       updatedUserReviews = [...userReviews, { id: id, rate: rate }];
     }
 
@@ -139,57 +144,65 @@ const MovieProfileHero = ({
           ))}
         </p>
 
-        <div className="movieRating-container">
-          <a
-            className="imdbInfo"
-            href={`https://www.imdb.com/title/${imdbID}`}
-            target="_blank"
-          >
-            <img className="imdbLogo" src="/IMDB_Logo_2016.svg" />
-            <span>{imdbRate}</span>
-          </a>
-          {isAuth && (
-            <TooltipIcon
-              icon={
-                <TbEyeCheck
-                  size={"1.5em"}
-                  className={
-                    currentWatched ? "active-watched" : "nonActive-tooltipIcon"
-                  }
-                  onClick={handleWatchedClick}
-                />
-              }
-              tooltip={
-                currentWatched ? "Remove from watched" : "Add to watched"
-              }
-            />
-          )}
-          {isAuth && (
-            <TooltipIcon
-              icon={
-                <TbHeartPlus
-                  size={"1.5em"}
-                  className={
-                    currentFav ? "active-fav" : "nonActive-tooltipIcon"
-                  }
-                  onClick={handleFavClick}
-                />
-              }
-              tooltip={
-                currentFav ? "Remove from favourites" : "Add to favourites"
-              }
-            />
-          )}
+        {userData && (
+          <div className="movieRating-container">
+            <a
+              className="imdbInfo"
+              href={`https://www.imdb.com/title/${imdbID}`}
+              target="_blank"
+            >
+              <img className="imdbLogo" src="/IMDB_Logo_2016.svg" />
+              <span>{imdbRate}</span>
+            </a>
+            {isAuth && (
+              <TooltipIcon
+                icon={
+                  <TbEyeCheck
+                    size={"1.5em"}
+                    className={
+                      currentWatched
+                        ? "active-watched"
+                        : "nonActive-tooltipIcon"
+                    }
+                    onClick={handleWatchedClick}
+                  />
+                }
+                tooltip={
+                  currentWatched ? "Remove from watched" : "Add to watched"
+                }
+              />
+            )}
+            {isAuth && (
+              <TooltipIcon
+                icon={
+                  <TbHeartPlus
+                    size={"1.5em"}
+                    className={
+                      currentFav ? "active-fav" : "nonActive-tooltipIcon"
+                    }
+                    onClick={handleFavClick}
+                  />
+                }
+                tooltip={
+                  currentFav ? "Remove from favourites" : "Add to favourites"
+                }
+              />
+            )}
 
-          <Rating
-            readonly={isAuth === "true" ? false : true}
-            disableFillHover={false}
-            onClick={handleRating}
-            size={25}
-            allowFraction
-            initialValue={existingReview ? existingReview.rate : 0}
-          />
-        </div>
+            <Rating
+              readonly={isAuth === "true" ? false : true}
+              disableFillHover={false}
+              onClick={handleRating}
+              size={25}
+              allowFraction
+              initialValue={
+                userReviews.find((review) => review.id === id)
+                  ? userReviews.find((review) => review.id === id).rate
+                  : 0
+              }
+            />
+          </div>
+        )}
         <p>{overview}</p>
 
         {/* mapping through each elemnt in the director and writers array

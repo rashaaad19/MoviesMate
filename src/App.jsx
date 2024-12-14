@@ -17,18 +17,22 @@ import EditProfile from "./pages/EditProfile";
 import MovieProfile from "./pages/MovieProfile";
 import Favourites from "./pages/Favourites";
 import Watched from "./pages/Watched";
-import Reviews from "./pages/Reviewes";
+import Reviews from "./pages/Reviews";
+import Error from './pages/Error';
+
 
 import { loader as movieDataLoader } from "./pages/MovieProfile";
 import { loader as loginLoader } from "./pages/Login";
 import { loader as signupLoader } from "./pages/Signup";
 import { loader as myProfileLoader } from "./pages/MyProfile";
+import { loader as userListLoader } from "./pages/Favourites";
 
 function App() {
   const router = createBrowserRouter([
     {
       path: "/",
       element: <Root />,
+      errorElement:<Error/>,
       children: [
         {
           path: "",
@@ -63,13 +67,20 @@ function App() {
           loader: myProfileLoader,
         },
         {
-          path: "/:userID/favourites",
+          path: "/favourites/:userID",
           element: <Favourites />,
+          loader: userListLoader,
         },
-        { path: "/:userID/watched", element: <Watched /> },
         {
-          path: "/:userID/reviews",
+          path: "/watched/:userID",
+          element: <Watched />,
+          loader: userListLoader,
+        },
+        {
+          path: "/reviews/:userID",
           element: <Reviews />,
+          loader:userListLoader
+
         },
         {
           path: "user/:userID/edit",
@@ -84,15 +95,6 @@ function App() {
       ],
     },
   ]);
-
-  // Add/remove class to body based on menuOpen state
-  // useEffect(() => {
-  //   if (showMenu) {
-  //     document.body.classList.add("overflow-hidden");
-  //   } else {
-  //     document.body.classList.remove("overflow-hidden");
-  //   }
-  // }, [showMenu]);
 
   return (
     <>

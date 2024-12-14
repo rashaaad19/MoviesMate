@@ -1,0 +1,22 @@
+//mixins and variables
+@use "../assets/mixins.scss";
+@use "../assets/variables.scss";
+@use "../assets//functions.scss";
+
+.errorBanner-container {
+  margin: 0 auto;
+  text-align: center;
+  padding: 50px 20px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  img {
+    max-width: 18rem;
+    display: inline;
+  }
+
+  a {
+    color: variables.$primary-orange;
+    text-decoration: none;
+    cursor: pointer;
+    font-weight: bold;
+  }
+}

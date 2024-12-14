@@ -143,7 +143,7 @@ const Navbar = () => {
           {mobileScreen && (
             <NavLink
               className={({ isActive }) => (isActive ? `active` : undefined)}
-              to={`/${userID}/reviews`}
+              to={`/reviews/${userID}`}
               onClick={() => {
                 setShowSideBar(false);
               }}
@@ -154,7 +154,7 @@ const Navbar = () => {
           {mobileScreen && (
             <NavLink
               className={({ isActive }) => (isActive ? `active` : undefined)}
-              to={`/${userID}/favourites`}
+              to={`/favourites/${userID}`}
               onClick={() => {
                 setShowSideBar(false);
               }}
@@ -165,7 +165,7 @@ const Navbar = () => {
           {mobileScreen && (
             <NavLink
               className={({ isActive }) => (isActive ? `active` : undefined)}
-              to={`/${userID}/watched`}
+              to={`/watched/${userID}`}
               onClick={() => {
                 setShowSideBar(false);
               }}

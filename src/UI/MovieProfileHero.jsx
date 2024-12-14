@@ -1,13 +1,18 @@
 import "./MovieProfileHero.scss";
-import { useEffect, useMemo, useState } from "react";
+
+import TooltipIcon from "./TooltipIcon";
 
 import { releaseDateFormatter, runtimeFormatter } from "../utilties/functions";
 
 import { Rating } from "react-simple-star-rating";
 import { TbEyeCheck, TbHeartPlus } from "react-icons/tb";
-import TooltipIcon from "./TooltipIcon";
+
+import { useState } from "react";
+
 import { arrayRemove, arrayUnion, doc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase";
+
+
 
 const MovieProfileHero = ({
   crew,
@@ -28,13 +33,18 @@ const MovieProfileHero = ({
 
   let isUserFav;
   let isUserWatched;
-  let userCurrentReviews;
+  let isUserReviewed;
+  let currentReviewValue;
   let userRef; //getting reference to the user doc
 
   if (userData) {
-    isUserFav = userData.movies.favourites.includes(id);
-    isUserWatched = userData.movies.watched.includes(id);
-    userCurrentReviews = userData.movies.reviews;
+    isUserFav = userData.movies.favourites.some((movie) => movie.id === id); //check if movie exists in user database
+    isUserWatched = userData.movies.watched.some((movie) => movie.id === id);
+    isUserReviewed = userData.movies.reviews.some((movie) => movie.id === id);
+    console.log(isUserReviewed);
+    currentReviewValue = userData.movies.reviews.find(
+      (movie) => movie.id === id
+    );
     userRef = doc(db, "users", userID);
   }
   const formatedRuntime = runtimeFormatter(runtime);
@@ -46,77 +56,101 @@ const MovieProfileHero = ({
 
   const [currentFav, setCurrentFav] = useState(isUserFav);
   const [currentWatched, setCurrentWatched] = useState(isUserWatched);
-  const [userReviews, setUserReviews] = useState(userCurrentReviews);
+  const [currentRate, setCurrentRate] = useState(
+    currentReviewValue ? currentReviewValue.rate : 0
+  );
 
-  // const existingReview = ;
 
-  useEffect(() => {
-    const updateReviews = async () => {
-      await updateDoc(userRef, {
-        "movies.reviews": userReviews,
-      });
-    };
-    updateReviews();
-  }, [userReviews, userRef]);
 
   const handleRating = async (rate) => {
-    let updatedUserReviews;
-
-    //if review already exists, find it's index and update it with the new value
-    if (userReviews.find((review) => review.id === id)) {
-      const existingReviewIndex = userReviews.findIndex(
-        (review) => review.id === id
-      );
-      updatedUserReviews = userReviews.map(
-        (
-          review,
-          index // create new updated array with the review updated
-        ) =>
-          index === existingReviewIndex ? { ...review, rate: rate } : review
-      );
+    if (!isUserReviewed) {
+      console.log("it is  not reviewed");
+      await updateDoc(userRef, {
+        "movies.reviews": arrayUnion({
+          name: title,
+          image: poster,
+          rate: rate,
+          id: id,
+        }),
+      });
+      // updating local state to keep all changes synced with firestore
+      currentReviewValue = {
+        name: title,
+        image: poster,
+        rate: rate,
+        id: id,
+      };
+      setCurrentRate(rate);
     }
-    //if review is new, append it to the reviews array
-    if (!userReviews.find((review) => review.id === id)) {
-      updatedUserReviews = [...userReviews, { id: id, rate: rate }];
-    }
 
-    //update the state to trigger the firestore update
-    setUserReviews(updatedUserReviews);
+    if (isUserReviewed) {
+      console.log("it is reviewed");
+
+      await updateDoc(userRef, {
+        "movies.reviews": arrayRemove({
+          name: title,
+          image: poster,
+          rate: currentRate,
+          id: id,
+        }),
+      });
+
+      await updateDoc(userRef, {
+        "movies.reviews": arrayUnion({
+          name: title,
+          image: poster,
+          rate: rate,
+          id: id,
+        }),
+      });
+      // updating local state to keep all changes synced with firestore
+      currentReviewValue = {
+        name: title,
+        image: poster,
+        rate: rate,
+        id: id,
+      };
+      setCurrentRate(rate);
+    }
   };
+
 
   const handleWatchedClick = async () => {
     //if the movie is not watched in the user's database, add it on click.
     if (!currentWatched) {
       setCurrentWatched(true);
       await updateDoc(userRef, {
-        "movies.watched": arrayUnion(id),
+        "movies.watched": arrayUnion({ name: title, image: poster, id: id }),
       });
     }
     //if the movie is watched in the user's database, remove it on click.
     if (currentWatched) {
       setCurrentWatched(false);
       await updateDoc(userRef, {
-        "movies.watched": arrayRemove(id),
+        "movies.watched": arrayRemove({ name: title, image: poster, id: id }),
       });
     }
   };
 
   const handleFavClick = async () => {
-    //if the movie is not in the user's database, add it onclick
     if (!currentFav) {
       setCurrentFav(true);
       await updateDoc(userRef, {
-        "movies.favourites": arrayUnion(id),
+        "movies.favourites": arrayUnion({ name: title, image: poster, id: id }),
       });
-    }
-    //if the movie is in the user's database, remove it onclick
-    if (currentFav) {
-      setCurrentFav(false);
-      await updateDoc(userRef, {
-        "movies.favourites": arrayRemove(id),
-      });
+      if (currentFav) {
+        setCurrentFav(false);
+        await updateDoc(userRef, {
+          "movies.favourites": arrayRemove({
+            name: title,
+            image: poster,
+            id: id,
+          }),
+        });
+      }
     }
   };
+
 
   return (
     <div
@@ -195,11 +229,7 @@ const MovieProfileHero = ({
               onClick={handleRating}
               size={25}
               allowFraction
-              initialValue={
-                userReviews.find((review) => review.id === id)
-                  ? userReviews.find((review) => review.id === id).rate
-                  : 0
-              }
+              initialValue={currentRate}
             />
           </div>
         )}

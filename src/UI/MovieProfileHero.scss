@@ -11,7 +11,7 @@
 
   > * {
     position: relative;
-    z-index: 1000;
+    z-index: 99;
   }
   img {
     width: 15rem;
@@ -83,7 +83,7 @@
 
 @media (max-width: 720px) {
   .movieHero-container {
-    padding: 1rem;
+    padding: 20px 0px;
     height: fit-content;
     & > img {
       width: 7rem;
@@ -93,6 +93,10 @@
       margin-left: 0;
       .movieRating-container {
         gap: 20px;
+        flex-wrap: wrap;
+        .star-svg{
+          size: 20px;
+        }
       }
     }
   }

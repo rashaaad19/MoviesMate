@@ -18,18 +18,6 @@ const nowPlayingURL =
   "https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1&api_key=c20fa7ec5e6db6643718e535c5234b95&region=us";
 
 const Home = () => {
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      // User is signed in, see docs for a list of available properties
-      // https://firebase.google.com/docs/reference/js/auth.user
-      const uid = user.uid;
-      // console.log(user);
-      // ...
-    } else {
-      // User is signed out
-      // ...
-    }
-  });
 
   return (
     <>

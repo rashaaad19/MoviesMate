@@ -12,9 +12,9 @@ const UserMenu = ({ image, name, userName, userID, onSignout, removeMenu }) => {
 
       <div className="userMenu-list">
           <Link to={`/user/${userID}`} onClick={removeMenu}> View Profile</Link>
-          <Link to={`/user/${userID}`} onClick={removeMenu}> Favourites</Link>
-          <Link to={`/user/${userID}`} onClick={removeMenu}> Watched</Link>
-          <Link to={`/user/${userID}`} onClick={removeMenu}> Ratings</Link>
+          <Link to={`/favourites/${userID}`} onClick={removeMenu}> Favourites</Link>
+          <Link to={`/watched/${userID}`} onClick={removeMenu}> Watched</Link>
+          <Link to={`/ratings/${userID}`} onClick={removeMenu}> Ratings</Link>
           <p onClick={onSignout}> Sign Out </p>
 
 

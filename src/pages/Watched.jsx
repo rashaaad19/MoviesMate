@@ -1,9 +1,11 @@
-import React from 'react'
+import { useLoaderData } from "react-router-dom";
 
 const Watched = () => {
-  return (
-    <div>Watched</div>
-  )
-}
 
-export default Watched
+  return (
+    <>
+    </>
+  );
+};
+
+export default Watched;

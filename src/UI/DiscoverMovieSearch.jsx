@@ -4,7 +4,6 @@ import {
   sortOptions,
   yearOptions,
 } from "../data/filterOptions";
-import { currentDate } from "../utilties/functions";
 import CategorySelectItem from "./CategorySelectItem";
 import "./DiscoverMovieSearch.scss";
 

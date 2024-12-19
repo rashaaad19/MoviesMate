@@ -1,16 +1,18 @@
 import { useDispatch, useSelector } from "react-redux";
 import "./Pagination.scss";
-import { useState } from "react";
 import { discoverActions } from "../store/DiscoverSlice";
-import { GrLink, GrLinkNext, GrLinkPrevious } from "react-icons/gr";
+import { GrLinkNext, GrLinkPrevious } from "react-icons/gr";
+import useCheckMobileScreen from "../hooks/useCheckMobileScreen";
 
-const Pagination = ({ totalResults }) => {
-  const [currentStart, setCurrentStart] = useState(1);
+const Pagination = ({ totalResults, currentStart, setCurrentStart }) => {
   const totalPages = Math.ceil(totalResults / 20);
-  const maxVisiblePages = 10;
   const activePage = useSelector((state) => state.discover.page);
   const dispatch = useDispatch();
 
+  const isMobile = useCheckMobileScreen();
+  const maxVisiblePages = isMobile ? 1 : 10;
+
+  console.log(activePage);
   //handle pagination reset
   const handleReset = () => {
     setCurrentStart(1);
@@ -24,14 +26,12 @@ const Pagination = ({ totalResults }) => {
   };
 
   //handle next button
-
   const handleNext = () => {
     if (currentStart + maxVisiblePages <= totalPages) {
       setCurrentStart(currentStart + maxVisiblePages);
       dispatch(discoverActions.changePage(currentStart + maxVisiblePages));
     }
   };
-
   // handle previous button
   const handlePrev = () => {
     if (currentStart - maxVisiblePages >= 1) {
@@ -58,10 +58,8 @@ const Pagination = ({ totalResults }) => {
           onClick={() => {
             handlePageClick(i);
           }}
-          style={
-            activePage === i
-              ? { color: "burlywood", cursor: "pointer" }
-              : { cursor: "pointer" }
+          className={
+            activePage === i ? `pagination-item activePage` : `pagination-item`
           }
           key={i}
         >
@@ -71,11 +69,12 @@ const Pagination = ({ totalResults }) => {
     }
 
     if (currentStart + maxVisiblePages <= totalPages) {
-      paginationItems.push(<span key="ellipsis">...</span>);
+      paginationItems.push(<span key="ellipsis" className="ellipsis">...</span>);
       paginationItems.push(
         <span
           key="last-page"
-          style={{ color: "orange", cursor: "pointer" }}
+          // style={{ color: "orange", cursor: "pointer" }}
+          className="lastPage"
           onClick={handleOnJump}
         >
           {totalPages}
@@ -88,11 +87,7 @@ const Pagination = ({ totalResults }) => {
       paginationItems.splice(
         0,
         0,
-        <span
-          key="first-page"
-          style={{ color: "orange", cursor: "pointer" }}
-          onClick={handleReset}
-        >
+        <span key="first-page" className="firstPage" onClick={handleReset}>
           1
         </span>
       );
@@ -105,7 +100,7 @@ const Pagination = ({ totalResults }) => {
     <div className="pagination_container">
       {currentStart !== 1 && (
         <button onClick={handlePrev}>
-          <GrLinkPrevious size={'1.1rem'} />
+          <GrLinkPrevious size={"1.1rem"} />
         </button>
       )}
 
@@ -113,7 +108,7 @@ const Pagination = ({ totalResults }) => {
 
       {currentStart !== totalPages - maxVisiblePages + 1 && (
         <button onClick={handleNext}>
-          <GrLinkNext size={'1.1rem'}/>
+          <GrLinkNext size={"1.1rem"} />
         </button>
       )}
     </div>

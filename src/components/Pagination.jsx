@@ -12,7 +12,6 @@ const Pagination = ({ totalResults, currentStart, setCurrentStart }) => {
   const isMobile = useCheckMobileScreen();
   const maxVisiblePages = isMobile ? 1 : 10;
 
-  console.log(activePage);
   //handle pagination reset
   const handleReset = () => {
     setCurrentStart(1);

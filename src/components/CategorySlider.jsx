@@ -4,6 +4,9 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import useFetch from "../hooks/useFetch";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { discoverActions } from "./../store/DiscoverSlice";
 
 const options = {
   method: "GET",
@@ -16,28 +19,33 @@ const options = {
 
 const CategorySlider = () => {
   const [genreId, setGenreId] = useState();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const url = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&page=1&sort_by=popularity.desc&with_genres=${genreId}`;
 
   const { data, loading, error } = useFetch(url, options);
 
   const handleOnSelect = (id) => {
+    const selectedCategory = categories
+      .find((item) => item.id === id)
+      .title.toLowerCase();
     setGenreId(id);
+    dispatch(discoverActions.changeGenre(selectedCategory));
+    navigate(`/discover`);
   };
-  
 
   return (
     <>
       <div className="layout-container">
         <h2>Categories</h2>
         <Swiper
-        className="categorySlider regularSlider"
+          className="categorySlider regularSlider"
           modules={[Navigation]}
           slidesPerView={3}
           navigation={true}
           spaceBetween={10}
           breakpoints={{
-            
             640: {
               slidesPerView: 3,
               spaceBetween: 20,
@@ -51,13 +59,12 @@ const CategorySlider = () => {
               spaceBetween: 50,
             },
           }}
-            allowTouchMove={true}
+          allowTouchMove={true}
           loop={true}
         >
           {categories.map((item) => {
             return (
               <SwiperSlide
-              
                 key={item.id}
                 className="category-slide"
                 onClick={() => handleOnSelect(item.id)}

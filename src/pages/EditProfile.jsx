@@ -121,7 +121,13 @@ const EditProfile = () => {
   };
 
   return (
-    <div style={{ paddingInline: "10%" }}>
+    <div
+      style={{
+        paddingInline: "10%",
+        backgroundColor: "#2D2E33",
+        paddingBottom: "25px",
+      }}
+    >
       <ProfileHeader type={"profileEdit"} name={profileData.name} />
 
       <EditImageCard

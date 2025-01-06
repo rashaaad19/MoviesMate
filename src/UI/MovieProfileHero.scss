@@ -15,7 +15,7 @@
   }
   .moviePoster{
     border-radius: 10px;
-    box-shadow: 4px 12px 12px 0px #3c3c49;
+    box-shadow: -1px 3px 10px 0px #3c3c49
   }
   img {
     width: 15rem;
@@ -85,9 +85,16 @@
 
 //media queries for mobile screens
 
-@media (max-width: 720px) {
+@media (max-width: 850px) {
+  .movieHero-container .movieHero-infoContainer p:nth-of-type(3){
+    max-height: 20rem;
+    overflow: hidden; /* Hide overflow text */
+    text-overflow: ellipsis; /* Add ellipsis if text overflows */
+
+  }
+
   .movieHero-container {
-    padding: 20px 0px;
+    padding: 40px 0px;
     height: fit-content;
     & > img {
       width: 7rem;
@@ -105,3 +112,5 @@
     }
   }
 }
+
+

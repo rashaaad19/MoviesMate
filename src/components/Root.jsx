@@ -2,7 +2,6 @@ import { Outlet, useNavigation } from "react-router-dom";
 import Navbar from "./Navbar";
 import Footer from "../UI/Footer";
 import ScrollToTop from "./ScrollToTop";
-import { FadeLoader } from "react-spinners";
 import LoadingScreen from "../UI/LoadingScreen";
 
 const Root = () => {

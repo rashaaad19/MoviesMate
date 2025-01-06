@@ -22,7 +22,6 @@
         variables.$primary-white
       );
       transition: all 0.2s ease-in-out;
-      // transition: filter 0.2s ease-in-out;
 
     }
     .posterLink:hover + .titleLink h3,
@@ -37,7 +36,6 @@
   img:hover{
     filter: brightness(0.5);
     transition: filter 0.2s ease-in-out;
-    
   }
   a {
     text-decoration: none;

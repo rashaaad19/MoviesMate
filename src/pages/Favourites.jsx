@@ -2,6 +2,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { useLoaderData } from "react-router-dom";
 import { json } from "react-router-dom";
 import { db } from "../firebase";
+import MovieList from "../UI/MovieList";
 
 const Favourites = () => {
   const data=useLoaderData();
@@ -9,7 +10,7 @@ const Favourites = () => {
   console.log(userFavs)
   return (
     <>
-      {userFavs.length>0? userFavs.map(movie=><h1 key={movie.name}>{movie.name}</h1>) : <h1>No movies yest</h1>}
+    <MovieList movies={userFavs} type='favourite'/>
     </>
   );
 };

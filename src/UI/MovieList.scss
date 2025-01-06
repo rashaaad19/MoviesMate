@@ -1,0 +1,76 @@
+//mixins and variables
+@use "../assets/mixins.scss";
+@use "../assets/variables.scss";
+
+.padding-container {
+  padding-block: 1.5rem 3rem;
+  padding-inline: 1rem;
+}
+
+.movieList-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  row-gap: 25px;
+  column-gap: 10px;
+
+  .movieList-item {
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    span
+    p {
+      cursor: pointer;
+      display: flex;
+      span {
+        @include mixins.header-style(18px, variables.$primary-white);
+      }
+    }
+    h3 {
+      display: block;
+      width: fit-content;
+      max-width: 185px;
+      @include mixins.header-style(18px, variables.$primary-white);
+      transition: all 0.2s ease-in-out;
+      height: 4rem;
+      overflow: hidden; /* Hide overflow text */
+      text-overflow: ellipsis; /* Add ellipsis if text overflows */
+    
+    }
+    &:hover h3,
+    h3:hover {
+      color: burlywood;
+    }
+    &:hover img,
+    img:hover {
+      filter: brightness(0.5);
+      transition: filter 0.2s ease-in-out;
+    }
+  }
+}
+.emptyList-error {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+  .emptyList-img {
+    width: 25rem;
+  }
+  span {
+    @include mixins.subHeader-stlye(18px, variables.$primary-white);
+  }
+  a {
+    @include mixins.button-style(
+      variables.$primary-white,
+      variables.$primary-orange
+    );
+    padding: 5px 10px;
+    font-weight: normal;
+  }
+}
+
+@media (max-width: 720px) {
+  .movieList-container {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}

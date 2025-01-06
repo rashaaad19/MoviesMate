@@ -12,8 +12,6 @@ import { useState } from "react";
 import { arrayRemove, arrayUnion, doc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase";
 
-
-
 const MovieProfileHero = ({
   crew,
   title,
@@ -41,7 +39,6 @@ const MovieProfileHero = ({
     isUserFav = userData.movies.favourites.some((movie) => movie.id === id); //check if movie exists in user database
     isUserWatched = userData.movies.watched.some((movie) => movie.id === id);
     isUserReviewed = userData.movies.reviews.some((movie) => movie.id === id);
-    console.log(isUserReviewed);
     currentReviewValue = userData.movies.reviews.find(
       (movie) => movie.id === id
     );
@@ -60,11 +57,8 @@ const MovieProfileHero = ({
     currentReviewValue ? currentReviewValue.rate : 0
   );
 
-
-
   const handleRating = async (rate) => {
     if (!isUserReviewed) {
-      console.log("it is  not reviewed");
       await updateDoc(userRef, {
         "movies.reviews": arrayUnion({
           name: title,
@@ -84,7 +78,6 @@ const MovieProfileHero = ({
     }
 
     if (isUserReviewed) {
-      console.log("it is reviewed");
 
       await updateDoc(userRef, {
         "movies.reviews": arrayRemove({
@@ -114,7 +107,6 @@ const MovieProfileHero = ({
     }
   };
 
-
   const handleWatchedClick = async () => {
     //if the movie is not watched in the user's database, add it on click.
     if (!currentWatched) {
@@ -138,19 +130,18 @@ const MovieProfileHero = ({
       await updateDoc(userRef, {
         "movies.favourites": arrayUnion({ name: title, image: poster, id: id }),
       });
-      if (currentFav) {
-        setCurrentFav(false);
-        await updateDoc(userRef, {
-          "movies.favourites": arrayRemove({
-            name: title,
-            image: poster,
-            id: id,
-          }),
-        });
-      }
+    }
+    if (currentFav) {
+      setCurrentFav(false);
+      await updateDoc(userRef, {
+        "movies.favourites": arrayRemove({
+          name: title,
+          image: poster,
+          id: id,
+        }),
+      });
     }
   };
-
 
   return (
     <div
@@ -159,7 +150,10 @@ const MovieProfileHero = ({
         backgroundImage: `url(https://image.tmdb.org/t/p/original${backdrop})`,
       }}
     >
-      <img src={`https://image.tmdb.org/t/p/w342${poster}`} />
+      <img
+        className="moviePoster"
+        src={`https://image.tmdb.org/t/p/w342${poster}`}
+      />
 
       <div className="movieHero-infoContainer">
         <h1>{title}</h1>

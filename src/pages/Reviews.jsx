@@ -1,10 +1,12 @@
 import { useLoaderData } from "react-router-dom";
+import MovieList from "../UI/MovieList";
 
 const Reviews = () => {
   const data = useLoaderData();
+  const userData=data.movies.reviews
   return (
     <>
-      <h1>{data.message}</h1>
+    <MovieList movies={userData} type={'reviewed'}/>
     </>
   );
 };

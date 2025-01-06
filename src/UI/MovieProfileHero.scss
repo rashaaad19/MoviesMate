@@ -13,6 +13,10 @@
     position: relative;
     z-index: 99;
   }
+  .moviePoster{
+    border-radius: 10px;
+    box-shadow: 4px 12px 12px 0px #3c3c49;
+  }
   img {
     width: 15rem;
     float: left;

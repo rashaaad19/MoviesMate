@@ -16,6 +16,13 @@ console.log(error)
           link={'/signup'}
         />
       )}
+      {error.status === 404 && (
+        <ErrorBanner
+          image={"/404-error.png"}
+          message={"We Can't find the page you'r looking for"}
+          link={'/'}
+        />
+      )}
       <Footer />
     </div>
   );

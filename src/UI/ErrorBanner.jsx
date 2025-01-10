@@ -5,7 +5,8 @@ const ErrorBanner = ({ image, message, link }) => {
     <div className="errorBanner-container">
       <img src={image} />
       <h1>{message}</h1>
-      <Link to={link}>Sign up now.</Link>
+      {link === "signup" && <Link to={link}>Sign up now.</Link>}
+      {link === "/" && <Link to={link}>Return to home page.</Link>}
     </div>
   );
 };

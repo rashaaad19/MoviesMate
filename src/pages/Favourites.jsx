@@ -7,7 +7,6 @@ import MovieList from "../UI/MovieList";
 const Favourites = () => {
   const data=useLoaderData();
   const userFavs = data.movies.favourites;
-  console.log(userFavs)
   return (
     <>
     <MovieList movies={userFavs} type='favourite'/>

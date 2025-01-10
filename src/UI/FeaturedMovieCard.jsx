@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import "./FeaturedMovieCard.scss";
 const FeaturedMovieCard = () => {
   return (
@@ -21,12 +22,8 @@ const FeaturedMovieCard = () => {
           designing the atomic bomb. Their work comes to fruition on July 16,
           1945, as they witness the world&apos;s first nuclear explosion,
           forever changing the course of history.
-          <a href="">See More</a>
+          <Link to={'/movies/872585'}>See More</Link>
         </p>
-        <button>
-          {" "}
-          <img src="/bookmark-svgrepo-com.svg" /> Add Watchlist
-        </button>
       </div>
     </div>
   );

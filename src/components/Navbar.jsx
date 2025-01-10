@@ -182,15 +182,17 @@ const Navbar = () => {
           >
             Discover
           </NavLink>
-          <NavLink
-            className={({ isActive }) => (isActive ? `active` : undefined)}
-            to={`/user/${userID}`}
-            onClick={() => {
-              setShowSideBar(false);
-            }}
-          >
-            My Profile
-          </NavLink>
+          {authStatus === "true" && (
+            <NavLink
+              className={({ isActive }) => (isActive ? `active` : undefined)}
+              to={`/user/${userID}`}
+              onClick={() => {
+                setShowSideBar(false);
+              }}
+            >
+              My Profile
+            </NavLink>
+          )}
           {/*move this section to the to of the sidebar*/}
           {authStatus === "true" ? (
             <button className={"user-navMenu"} onClick={handleUserMenu}>

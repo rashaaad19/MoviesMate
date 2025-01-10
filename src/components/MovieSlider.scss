@@ -74,7 +74,7 @@
 
       h3 {
         @include mixins.header-style(
-          clamp(15px, 2.5vw, 20px),
+          clamp(17px, 2.5vw, 20px),
           variables.$primary-white
         );
       }

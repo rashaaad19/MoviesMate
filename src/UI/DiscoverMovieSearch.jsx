@@ -16,7 +16,6 @@ const DiscoverMovieSearch = () => {
         <h1>Enter Movie Name</h1>
         <p className="searchInput-container">
           <SearchBar />
-          <button type="button">Search</button>
         </p>
         <div className="categoryFilters">
           <CategorySelectItem

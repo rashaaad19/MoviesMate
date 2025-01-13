@@ -7,6 +7,7 @@ const DiscoverSlice = createSlice({
     genre: "all",
     language: "all",
     page: 1,
+    query: ''
   },
   name: "discover",
   reducers: {
@@ -25,6 +26,9 @@ const DiscoverSlice = createSlice({
     changePage(state, action) {
       state.page = action.payload;
     },
+    changeQuery(state, action) {
+      state.query = action.payload;
+    }
   },
 });
 export const discoverActions = DiscoverSlice.actions;

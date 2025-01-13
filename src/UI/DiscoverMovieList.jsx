@@ -1,7 +1,6 @@
 import "./DiscoverMovieList.scss";
 import useFetch from "../hooks/useFetch";
 import { genreOptions } from "../data/filterOptions";
-
 import { useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -9,20 +8,22 @@ import Pagination from "../components/Pagination";
 import LoadingScreen from "./LoadingScreen";
 
 const DiscoverMovieList = () => {
-  //Extracting the states from the discover slice
+  // Extracting the states from the discover slice
   const sortByState = useSelector((state) => state.discover.sortBy);
   const yearState = useSelector((state) => state.discover.year);
   const languageState = useSelector((state) => state.discover.language);
   const genreState = useSelector((state) => state.discover.genre);
   const pageState = useSelector((state) => state.discover.page);
+  const queryState = useSelector((state) => state.discover.query);
 
-  //URL params state
+  // URL params state
   const [params, setParams] = useState({
     api_key: "c20fa7ec5e6db6643718e535c5234b95",
     include_adult: false,
     include_video: false,
     page: pageState,
     "vote_count.gte": 100,
+    query: queryState, // Include queryState in initial params
   });
 
   const [currentStart, setCurrentStart] = useState(1);
@@ -40,7 +41,7 @@ const DiscoverMovieList = () => {
     []
   );
 
-  //find genreID by name
+  // Find genreID by name
   const findGenreID = (name) => {
     const genre = genreOptions.find(
       (genre) => genre.name.toLowerCase() === name.toLowerCase()
@@ -50,16 +51,31 @@ const DiscoverMovieList = () => {
   const genreID = findGenreID(genreState);
 
   const queryString = new URLSearchParams(params).toString();
-  let moviesURL = `https://api.themoviedb.org/3/discover/movie?${queryString}`;
+  let searchMoviesURL = `https://api.themoviedb.org/3/search/movie?${queryString}`;
+  let discoverMoviesURL = `https://api.themoviedb.org/3/discover/movie?${queryString}`;
 
-  //dynamically changing the parameters based on the global state.
+  // Fetching the data using custom hook
+  const {
+    data: discoverData,
+    loading: discoverLoading,
+    error: discoverError,
+  } = useFetch(discoverMoviesURL, options);
+  const {
+    data: searchData,
+    loading: searchLoading,
+    error: searchError,
+  } = useFetch(searchMoviesURL, options);
+
+  // Determine which data to display
+  const resultsToDisplay =
+    searchData?.results?.length > 0 ? searchData.results : discoverData?.results || [];
+
+  // Dynamically changing the parameters based on the global state
   useEffect(() => {
     const updateParams = () => {
-      const updatedParams = { ...params, page: pageState }; // Start with the current params
-
+      const updatedParams = { ...params, page: pageState, query: queryState };
       if (languageState !== "all") {
         updatedParams.with_original_language = languageState;
-        //remove the query if the user selected "all" option
       } else {
         delete updatedParams.with_original_language;
       }
@@ -82,42 +98,45 @@ const DiscoverMovieList = () => {
 
       return updatedParams;
     };
+
     setParams(updateParams());
-  }, [languageState, genreState, yearState, sortByState, pageState, genreID]);
+  }, [languageState, genreState, yearState, sortByState, pageState, genreID, queryState]);
 
-  //fetching the data using custom hook
-  const { data, loading, error } = useFetch(moviesURL, options);
-
-  if (loading) {
+  if (discoverLoading || searchLoading) {
     return <LoadingScreen />;
+  }
+
+
+
+  if (resultsToDisplay.length === 0 && !discoverLoading && !searchLoading) {
+    return <div>No movies found.</div>;
   }
 
   return (
     <>
       <div className="discoverMovieList-container">
-        {data &&
-          data.results.map((movie) => {
-            return (
-              <div key={movie.id} className="movieCard">
-                <Link to={`/movies/${movie.id}`} className="posterLink">
-                  <img
-                    src={`http://image.tmdb.org/t/p/original/${movie.poster_path}`}
-                    key={movie.title}
-                    loading="lazy"
-                  />
-                </Link>
-                <Link to={`/movies/${movie.id}`} className="titleLink">
-                  <h3>{movie.title}</h3>
-                </Link>
-              </div>
-            );
-          })}
+        {resultsToDisplay.map((movie) => (
+          <div key={movie.id} className="movieCard">
+            <Link to={`/movies/${movie.id}`} className="posterLink">
+              <img
+                src={`http://image.tmdb.org/t/p/original/${movie.poster_path}`}
+                alt={movie.title}
+                loading="lazy"
+              />
+            </Link>
+            <Link to={`/movies/${movie.id}`} className="titleLink">
+              <h3>{movie.title}</h3>
+            </Link>
+          </div>
+        ))}
       </div>
-      {data && (
+      {resultsToDisplay.length > 0 && (
         <Pagination
           currentStart={currentStart}
           setCurrentStart={setCurrentStart}
-          totalResults={data.total_results}
+          totalResults={
+            searchData?.total_results || discoverData?.total_results || 0
+          }
         />
       )}
     </>

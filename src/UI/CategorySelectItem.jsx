@@ -19,7 +19,6 @@ const CategorySelectItem = ({ options, htmlFor, id, name }) => {
       case "year":
         itemSelected = JSON.parse(itemSelected);
         dispatch(discoverActions.changeYear(itemSelected));
-
         break;
 
       case "genre":

@@ -28,7 +28,7 @@ const MovieProfileHero = ({
 }) => {
   const isAuth = localStorage.getItem("isAuth"); //extract authentication status from local storage
   const userID = localStorage.getItem("userID"); // extract User ID from local storage
-
+console.log(userData)
   let isUserFav;
   let isUserWatched;
   let isUserReviewed;

@@ -7,7 +7,6 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 
 import { useState } from "react";
 import { useAuth } from "../hooks/useAuth";
-import LoadingScreen from "../UI/LoadingScreen";
 
 const Login = () => {
   const [loginError, setLoginError] = useState({
@@ -19,10 +18,6 @@ const Login = () => {
   const { handleFacebookSignup, handleGoogleSignup, loading, error } =
     useAuth();
 
-  // // handling loading state
-  // if (loading || isLoading) {
-  //   return <LoadingScreen />;
-  // }
   //handling normal login submission
   const handleOnSubmit = (event) => {
     event.preventDefault();
@@ -58,7 +53,7 @@ const Login = () => {
 
   return (
     <div className="registerForm-container">
-      <form onSubmit={handleOnSubmit} className="registerForm">
+      <form onSubmit={handleOnSubmit} className="registerForm" role="form">
         <h1>Welcome Back!</h1>
         <div className="registerInput-container">
           <label htmlFor="email">Email</label>

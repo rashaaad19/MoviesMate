@@ -49,15 +49,22 @@
     align-self: center;
   }
   .submitForm-button {
+  
     @include mixins.button-style(
       variables.$primary-white,
       variables.$light-blue
     );
     margin-block: 10px;
+    // Disabled styles
+    &:disabled {
+      cursor: not-allowed;
+    }
+
   }
   .submitForm-button:hover {
     background-color: variables.$light-blue-hover;
   }
+
   .formSeprator {
     font-family: Open Sans Regular, sans-serif;
     display: flex;

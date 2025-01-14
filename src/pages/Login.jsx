@@ -19,10 +19,10 @@ const Login = () => {
   const { handleFacebookSignup, handleGoogleSignup, loading, error } =
     useAuth();
 
-  // handling loading state
-  if (loading || isLoading) {
-    return <LoadingScreen />;
-  }
+  // // handling loading state
+  // if (loading || isLoading) {
+  //   return <LoadingScreen />;
+  // }
   //handling normal login submission
   const handleOnSubmit = (event) => {
     event.preventDefault();
@@ -73,7 +73,9 @@ const Login = () => {
           <label htmlFor="password">Password</label>
           <input type="password" name="password" id="password" required />
         </div>
-        <button className="submitForm-button">Login</button>
+        <button className="submitForm-button" disabled={loading || isLoading}>
+          {loading || isLoading ? "Loading..." : "Login"}
+        </button>
         <span className="formSeprator">or</span>
         <button
           type="button"

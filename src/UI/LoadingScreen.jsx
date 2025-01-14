@@ -12,7 +12,7 @@ const LoadingScreen = () => {
     
   return (
     <div style={loadingStyles}>
-      <FadeLoader color="#f98727" />
+      <FadeLoader  color="#f98727" />
       <ScrollToTop />
     </div>
   );

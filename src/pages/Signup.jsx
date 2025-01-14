@@ -33,9 +33,9 @@ const Signup = () => {
   const confirmPasswordRef = useRef(null);
   const passwordRef = useRef(null);
 
-  if (loading || isLoading) {
-    return <LoadingScreen />;
-  }
+  // if (loading || isLoading) {
+  //   return <LoadingScreen />;
+  // }
   //get all users usernames to check availability
 
   const handleOnSubmit = async (event) => {
@@ -110,9 +110,9 @@ const Signup = () => {
           navigate("/");
         })
         .catch((error) => {
+          setIsLoading(false);
           const errorMessage = error.message;
           console.log(error.message);
-          setIsLoading(false);
           if (errorMessage === "Firebase: Error (auth/email-already-in-use).") {
             setEmailIsInvalid({ invalid: true, errorType: "email exists" });
             emailRef.current.focus();
@@ -125,6 +125,7 @@ const Signup = () => {
   return (
     <div className="registerForm-container">
       <form role="form" className="registerForm" onSubmit={handleOnSubmit}>
+        {/* {(loading||isLoading) && <LoadingScreen />} */}
         <h1>Let&apos;s get started.</h1>
         <div className="registerInput-container">
           <label htmlFor="email">Email</label>
@@ -196,7 +197,9 @@ const Signup = () => {
             </p>
           )}
         </div>
-        <button className="submitForm-button">Create Account</button>
+        <button className="submitForm-button" disabled={loading || isLoading}>
+          {loading || isLoading ? "Loading..." : "Create Account"}
+        </button>
         <span className="formSeprator">or</span>
         <button
           type="button"

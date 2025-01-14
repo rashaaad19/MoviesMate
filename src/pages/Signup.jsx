@@ -60,15 +60,18 @@ const Signup = () => {
         invalid: true,
         errorType: "passwords does not match",
       });
+      setIsLoading(false);
       confirmPasswordRef.current.focus();
     } else if (userData.userPassword.length < 6) {
       setPasswordIsInvalid({ invalid: true, errorType: "password too short" });
+      setIsLoading(false);
       passwordRef.current.focus();
     } else if (validatePassword(userData.userPassword) !== true) {
       setPasswordIsInvalid({
         invalid: true,
         errorType: "no capital and special characters",
       });
+      setIsLoading(false);
       passwordRef.current.focus();
     }
 
@@ -121,7 +124,7 @@ const Signup = () => {
 
   return (
     <div className="registerForm-container">
-      <form className="registerForm" onSubmit={handleOnSubmit}>
+      <form role="form" className="registerForm" onSubmit={handleOnSubmit}>
         <h1>Let&apos;s get started.</h1>
         <div className="registerInput-container">
           <label htmlFor="email">Email</label>

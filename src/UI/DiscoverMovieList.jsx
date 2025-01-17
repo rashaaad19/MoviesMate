@@ -68,7 +68,9 @@ const DiscoverMovieList = () => {
 
   // Determine which data to display
   const resultsToDisplay =
-    searchData?.results?.length > 0 ? searchData.results : discoverData?.results || [];
+    searchData?.results?.length > 0
+      ? searchData.results
+      : discoverData?.results || [];
 
   // Dynamically changing the parameters based on the global state
   useEffect(() => {
@@ -100,16 +102,27 @@ const DiscoverMovieList = () => {
     };
 
     setParams(updateParams());
-  }, [languageState, genreState, yearState, sortByState, pageState, genreID, queryState]);
+  }, [
+    languageState,
+    genreState,
+    yearState,
+    sortByState,
+    pageState,
+    genreID,
+    queryState,
+  ]);
 
   if (discoverLoading || searchLoading) {
     return <LoadingScreen />;
   }
 
-
-
   if (resultsToDisplay.length === 0 && !discoverLoading && !searchLoading) {
-    return <div>No movies found.</div>;
+    return (
+      <div style={{ display:'flex', alignItems:'center', flexDirection:'column',paddingBlock:'2rem', gap:'15px' }}>
+        <img style={{width:'8rem'}} src="/wrong-svgrepo-com.svg" alt="error" />
+        <h1>No Movies Found!</h1>
+      </div>
+    );
   }
 
   return (

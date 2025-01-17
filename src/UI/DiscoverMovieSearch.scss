@@ -1,3 +1,4 @@
+
 //mixins and variables
 @use "../assets/mixins.scss";
 @use "../assets/variables.scss";
@@ -21,6 +22,7 @@
       color: variables.$light-gray;
       border: none;
       font-size: 16px;
+      padding: 0.5rem
     }
     button {
       @include mixins.button-style(

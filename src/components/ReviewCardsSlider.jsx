@@ -25,7 +25,7 @@ const normalBreakpoints = {
 };
 
 const ReviewCardsSlider = ({ reviews }) => {
-  console.log(reviews)
+  // console.log(reviews)
 
   return (
     <div className="reviewSection-container">

@@ -112,7 +112,6 @@ export const loader = async () => {
     console.log("Error fetching document:", error);
   }
 
-  console.log({ isAuth });
 
   if (isAuth === "false") {
     return redirect("/");

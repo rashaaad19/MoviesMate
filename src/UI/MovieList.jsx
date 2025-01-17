@@ -4,7 +4,7 @@ import "./MovieList.scss";
 import { Rating } from "react-simple-star-rating";
 
 const MovieList = ({ movies, type }) => {
-  console.log(movies);
+  // console.log(movies);
   return (
     <div className="padding-container">
       {movies.length > 0 ? (

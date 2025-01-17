@@ -1,5 +1,5 @@
 import "./ReviewCard.scss";
-const ReviewCard = ({ author, date, content, reviewURL }) => {
+const ReviewCard = ({ author, content, reviewURL }) => {
   return (
     <div className="reviewCard_container">
       <div className="reviewCard_header">

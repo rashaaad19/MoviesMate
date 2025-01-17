@@ -8,7 +8,7 @@ const EditImageCard = ({ image, id, onSaveImage }) => {
   const handleOnImageChange = (event) => {
     //extracting the first selected element
     const file = event.target.files[0];
-    console.log(file);
+    // console.log(file);
     // Reset the input value to ensure onChange triggers even for the same file
     event.target.value = null;
 

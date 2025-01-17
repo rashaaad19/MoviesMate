@@ -67,7 +67,7 @@ export const useAuth = () => {
         localStorage.setItem("userEmail", user.email);
         localStorage.setItem("userID", user.uid);
         // localStorage.setItem("userImg", user.image);
-        console.log(user);
+        // console.log(user);
         // Navigate after successful login
         navigate("/");
       })
@@ -77,7 +77,6 @@ export const useAuth = () => {
         const credential = GoogleAuthProvider.credentialFromError(error);
         setError(error);
         setLoading(false);
-        console.log(error);
       });
   };
 
@@ -138,7 +137,7 @@ export const useAuth = () => {
         const credential = FacebookAuthProvider.credentialFromError(error);
         setError(error);
         setLoading(false);
-        console.log(error);
+        // console.log(error);
       });
   };
 

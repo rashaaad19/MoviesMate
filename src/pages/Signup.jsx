@@ -112,11 +112,11 @@ const Signup = () => {
         .catch((error) => {
           setIsLoading(false);
           const errorMessage = error.message;
-          console.log(error.message);
+          // console.log(error.message);
           if (errorMessage === "Firebase: Error (auth/email-already-in-use).") {
             setEmailIsInvalid({ invalid: true, errorType: "email exists" });
             emailRef.current.focus();
-            console.log(errorMessage, emailIsInvalid);
+            // console.log(errorMessage, emailIsInvalid);
           }
         });
     }

@@ -74,7 +74,7 @@ const Navbar = () => {
       })
       .catch((error) => {
         //an error happened
-        console.log(error);
+        // console.log(error);
       });
     setShowSideBar(false);
   };

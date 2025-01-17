@@ -23,6 +23,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const mobileScreen = useCheckMobileScreen();
+  console.log(userData.image);
 
   const authStatus = localStorage.getItem("isAuth"); //extract authentication status to update UI
   let docRef;
@@ -125,7 +126,7 @@ const Navbar = () => {
 
           {authStatus === "true" && userData && (
             <div className="sidebar-userData">
-              <img src={userData.image} />
+              <img src={userData.image ||"/Default-Avatar.jpg"} />
               <h3>{userData.name}</h3>
               <p>{userData.userName}</p>
             </div>
@@ -196,7 +197,7 @@ const Navbar = () => {
           {/*move this section to the to of the sidebar*/}
           {authStatus === "true" ? (
             <button className={"user-navMenu"} onClick={handleUserMenu}>
-              {userData.image && <img src={userData.image} alt="profile" />}
+              { <img src={userData.image||"/Default-Avatar.jpg"} alt="profile" />}
               <IoIosArrowDown
                 className={showUserMenu ? "activeArrow" : "nonActiveArrow"}
               />
@@ -240,7 +241,7 @@ const Navbar = () => {
       {!showSideBar && showUserMenu && userData && (
         <UserMenu
           name={userData.name}
-          image={userData.image}
+          image={userData.image || '/Default-Avatar.jpg'}
           userName={userData.userName}
           userID={userID}
           onSignout={handleSignOut}

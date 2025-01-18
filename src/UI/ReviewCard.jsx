@@ -12,7 +12,7 @@ const ReviewCard = ({ author, content, reviewURL }) => {
       <p>{content} </p>
       <div className="reviewCard_footer">
         <p>April 5, 2024</p>
-        <a href={reviewURL}>Full Review</a>
+        <a href={reviewURL} target="_blank">Full Review</a>
       </div>
     </div>
   );

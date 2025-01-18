@@ -34,8 +34,6 @@
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="#acknowledgments">Acknowledgments</a></li>
@@ -75,9 +73,14 @@ This project is built using the following frameworks and tools:
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+<!-- GETTING STARTED -->
+## Getting Started
+
+To get a local copy of this project up and running, follow these simple steps:
+
 ### Prerequisites
 
-To run this project locally, ensure you have the following installed:
+_Before you begin, ensure you have the following software installed:_
 
 * **Node.js** (v14 or higher recommended)  
   [Download and install Node.js](https://nodejs.org/).

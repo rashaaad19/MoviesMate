@@ -46,10 +46,10 @@ function App() {
           path: "discover",
           element: <Discover />,
         },
-        {
-          path: "about",
-          element: <About />,
-        },
+        // {
+        //   path: "about",
+        //   element: <About />,
+        // },
         {
           path: "login",
           element: <Login />,

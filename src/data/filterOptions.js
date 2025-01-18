@@ -223,12 +223,13 @@ export const languageOptions = [
 
 export const sortOptions = [
   {
+    name: "Vote Count",
+    code: "vote_count.desc",
+  },
+  {
     name: "Popularity",
     code: "popularity.desc",
   },
 
-  {
-    name: "Vote Count",
-    code: "vote_count.desc",
-  },
+ 
 ];

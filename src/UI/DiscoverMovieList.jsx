@@ -53,7 +53,7 @@ const DiscoverMovieList = () => {
   const queryString = new URLSearchParams(params).toString();
   let searchMoviesURL = `https://api.themoviedb.org/3/search/movie?${queryString}`;
   let discoverMoviesURL = `https://api.themoviedb.org/3/discover/movie?${queryString}`;
-
+  console.log(discoverMoviesURL);
   // Fetching the data using custom hook
   const {
     data: discoverData,
@@ -118,8 +118,20 @@ const DiscoverMovieList = () => {
 
   if (resultsToDisplay.length === 0 && !discoverLoading && !searchLoading) {
     return (
-      <div style={{ display:'flex', alignItems:'center', flexDirection:'column',paddingBlock:'2rem', gap:'15px' }}>
-        <img style={{width:'8rem'}} src="/wrong-svgrepo-com.svg" alt="error" />
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          flexDirection: "column",
+          paddingBlock: "2rem",
+          gap: "15px",
+        }}
+      >
+        <img
+          style={{ width: "8rem" }}
+          src="/wrong-svgrepo-com.svg"
+          alt="error"
+        />
         <h1>No Movies Found!</h1>
       </div>
     );

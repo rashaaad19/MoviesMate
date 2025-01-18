@@ -10,6 +10,7 @@ const CategorySelectItem = ({ options, htmlFor, id, name }) => {
   const currentLanguage = useSelector((state) => state.discover.language);
   const currentGenre = useSelector((state) => state.discover.genre);
 
+  console.log(currentSortBy)
   const handleOnChange = (event) => {
     let itemSelected = event.target.value.toLowerCase();
     dispatch(discoverActions.changePage(1));

@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const DiscoverSlice = createSlice({
   initialState: {
-    sortBy: "popularity.dsc",
+    sortBy: "vote_count.desc",
     year: "all",
     genre: "all",
     language: "all",

@@ -50,7 +50,7 @@
 
 MoviesMate is a comprehensive movie library and database where you can explore detailed information, ratings, and reviews for all your favorite films from around the world. It’s designed to make discovering and keeping track of movies easy and enjoyable.
 
-Key features:
+### Key features:
 * Browse and search for movies by title, genre, or release year.
 * View detailed information, including cast, crew, and user ratings.
 * Create a personal profile to save favorites, track watched movies, and write reviews.

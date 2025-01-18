@@ -23,7 +23,6 @@ const Navbar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const mobileScreen = useCheckMobileScreen();
-  console.log(userData.image);
 
   const authStatus = localStorage.getItem("isAuth"); //extract authentication status to update UI
   let docRef;
@@ -45,10 +44,10 @@ const Navbar = () => {
           if (docSnap.exists()) {
             setUserData(docSnap.data());
           } else {
-            console.log("No such document!");
+            // console.log("No such document!");
           }
         } catch (error) {
-          console.log("Error fetching document:", error);
+          // console.log("Error fetching document:", error);
         }
       }
     };

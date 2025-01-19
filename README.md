@@ -66,6 +66,7 @@ This project is built using the following frameworks and tools:
 
 * [![React][React.js]][React-url]
 * [![SCSS][SCSS.js]][SCSS-url]
+* [![Figma][Figma.js]][Figma-url]
 * [![Vite][Vite.js]][Vite-url]
 * [![Firebase][Firebase.js]][Firebase-url]
 * [![Redux Toolkit][Redux.js]][Redux-url]
@@ -206,4 +207,7 @@ A big thank you to the following resources that helped shape this project:
 [Netlify-url]: https://www.netlify.com/
 [RTL.js]: https://img.shields.io/badge/React_Testing_Library-E33332?style=for-the-badge&logo=testing-library&logoColor=white
 [RTL-url]: https://testing-library.com/docs/react-testing-library/intro/
+[Figma.js]: https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white
+[Figma-url]:https://www.figma.com/
+
 
